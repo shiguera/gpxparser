@@ -1,0 +1,302 @@
+package com.mlab.tesis.java.gpx.data;
+import java.io.BufferedWriter;
+import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.InputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.DOMImplementation;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.ls.DOMImplementationLS;
+import org.w3c.dom.ls.LSOutput;
+import org.w3c.dom.ls.LSSerializer;
+import org.xml.sax.InputSource;
+
+/**
+ * Clase utilitaria para manipulación de documentos Gpx
+ * Básicamente se compone de un elemento Metadata y unas colecciones
+ * de WayPoint's, Route's y Track's
+ * El esquema xsd es:<p>
+ * <pre>
+ * {@code
+ * <xsd:complexType name="gpxType">
+ *    <xsd:sequence>
+ *        <xsd:element name="metadata" type="metadataType" minOccurs="0"/>
+ *        <xsd:element name="wpt" type="wptType" minOccurs="0" maxOccurs="unbounded"/>
+ *        <xsd:element name="rte" type="rteType" minOccurs="0" maxOccurs="unbounded"/>
+ *        <xsd:element name="trk" type="trkType" minOccurs="0" maxOccurs="unbounded"/>
+ *        <xsd:element name="extensions" type="extensionsType" minOccurs="0"/>
+ *    </xsd:sequence>
+ *    <xsd:attribute name="version" type="xsd:string" use="required" fixed="1.1"/>
+ *    <xsd:attribute name="creator" type="xsd:string" use="required"/>
+ * </xsd:complexType>
+ * }
+ * </pre>
+ * 
+ * @author shiguera
+ */
+public class GpxDocument  extends GpxElement {	
+	
+	final public String head="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
+		"<gpx version=\"1.1\" creator=\"MercatorLab - http:mercatorlab.com\" "+
+		"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "+
+		"xmlns=\"http://www.topografix.com/GPX/1/1\" "+
+		"xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\" "+
+		"xmlns:mlab=\"http://mercatorlab.com/downloads/mlab.xsd\">";
+	final String footer="</gpx>";
+	
+	/**
+	 * DOM Document tipo gpx
+	 */
+	Document doc;
+
+	/**
+	 * Metadata del GpxDocument
+	 */
+	Metadata metadata;
+	/**
+	 * Colección de WayPoint's del GpxDocument
+	 */
+	ArrayList<WayPoint> wpts; 
+	/**
+	 * Colección de Route's del GpxDocument
+	 */
+	ArrayList<Route> routes; 
+
+	/**
+	 * Colección de Track's del GpxDocument
+	 */
+	ArrayList<Track> tracks;
+	
+	// FIXME Falta el elemento <extensions>
+
+	/**
+	 * Constructor de clase. Inicializa las colecciones.
+	 */
+	public GpxDocument() {		
+		this.metadata= new Metadata();
+		this.routes = new ArrayList<Route>();
+		this.tracks = new ArrayList<Track>();
+		this.wpts = new ArrayList<WayPoint>();
+	}
+
+	/**
+	 * Añade un track a la colección de tracks del GpxDocument
+	 * @param track Track que se quiere añadir
+	 */
+	public void addTrack(Track track) {
+		// Añadir el track a la colección de tracks
+		this.tracks.add(track);
+		
+	}
+	
+	/**
+	 * Devuelve el número de tracks en el documento
+	 * @return Devuelve el número de tracks en el documento
+	 */
+	public int trackCount() {
+		return this.tracks.size();
+	}
+	
+	/**
+	 * Añade un WayPoint a la colección de WayPoints
+	 * @param wp WayPoint que se quiere añadir
+	 */
+	public void addWayPoint(WayPoint wp) {
+		this.wpts.add(wp);
+	}
+	public int wayPointCount() {
+		return this.wpts.size();
+	}
+	/**
+	 * Añade una Route a la colección de rutas del GpxDocument
+	 * @param rte Route que se quiere añadir
+	 */
+	public void addRoute(Route rte) {
+		this.routes.add(rte);
+	}
+	public int routeCount() {
+		return this.routes.size();
+	}
+	/**
+	 * 
+	 * @return Cadena gpx del documento
+	 */
+	@Override
+	public String asGpx() {
+
+		String cad = "";
+		cad += head;
+		
+		cad += this.metadata.asGpx();
+		
+		if(this.wpts.size()>0) {
+			for(int i=0; i<this.wpts.size(); i++) {
+				cad += this.wpts.get(i).asGpx();
+			}
+		}
+		if(this.routes.size()>0) {
+			for(int i=0; i<this.routes.size(); i++) {
+				cad += this.routes.get(i).asGpx();
+			}
+		}
+		if(this.tracks.size()>0) {
+			for(int i=0; i<this.tracks.size(); i++) {
+				cad += this.tracks.get(i).asGpx();
+			}
+		}
+		
+		// FIXME Falta resolver el elemento <extensions>
+
+		cad += footer;
+		return cad;
+	}
+	
+	/**
+	 * Formatea una cadena xml con cambios de linea y tabulaciones. 
+	 * Añade la cabecera de documento
+	 * @param xml cadena xml que se quiere formatear
+	 * @return Cadena formateada
+	 */
+	public static String format(String xml) {
+		try {
+        	final InputSource src = new InputSource(new StringReader(xml));
+        	final Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);        	
+        	DOMImplementation impl = document.getImplementation();
+        	DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS", "3.0");
+        	LSSerializer lsSerializer = implLS.createLSSerializer();
+        	lsSerializer.getDomConfig().setParameter("format-pretty-print", true);
+
+        	LSOutput lsOutput = implLS.createLSOutput();
+        	lsOutput.setEncoding("UTF-8");
+        	Writer stringWriter = new StringWriter();
+        	lsOutput.setCharacterStream(stringWriter);
+        	lsSerializer.write(document, lsOutput);
+        	 
+        	String result = stringWriter.toString();             
+            return result;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+	}
+	
+	public String format() {
+		String xml=this.asGpx();
+        return GpxDocument.format(xml);
+    }
+	
+	/**
+	 * Escribe una cadena de texto en un fichero
+	 * 
+	 * @param filename
+	 *            String Nombre del fichero
+	 * @param cad
+	 *            String Cadena de texto a escribir
+	 * @return 1 si todo va bien, negativo o cero en caso contrario
+	 */
+	public int write(String filename, String cad) {
+		BufferedWriter writer;
+		try {
+			writer = new BufferedWriter(new FileWriter(filename));
+			writer.write(cad + "\n");
+			writer.close();
+		} catch (FileNotFoundException fe) {
+			System.out.println("File " + filename + " not found.\n"
+					+ fe.getMessage());
+			return -1;
+		} catch (NumberFormatException ne) {
+			System.out.println("Number format error. " + ne.getMessage());
+			return -2;
+		} catch (Exception e) {
+			System.out.println("Unidentified error. " + e.getMessage());
+			return -3;
+		}
+    
+		return 1;
+	}
+	
+	/**
+	 * Parsea un documento de texto gpx
+	 * @param gpxcad
+	 * @return
+	 */
+	public static GpxDocument parseGpxDocument(String cadgpx) {
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder=null;
+		InputStream is = null;
+		Document doc = null;
+		GpxDocument gpxDocument=new GpxDocument();
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+		    is = new ByteArrayInputStream(cadgpx.getBytes("UTF-8"));
+		    doc = dBuilder.parse(is);	
+			doc.getDocumentElement().normalize();
+		} catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+		if(doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {
+			return null;
+		}
+		//Element gpx=doc.getDocumentElement();
+		
+		// TODO Procesar metadata
+		// TODO Procesar nodos WPT
+		NodeList nl=doc.getElementsByTagName("wpt");
+		for(int i=0; i< nl.getLength(); i++) {
+			WayPoint wp= WayPoint.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+			if(wp!=null) {
+				gpxDocument.addWayPoint(wp);
+			}
+		}
+		// TODO Procesar nodos RTE
+		nl=doc.getElementsByTagName("rte");
+		for(int i=0; i< nl.getLength(); i++) {
+			Route rte= Route.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+			if(rte!=null) {
+				gpxDocument.addRoute(rte);
+			}
+		}
+		// TODO Procesar nodos TRK
+		
+		// TODO Procesar nodos Extensions
+
+		return gpxDocument;
+	}
+	
+	public static String nodeAsString(Node node) {
+		String xmlString="";
+		try	{
+			// Set up the output transformer
+			TransformerFactory transfac = TransformerFactory.newInstance();
+			Transformer trans = transfac.newTransformer();
+			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+			// Print the DOM node
+			StringWriter sw = new StringWriter();
+			StreamResult result = new StreamResult(sw);
+			DOMSource source = new DOMSource(node);
+			trans.transform(source, result);
+			xmlString = sw.toString();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+		return xmlString;
+	}
+
+}

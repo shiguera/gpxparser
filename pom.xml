@@ -1,0 +1,111 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.mlab.tesis.java</groupId>
+  <artifactId>GpxParser</artifactId>
+  <version>1.0-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>GpxParser</name>
+  <url>http://maven.apache.org</url>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  <install-dir>${project.build.directory}</install-dir>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-simple</artifactId>
+      <version>1.6.0</version>
+  </dependency>
+
+</dependencies>
+
+<build>
+<plugins>
+  <!-- Compiler plugin (seleccionar version de java )-->
+  <plugin>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>2.3.2</version>
+    <configuration>
+      <source>1.6</source>
+      <target>1.6</target>
+    </configuration>
+  </plugin>
+<plugin>
+    <!-- Generar el jar ejecutable del programa -->
+    <artifactId>maven-jar-plugin</artifactId>
+    <version>2.2</version>
+    <configuration>
+        <archive>
+            <manifest>
+                <mainClass>mlab.tesis.java.App</mainClass>
+                <addClasspath>true</addClasspath>
+                <classpathPrefix>lib</classpathPrefix>
+            </manifest>
+        </archive>
+    </configuration>
+</plugin>
+
+<plugin>
+    <!-- Copia las dependencias en el directorio lib de target -->
+  <artifactId>maven-dependency-plugin</artifactId>
+  <version>2.0</version>
+  <executions>
+    <execution>
+      <id>copy-dependencies</id>
+      <phase>install</phase>
+      <goals>
+        <goal>copy-dependencies</goal>
+      </goals>
+      <configuration>
+        <outputDirectory>${install-dir}/${project.artifactId}/lib</outputDirectory>
+        <overWriteReleases>false</overWriteReleases>
+        <overWriteSnapshots>false</overWriteSnapshots>
+        <overWriteIfNewer>true</overWriteIfNewer>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+
+<plugin>
+    <!-- Copia los recursos -->
+  <artifactId>maven-resources-plugin</artifactId>
+  <version>2.4.3</version>
+  <executions>
+    <execution>
+      <id>copy-jar</id>
+      <phase>install</phase>
+      <goals>
+        <goal>copy-resources</goal>
+      </goals>
+      <configuration>
+        <outputDirectory>${install-dir}/${project.artifactId}</outputDirectory>
+        <resources>
+          <resource>
+            <directory>${project.build.directory}</directory>
+            <includes>
+              <include>${project.build.finalName}.jar</include>
+            </includes>
+          </resource>
+          <resource>
+            <directory>${project.basedir}/src/main/resources</directory>
+            <filtering>true</filtering>
+          </resource>
+        </resources>
+      </configuration>
+    </execution>
+  </executions>
+</plugin>
+</plugins>
+</build>
+
+</project>
