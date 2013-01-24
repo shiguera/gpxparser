@@ -135,7 +135,7 @@ public class WayPoint  extends GpxElement {
 	 * @return WayPoint o null si hay errores
 	 * @throws ParserConfigurationException 
 	 */
-	public static WayPoint parseGpx(String cadgpx) {
+	public static WayPoint parseGpxString(String cadgpx) {
 		WayPoint pt=null;
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder=null;

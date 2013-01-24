@@ -37,7 +37,7 @@ public class WayPointTest extends TestCase {
 		String cadgpx=tp.asGpx();
 		
 		// Generar un TrackPoint parseando una cadena gpx y comprobar que no es nulo
-		WayPoint parsedPoint=WayPoint.parseGpx(cadgpx);
+		WayPoint parsedPoint=WayPoint.parseGpxString(cadgpx);
 		assertNotNull(parsedPoint);
 		//logger.info("\n"+parsedPoint.asGpx());		
 

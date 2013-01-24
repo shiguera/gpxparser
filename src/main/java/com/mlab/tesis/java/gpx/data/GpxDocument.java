@@ -52,7 +52,7 @@ import org.xml.sax.InputSource;
  */
 public class GpxDocument  extends GpxElement {	
 	
-	final public String head="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
+	final String head="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
 		"<gpx version=\"1.1\" creator=\"MercatorLab - http:mercatorlab.com\" "+
 		"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "+
 		"xmlns=\"http://www.topografix.com/GPX/1/1\" "+
@@ -63,27 +63,37 @@ public class GpxDocument  extends GpxElement {
 	/**
 	 * DOM Document tipo gpx
 	 */
-	Document doc;
+	protected Document doc;
 
 	/**
 	 * Metadata del GpxDocument
 	 */
-	Metadata metadata;
+	protected Metadata metadata;
 	/**
 	 * Colección de WayPoint's del GpxDocument
 	 */
-	ArrayList<WayPoint> wpts; 
+	protected ArrayList<WayPoint> wpts; 
 	/**
 	 * Colección de Route's del GpxDocument
 	 */
-	ArrayList<Route> routes; 
+	protected ArrayList<Route> routes; 
 
 	/**
 	 * Colección de Track's del GpxDocument
 	 */
-	ArrayList<Track> tracks;
+	protected ArrayList<Track> tracks;
 	
 	// FIXME Falta el elemento <extensions>
+
+	/**
+	 * Constructor de clase. Inicializa las colecciones.
+	 */
+	public GpxDocument() {		
+		this.metadata= new Metadata();
+		this.routes = new ArrayList<Route>();
+		this.tracks = new ArrayList<Track>();
+		this.wpts = new ArrayList<WayPoint>();
+	}
 
 	public Document getDoc() {
 		return doc;
@@ -126,16 +136,6 @@ public class GpxDocument  extends GpxElement {
 	}
 
 	/**
-	 * Constructor de clase. Inicializa las colecciones.
-	 */
-	public GpxDocument() {		
-		this.metadata= new Metadata();
-		this.routes = new ArrayList<Route>();
-		this.tracks = new ArrayList<Track>();
-		this.wpts = new ArrayList<WayPoint>();
-	}
-
-	/**
 	 * Añade un track a la colección de tracks del GpxDocument
 	 * @param track Track que se quiere añadir
 	 */
@@ -174,8 +174,8 @@ public class GpxDocument  extends GpxElement {
 		return this.routes.size();
 	}
 	/**
-	 * 
-	 * @return Cadena gpx del documento
+	 * Devuelve una cadena con el documento xml
+	 * @return Cadena gpx del documento, incluso cabecera xml
 	 */
 	@Override
 	public String asGpx() {
@@ -270,6 +270,14 @@ public class GpxDocument  extends GpxElement {
 	}
 	
 	/**
+	 * 
+	 */
+	public static GpxElement parseGpxString(String cadgpx) {
+		GpxDocument gpxdoc = parseGpxDocument(cadgpx);		
+		return gpxdoc;
+	}
+	
+	/**
 	 * Parsea un documento de texto gpx
 	 * @param gpxcad
 	 * @return
@@ -294,27 +302,28 @@ public class GpxDocument  extends GpxElement {
 		}
 		//Element gpx=doc.getDocumentElement();
 		
-		// TODO Procesar metadata
-		// TODO Procesar nodos WPT
+		// FIXME Procesar metadata
+		
+		// Procesar nodos WayPoint
 		NodeList nl=doc.getElementsByTagName("wpt");
 		for(int i=0; i< nl.getLength(); i++) {
-			WayPoint wp= WayPoint.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+			WayPoint wp= WayPoint.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
 			if(wp!=null) {
 				gpxDocument.addWayPoint(wp);
 			}
 		}
-		// TODO Procesar nodos RTE
+		// Procesar nodos RTE
 		nl=doc.getElementsByTagName("rte");
 		for(int i=0; i< nl.getLength(); i++) {
-			Route rte= Route.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+			Route rte= Route.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
 			if(rte!=null) {
 				gpxDocument.addRoute(rte);
 			}
 		}
-		// TODO Procesar nodos TRK
+		// Procesar nodos TRK
 		nl=doc.getElementsByTagName("trk");
 		for(int i=0; i< nl.getLength(); i++) {
-			Track trk= Track.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+			Track trk= Track.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
 			if(trk!=null) {
 				gpxDocument.addTrack(trk);
 			}
@@ -325,13 +334,18 @@ public class GpxDocument  extends GpxElement {
 		return gpxDocument;
 	}
 	
-	public static String nodeAsString(Node node) {
+	/**
+	 * Convierte un Node xml en una cadena de texto
+	 * @param node org.w3c.dom.Node con el xml
+	 * @return String con la cadena xml del Node sin cabecera xml
+	 */
+	public static String nodeAsString(Node node, boolean withDeclaration) {
 		String xmlString="";
 		try	{
 			// Set up the output transformer
 			TransformerFactory transfac = TransformerFactory.newInstance();
 			Transformer trans = transfac.newTransformer();
-			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, Boolean.toString(withDeclaration));
 			trans.setOutputProperty(OutputKeys.INDENT, "yes");
 			// Print the DOM node
 			StringWriter sw = new StringWriter();

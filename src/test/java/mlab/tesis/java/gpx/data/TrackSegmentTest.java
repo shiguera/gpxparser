@@ -46,7 +46,7 @@ public class TrackSegmentTest extends TestCase {
 		
 		String cadgpx=ts.asGpx();
 		
-		TrackSegment parsed=TrackSegment.parseGpx(cadgpx);
+		TrackSegment parsed=TrackSegment.parseGpxString(cadgpx);
 		assertNotNull(parsed);
 		assertEquals(3,parsed.wayPointCount());
 		

@@ -29,7 +29,7 @@ public class RouteTest extends TestCase {
 		logger.info(String.format("%d", rte.addWayPoint(tp3)));
 		assertEquals(3,rte.size());
 		
-		Route parsed=Route.parseGpx(rte.asGpx());
+		Route parsed=Route.parseGpxString(rte.asGpx());
 		assertNotNull(parsed);
 		assertEquals(3,parsed.size());
 		

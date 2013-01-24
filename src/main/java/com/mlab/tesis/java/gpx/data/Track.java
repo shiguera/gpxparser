@@ -274,7 +274,7 @@ public class Track  extends GpxElement {
 	}
 
 	// FIXME implementar método static parseGpx() 
-	public static Track parseGpx(String cadgpx) {
+	public static Track parseGpxString(String cadgpx) {
 		Track t= new Track();
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -297,7 +297,7 @@ public class Track  extends GpxElement {
 		if(nl.getLength()>0) {
 			for (int i=0; i<nl.getLength(); i++) {
 				try {
-					TrackSegment ts = TrackSegment.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+					TrackSegment ts = TrackSegment.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
 					if(ts!=null) {
 						t.addTrackSegment(ts);
 					}

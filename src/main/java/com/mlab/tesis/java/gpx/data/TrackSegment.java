@@ -114,7 +114,7 @@ public class TrackSegment  extends GpxElement {
 		return cad;
 	}
 
-	public static TrackSegment parseGpx(String cadgpx) {
+	public static TrackSegment parseGpxString(String cadgpx) {
 		TrackSegment ts= new TrackSegment();
 
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -137,7 +137,7 @@ public class TrackSegment  extends GpxElement {
 		if(nl.getLength()>0) {
 			for (int i=0; i<nl.getLength(); i++) {
 				try {
-					WayPoint wp= WayPoint.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+					WayPoint wp= WayPoint.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
 					if(wp!=null) {
 						ts.addWayPoint(wp);
 					}
