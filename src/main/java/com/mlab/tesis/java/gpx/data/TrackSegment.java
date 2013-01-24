@@ -27,11 +27,11 @@ import com.mlab.tesis.java.tserie.TSerie;
  * */
 public class TrackSegment  extends GpxElement {
 	
-	private TSerie pts;
+	private TSerie tSerie;
 	
 	public TrackSegment() {
 		// (lon,lat,alt,vel,rumbo,accuracy)
-		pts=new TSerie(6);
+		tSerie=new TSerie(6);
 		
 	}
 	/**
@@ -44,13 +44,13 @@ public class TrackSegment  extends GpxElement {
 	 */
 	public boolean addWayPoint(WayPoint wp) {
 		int last=0;
-		if(this.pts.size()>0) {
-			last=this.pts.size()-1;
-			if(wp.time <= this.pts.time(last)) {
+		if(this.tSerie.size()>0) {
+			last=this.tSerie.size()-1;
+			if(wp.time <= this.tSerie.time(last)) {
 				return false;
 			}
 		}
-		this.pts.add(wp.time, wp.getValues());
+		this.tSerie.add(wp.time, wp.getValues());
 		return true;
 	}
 	
@@ -60,8 +60,8 @@ public class TrackSegment  extends GpxElement {
 	 */
 	public long getFirstTime() {
 		long t=-1l;
-		if(pts.size()>0) {
-			t=pts.time(0);
+		if(tSerie.size()>0) {
+			t=tSerie.time(0);
 		}
 		return t;
 	}
@@ -72,13 +72,24 @@ public class TrackSegment  extends GpxElement {
 	 */
 	public long getLastTime() {
 		long t=-1l;
-		if(pts.size()>0) {
-			t=pts.time(pts.size()-1);
+		if(tSerie.size()>0) {
+			t=tSerie.time(tSerie.size()-1);
 		}
 		return t;
 	}
 	public int wayPointCount() {
-		return this.pts.size();
+		return this.tSerie.size();
+	}
+	/**
+	 * Devuelve un double con los valores de 
+	 * [lon,lat,alt,vel,rumbo,acc] interpolados para ese tiempo
+	 * @param time tiempo en milisegundos UTC de los valores solicitados
+	 * @return double[] [lon,lt,alt,vel,rumbo,acc] con los valores interpolados.<p>
+	 * Si el tiempo es menor que el primero del trkseg o mayor
+	 * que el último del trkseg devuelve null
+	 */
+	public double[] getValues(long time) {
+		return this.tSerie.values(time);
 	}
 	
 	/**
@@ -88,10 +99,10 @@ public class TrackSegment  extends GpxElement {
 	public String asGpx() {
 		String cad="<trkseg>";
 		// Comprobar que hay algún WayPoint
-		if(pts.size()>0) {
-			for(int i=0;i<this.pts.size(); i++) {
-				long time=this.pts.time(i);
-				double[] values=this.pts.values(i);
+		if(tSerie.size()>0) {
+			for(int i=0;i<this.tSerie.size(); i++) {
+				long time=this.tSerie.time(i);
+				double[] values=this.tSerie.values(i);
 				WayPoint wp= WayPoint.fromValues(time, values);
 				if(wp!=null) {
 					wp.TAG = "trkpt";
@@ -139,6 +150,6 @@ public class TrackSegment  extends GpxElement {
 		return ts;
 	}
 	public int size() {
-		return this.pts.size();
+		return this.tSerie.size();
 	}
 }

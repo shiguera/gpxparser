@@ -85,6 +85,46 @@ public class GpxDocument  extends GpxElement {
 	
 	// FIXME Falta el elemento <extensions>
 
+	public Document getDoc() {
+		return doc;
+	}
+
+	public void setDoc(Document doc) {
+		this.doc = doc;
+	}
+
+	public Metadata getMetadata() {
+		return metadata;
+	}
+
+	public void setMetadata(Metadata metadata) {
+		this.metadata = metadata;
+	}
+
+	public ArrayList<WayPoint> getWpts() {
+		return wpts;
+	}
+
+	public void setWpts(ArrayList<WayPoint> wpts) {
+		this.wpts = wpts;
+	}
+
+	public ArrayList<Route> getRoutes() {
+		return routes;
+	}
+
+	public void setRoutes(ArrayList<Route> routes) {
+		this.routes = routes;
+	}
+
+	public ArrayList<Track> getTracks() {
+		return tracks;
+	}
+
+	public void setTracks(ArrayList<Track> tracks) {
+		this.tracks = tracks;
+	}
+
 	/**
 	 * Constructor de clase. Inicializa las colecciones.
 	 */
@@ -181,14 +221,13 @@ public class GpxDocument  extends GpxElement {
         	DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS", "3.0");
         	LSSerializer lsSerializer = implLS.createLSSerializer();
         	lsSerializer.getDomConfig().setParameter("format-pretty-print", true);
-
+			
         	LSOutput lsOutput = implLS.createLSOutput();
         	lsOutput.setEncoding("UTF-8");
         	Writer stringWriter = new StringWriter();
         	lsOutput.setCharacterStream(stringWriter);
         	lsSerializer.write(document, lsOutput);
-        	 
-        	String result = stringWriter.toString();             
+        	String result = stringWriter.toString(); 
             return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -209,7 +248,7 @@ public class GpxDocument  extends GpxElement {
 	 *            String Cadena de texto a escribir
 	 * @return 1 si todo va bien, negativo o cero en caso contrario
 	 */
-	public int write(String filename, String cad) {
+	public static int write(String filename, String cad) {
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(filename));
@@ -273,6 +312,13 @@ public class GpxDocument  extends GpxElement {
 			}
 		}
 		// TODO Procesar nodos TRK
+		nl=doc.getElementsByTagName("trk");
+		for(int i=0; i< nl.getLength(); i++) {
+			Track trk= Track.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+			if(trk!=null) {
+				gpxDocument.addTrack(trk);
+			}
+		}
 		
 		// TODO Procesar nodos Extensions
 

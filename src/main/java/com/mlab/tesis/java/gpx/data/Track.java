@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 /**
  * La clase Track guarda un track de un documento GpxDocument. Básicamente consiste
@@ -137,7 +138,7 @@ public class Track  extends GpxElement {
 	public void setNumber(int number) {
 		this.number = number;
 	}
-
+	
 	/**
 	 * @return the type
 	 */
@@ -232,6 +233,27 @@ public class Track  extends GpxElement {
 		return true;
 	}
 	
+	
+	/**
+	 * Devuelve un double con los valores de 
+	 * [lon,lat,alt,vel,rumbo,acc] interpolados para ese tiempo
+	 * @param time tiempo en milisegundos UTC de los valores solicitados
+	 * @return double[] [lon,lt,alt,vel,rumbo,acc] con los valores interpolados.<p>
+	 * Si el tiempo es menor que el primer WayPoint del trk o mayor
+	 * que el último devuelve null
+	 */
+	public double[] getValues(long time) {
+		double[] result=null;
+		if(this.segments.size()>0) {
+			for(int i=0; i<segments.size(); i++) {
+				if(time>=segments.get(i).getFirstTime() && time<=segments.get(i).getLastTime()) {
+					result=segments.get(i).getValues(time);
+				}
+			}
+		}
+		return result;
+	}
+	
 	public Element asElement() {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder=null;
@@ -252,4 +274,40 @@ public class Track  extends GpxElement {
 	}
 
 	// FIXME implementar método static parseGpx() 
+	public static Track parseGpx(String cadgpx) {
+		Track t= new Track();
+
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder=null;
+		InputStream is = null;
+		Document doc = null;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+		    is = new ByteArrayInputStream(cadgpx.getBytes("UTF-8"));
+		    doc = dBuilder.parse(is);	
+			doc.getDocumentElement().normalize();
+		} catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+		if(doc.getDocumentElement().getNodeName().equalsIgnoreCase("trk")==false) {
+			return null;
+		}
+		NodeList nl=doc.getElementsByTagName("trkseg");
+		if(nl.getLength()>0) {
+			for (int i=0; i<nl.getLength(); i++) {
+				try {
+					TrackSegment ts = TrackSegment.parseGpx(GpxDocument.nodeAsString(nl.item(i)));
+					if(ts!=null) {
+						t.addTrackSegment(ts);
+					}
+				} catch (Exception e) {
+		            e.printStackTrace();
+					return null;
+				}
+			}
+		}
+		return t;
+	}
+
 }
