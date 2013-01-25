@@ -258,7 +258,7 @@ public class WayPoint  extends GpxElement {
 			cad += "<time>"+cadate+"</time>";		
 		}		 
 		// name
-		if(this.name.isEmpty()==false) {
+		if(this.name.isEmpty() == false) {
 			cad += "<name>"+this.name+"</name>";
 		}
 		// deac

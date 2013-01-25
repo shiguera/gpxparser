@@ -1,4 +1,4 @@
-package mlab.tesis.java.gpx.data;
+package com.mlab.tesis.java.gpx.data.test;
 
 
 import org.slf4j.Logger;

@@ -1,4 +1,4 @@
-package mlab.tesis.java.gpx.data;
+package com.mlab.tesis.java.gpx.data.test;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -51,7 +51,6 @@ public class GpxDocumentTest extends TestCase {
 		gpxdoc = buildGpxdoc();
 		String cadxml=this.gpxdoc.asGpx();
 		assertNotNull(cadxml);
-		logger.info("\n"+GpxDocument.format(cadxml));			
 	}
 
 	public void testNodeAsString() {
@@ -86,6 +85,8 @@ public class GpxDocumentTest extends TestCase {
 		
 			assertEquals(2,parsed.wayPointCount());
 			assertEquals(1,this.gpxdoc.trackCount());		
+			logger.info("\n"+GpxDocument.format(cadgpx));			
+
 		} else {
 			// Error en el constructor, no aquí
 			this.logger.info("parseGpxString(): Error en el constructor, no aquí");

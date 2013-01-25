@@ -1,4 +1,4 @@
-package mlab.tesis.java;
+package com.mlab.tesis.java.gpx.data.test;
 
 import junit.framework.Test;
 import junit.framework.TestCase;

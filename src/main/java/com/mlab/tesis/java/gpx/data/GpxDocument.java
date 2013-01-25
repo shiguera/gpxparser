@@ -3,16 +3,20 @@ import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Properties;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -59,6 +63,7 @@ public class GpxDocument  extends GpxElement {
 		"xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\" "+
 		"xmlns:mlab=\"http://mercatorlab.com/downloads/mlab.xsd\">";
 	final String footer="</gpx>";
+	final static int XMLFORMAT_INDENT = 3;
 	
 	/**
 	 * DOM Document tipo gpx
@@ -96,6 +101,7 @@ public class GpxDocument  extends GpxElement {
 	}
 
 	public Document getDoc() {
+		doc = GpxDocument.parseXmlDocument(this.asGpx());
 		return doc;
 	}
 
@@ -179,7 +185,6 @@ public class GpxDocument  extends GpxElement {
 	 */
 	@Override
 	public String asGpx() {
-
 		String cad = "";
 		cad += head;
 		
@@ -190,11 +195,14 @@ public class GpxDocument  extends GpxElement {
 				cad += this.wpts.get(i).asGpx();
 			}
 		}
+
 		if(this.routes.size()>0) {
 			for(int i=0; i<this.routes.size(); i++) {
 				cad += this.routes.get(i).asGpx();
 			}
 		}
+		System.out.println(cad);
+
 		if(this.tracks.size()>0) {
 			for(int i=0; i<this.tracks.size(); i++) {
 				cad += this.tracks.get(i).asGpx();
@@ -207,32 +215,68 @@ public class GpxDocument  extends GpxElement {
 		return cad;
 	}
 	
+//	/**
+//	 * Formatea una cadena xml con cambios de linea y tabulaciones. 
+//	 * Añade la cabecera de documento
+//	 * @param cadxml cadena xml que se quiere formatear
+//	 * @return Cadena formateada
+//	 */
+//	public static String format-old(String cadxml) {
+//		try {
+//			if(true) {
+//        		return cadxml;
+//        	}
+//        	final InputSource src = new InputSource(new StringReader(cadxml));
+//        	final Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);        	
+//        	DOMImplementation impl = document.getImplementation();
+//        	DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS", "3.0");
+//        	LSSerializer lsSerializer = implLS.createLSSerializer();
+//        	lsSerializer.getDomConfig().setParameter("format-pretty-print", true);
+//			
+//        	LSOutput lsOutput = implLS.createLSOutput();
+//        	
+//        	lsOutput.setEncoding("UTF-8");
+//        	Writer stringWriter = new StringWriter();
+//        	lsOutput.setCharacterStream(stringWriter);
+//        	lsSerializer.write(document, lsOutput);
+//        	String result = stringWriter.toString(); 
+//            return result;
+//        } catch (Exception e) {
+//            throw new RuntimeException(e);
+//        }
+//	}
+
 	/**
 	 * Formatea una cadena xml con cambios de linea y tabulaciones. 
 	 * Añade la cabecera de documento
-	 * @param xml cadena xml que se quiere formatear
+	 * @param cadxml cadena xml que se quiere formatear
 	 * @return Cadena formateada
 	 */
-	public static String format(String xml) {
-		try {
-        	final InputSource src = new InputSource(new StringReader(xml));
-        	final Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(src);        	
-        	DOMImplementation impl = document.getImplementation();
-        	DOMImplementationLS implLS = (DOMImplementationLS) impl.getFeature("LS", "3.0");
-        	LSSerializer lsSerializer = implLS.createLSSerializer();
-        	lsSerializer.getDomConfig().setParameter("format-pretty-print", true);
+	public static String format(String cadxml) {
+		String xmlString="";
+		Document node = GpxDocument.parseXmlDocument(cadxml);
+		try	{
+			// Set up the output transformer
+			TransformerFactory transfac = TransformerFactory.newInstance();
+			Transformer trans = transfac.newTransformer();
+			trans.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "no");
+			trans.setOutputProperty(OutputKeys.INDENT, "yes");
+			trans.setOutputProperty("{http://xml.apache.org/xslt}indent-amount",
+					String.format("%d", XMLFORMAT_INDENT));
+			// Print the DOM node
+			StringWriter sw = new StringWriter();
+			StreamResult result = new StreamResult(sw);
 			
-        	LSOutput lsOutput = implLS.createLSOutput();
-        	lsOutput.setEncoding("UTF-8");
-        	Writer stringWriter = new StringWriter();
-        	lsOutput.setCharacterStream(stringWriter);
-        	lsSerializer.write(document, lsOutput);
-        	String result = stringWriter.toString(); 
-            return result;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+			DOMSource source = new DOMSource(node);
+			trans.transform(source, result);
+			xmlString = sw.toString();
+		} catch (TransformerException e) {
+			e.printStackTrace();
+		}
+		return xmlString;
 	}
+
+    
 	
 	public String format() {
 		String xml=this.asGpx();
@@ -278,29 +322,18 @@ public class GpxDocument  extends GpxElement {
 	}
 	
 	/**
-	 * Parsea un documento de texto gpx
-	 * @param gpxcad
-	 * @return
+	 * Parsea un documento de texto gpx a GpxDocument
+	 * @param cadgpx
+	 * @return GpxDocument 
 	 */
 	public static GpxDocument parseGpxDocument(String cadgpx) {
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder=null;
-		InputStream is = null;
-		Document doc = null;
-		GpxDocument gpxDocument=new GpxDocument();
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-		    is = new ByteArrayInputStream(cadgpx.getBytes("UTF-8"));
-		    doc = dBuilder.parse(is);	
-			doc.getDocumentElement().normalize();
-		} catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+		Document doc= GpxDocument.parseXmlDocument(cadgpx);
 		if(doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {
 			return null;
 		}
 		//Element gpx=doc.getDocumentElement();
+		
+		GpxDocument gpxDocument = new GpxDocument();
 		
 		// FIXME Procesar metadata
 		
@@ -332,6 +365,25 @@ public class GpxDocument  extends GpxElement {
 		// TODO Procesar nodos Extensions
 
 		return gpxDocument;
+	}
+	
+	public static Document parseXmlDocument(String cadxml) {
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder=null;
+		InputSource is = null;
+		Document doc = null;
+		try {
+			dBuilder = dbFactory.newDocumentBuilder();
+		    is = new InputSource();
+			is.setCharacterStream(new StringReader(cadxml));
+		    doc = dBuilder.parse(is);	
+			doc.getDocumentElement().normalize();
+		} catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+		
+		return doc;
 	}
 	
 	/**
