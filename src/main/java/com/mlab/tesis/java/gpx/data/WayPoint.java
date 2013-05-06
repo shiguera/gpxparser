@@ -27,7 +27,8 @@ import org.w3c.dom.NodeList;
  * @author shiguera
  *
  */
-public class WayPoint  extends GpxElement {
+public class WayPoint  extends AbstractWpt {
+
 	/**
 	 * Tiempo en milisegundos desde 1 Enero 1970 en horario UTC. 
 	 * Cuando no se dispone del dato
@@ -81,6 +82,7 @@ public class WayPoint  extends GpxElement {
 	 */
 	public String TAG="wpt";
 	
+	
 	/**
 	 * Constructor de un objeto WayPoint
 	 * @param time Long Tiempo en milisegundos desde el 
@@ -120,7 +122,7 @@ public class WayPoint  extends GpxElement {
 	 * @return Devuelve el WayPoint creado o null si hay errores
 	 */	
 	public static WayPoint fromValues(long t, double[] values) {
-		if(values.length != 6) {
+		if(values==null || values.length != 6) {
 			return null;
 		}
 		WayPoint wp= new WayPoint("","",t, values[0],values[1],
@@ -303,76 +305,105 @@ public class WayPoint  extends GpxElement {
 		return val;
 	}
 	
+	@Override
 	public long getTime() {
 		return time;
 	}
 
+	@Override
 	public void setTime(long time) {
 		this.time = time;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	@Override
 	public String getDescription() {
 		return description;
 	}
 
+	@Override
 	public void setDescription(String description) {
 		this.description = description;
 	}
 
+	@Override
 	public double getLongitude() {
 		return longitude;
 	}
 
+	@Override
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 
+	@Override
 	public double getLatitude() {
 		return latitude;
 	}
 
+	@Override
 	public void setLatitude(double latitude) {
 		this.latitude = latitude;
 	}
-
+	
+	@Override
 	public double getAltitude() {
 		return altitude;
 	}
 
+	@Override
 	public void setAltitude(double altitude) {
 		this.altitude = altitude;
 	}
 
+	@Override
 	public double getBearing() {
 		return bearing;
 	}
 
+	@Override
 	public void setBearing(double bearing) {
 		this.bearing = bearing;
 	}
 
+	@Override
 	public double getSpeed() {
 		return speed;
 	}
 
+	@Override
 	public void setSpeed(double speed) {
 		this.speed = speed;
 	}
 
+	@Override
 	public double getAccuracy() {
 		return accuracy;
 	}
 
+	@Override
 	public void setAccuracy(double accuracy) {
 		this.accuracy = accuracy;
+	}
+
+	@Override
+	public String getTAG() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setTAG(String tAG) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

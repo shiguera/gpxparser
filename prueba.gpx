@@ -1,21 +1,18 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gpx creator="MercatorLab - http:mercatorlab.com" version="1.1"
-    xmlns="http://www.topografix.com/GPX/1/1"
-    xmlns:mlab="http://mercatorlab.com/downloads/mlab.xsd"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
-    <metadata/>
-    <trk>
-        <number>0</number>
-        <trkseg>
-            <trkpt lat="42.500000" lon="-3.800000">
-                <ele>900.00</ele>
-                <time>2012-12-13T21:42:37.37Z</time>
-                <extensions>
-                    <mlab:bearing>123.20</mlab:bearing>
-                    <mlab:speed>23.70</mlab:speed>
-                </extensions>
-            </trkpt>
-        </trkseg>
-    </trk>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<gpx xmlns="http://www.topografix.com/GPX/1/1" xmlns:mlab="http://mercatorlab.com/downloads/mlab.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" creator="MercatorLab - http:mercatorlab.com" version="1.1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+   <metadata/>
+   <trk>
+      <number>0</number>
+      <trkseg>
+         <trkpt lat="42.500000" lon="-3.800000">
+            <ele>900.00</ele>
+            <time>2013-04-28T19:15:20.20Z</time>
+            <extensions>
+               <mlab:bearing>123.20</mlab:bearing>
+               <mlab:speed>23.70</mlab:speed>
+            </extensions>
+         </trkpt>
+      </trkseg>
+   </trk>
 </gpx>
 

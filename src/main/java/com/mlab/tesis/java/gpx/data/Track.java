@@ -224,8 +224,8 @@ public class Track  extends GpxElement {
 	 */
 	public boolean addTrackSegment(TrackSegment ts) {
 		if(segments.size()>0) {
-			long last = segments.get(segments.size()-1).getLastTime();
-			if(ts.getLastTime() <= last) {
+			long last = segments.get(segments.size()-1).getEndTime();
+			if(ts.getEndTime() <= last) {
 				return false;
 			}
 		}
@@ -246,7 +246,7 @@ public class Track  extends GpxElement {
 		double[] result=null;
 		if(this.segments.size()>0) {
 			for(int i=0; i<segments.size(); i++) {
-				if(time>=segments.get(i).getFirstTime() && time<=segments.get(i).getLastTime()) {
+				if(time>=segments.get(i).getStartTime() && time<=segments.get(i).getEndTime()) {
 					result=segments.get(i).getValues(time);
 				}
 			}
@@ -254,6 +254,83 @@ public class Track  extends GpxElement {
 		return result;
 	}
 	
+	public long getStartTime() {
+		long startTime = -1l;
+		if(this.segments.size()>0) {
+			startTime = this.segments.get(0).getStartTime();
+		}
+		return startTime;
+	}
+
+	public long getEndTime() {
+		long lastTime = -1l;
+		if(this.segments.size()>0) {
+			int ultimo = this.segments.size()-1;
+			lastTime = this.segments.get(ultimo).getEndTime();
+		}
+		return lastTime;
+	}
+
+	public double[] getStartValues() {
+		return getValues(getStartTime());
+	}
+	public double[] getEndValues() {
+		return getValues(getEndTime());
+	}
+	
+	public WayPoint getStartWayPoint() {
+		WayPoint waypoint = null;
+		if(this.segments.size()>0) {
+			waypoint = this.segments.get(0).getStartWayPoint();
+		}
+		return waypoint;
+	}
+	
+	public WayPoint getEndWayPoint() {
+		WayPoint waypoint = null;
+		if(this.segments.size()>0) {
+			int ultimo = this.segments.size()-1;
+			waypoint = this.segments.get(ultimo).getEndWayPoint();
+		}
+		return waypoint;
+	}
+	/**
+	 * Devuelve [minx, miny, maxx, maxy]
+	 * @return
+	 */
+	public double[] getBounds() {
+		double[] result = null;
+		if(this.segments.size()>0) {
+			WayPoint p = getStartWayPoint();
+			double minx = p.longitude;
+			double maxx = minx;
+			double miny = p.latitude;
+			double maxy = miny;
+			for (int i=0; i<segments.size(); i++) {
+				for(int j=0; j<segments.get(i).size(); j++) {
+					p = segments.get(i).getWpts().get(j);
+					double x = p.getLongitude();
+					double y = p.getLatitude();
+					if(x<minx) {
+						minx=x;
+					}
+					if(x>maxx) {
+						maxx=x;
+					}
+					if(y<miny) {
+						miny=y;
+					}
+					if(y>maxy) {
+						maxy=y;
+					}
+				}
+			}
+			result = new double[]{minx,miny,maxx,maxy};
+		}
+		return result;
+	}
+
+
 	public Element asElement() {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder=null;

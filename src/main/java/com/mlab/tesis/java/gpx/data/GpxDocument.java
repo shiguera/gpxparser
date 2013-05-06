@@ -56,13 +56,13 @@ import org.xml.sax.InputSource;
  */
 public class GpxDocument  extends GpxElement {	
 	
-	final String head="<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
+	final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
 		"<gpx version=\"1.1\" creator=\"MercatorLab - http:mercatorlab.com\" "+
 		"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" "+
 		"xmlns=\"http://www.topografix.com/GPX/1/1\" "+
 		"xsi:schemaLocation=\"http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd\" "+
 		"xmlns:mlab=\"http://mercatorlab.com/downloads/mlab.xsd\">";
-	final String footer="</gpx>";
+	final String FOOTER = "</gpx>";
 	final static int XMLFORMAT_INDENT = 3;
 	
 	/**
@@ -186,7 +186,7 @@ public class GpxDocument  extends GpxElement {
 	@Override
 	public String asGpx() {
 		String cad = "";
-		cad += head;
+		cad += HEAD;
 		
 		cad += this.metadata.asGpx();
 		
@@ -211,7 +211,7 @@ public class GpxDocument  extends GpxElement {
 		
 		// FIXME Falta resolver el elemento <extensions>
 
-		cad += footer;
+		cad += FOOTER;
 		return cad;
 	}
 	
@@ -246,6 +246,8 @@ public class GpxDocument  extends GpxElement {
 //        }
 //	}
 
+	
+	
 	/**
 	 * Formatea una cadena xml con cambios de linea y tabulaciones. 
 	 * Añade la cabecera de documento
@@ -275,8 +277,6 @@ public class GpxDocument  extends GpxElement {
 		}
 		return xmlString;
 	}
-
-    
 	
 	public String format() {
 		String xml=this.asGpx();

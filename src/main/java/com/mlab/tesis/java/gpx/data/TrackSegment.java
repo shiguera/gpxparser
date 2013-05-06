@@ -2,6 +2,8 @@ package com.mlab.tesis.java.gpx.data;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -28,10 +30,12 @@ import com.mlab.tesis.java.tserie.TSerie;
 public class TrackSegment  extends GpxElement {
 	
 	private TSerie tSerie;
+	private ArrayList<WayPoint> wpts;
 	
 	public TrackSegment() {
 		// (lon,lat,alt,vel,rumbo,accuracy)
 		tSerie=new TSerie(6);
+		wpts= new ArrayList<WayPoint>();
 		
 	}
 	/**
@@ -51,14 +55,35 @@ public class TrackSegment  extends GpxElement {
 			}
 		}
 		this.tSerie.add(wp.time, wp.getValues());
+		this.wpts.add(wp);
 		return true;
 	}
+	/**
+	 * Proporciona acceso al ArrayList de WayPoint
+	 * @return Devuelve una referencia al ArrayList de WayPoint
+	 */
+	public ArrayList<WayPoint> getWpts() {
+		return wpts;
+	}
 	
+	/**
+	 * Da acceso directo a los WayPoint's del segmento
+	 * @param index índice del WayPoint buscado
+	 * @return WayPoint o null
+	 */
+	public WayPoint getWayPoint(int index) {
+		WayPoint pt=null;
+		if(index>=0 && index < this.wpts.size()) {
+			pt = this.wpts.get(index);
+		}
+		return pt;
+	}
+
 	/**
 	 * Devuelve el tiempo correspondiente al primer WayPoint del TrackSegment
 	 * @return long Tiempo del primer WayPoint del TrackSegment
 	 */
-	public long getFirstTime() {
+	public long getStartTime() {
 		long t=-1l;
 		if(tSerie.size()>0) {
 			t=tSerie.time(0);
@@ -70,13 +95,38 @@ public class TrackSegment  extends GpxElement {
 	 * Devuelve el tiempo correspondiente al último WayPoint del TrackSegment
 	 * @return long Tiempo del último WayPoint del TrackSegment
 	 */
-	public long getLastTime() {
+	public long getEndTime() {
 		long t=-1l;
 		if(tSerie.size()>0) {
 			t=tSerie.time(tSerie.size()-1);
 		}
 		return t;
 	}
+	/**
+	 * Devuelve el primer WayPoint del segmento
+	 * @return
+	 */
+	public WayPoint getStartWayPoint() {
+		long starttime = getStartTime();
+		double[] values = getValues(starttime);
+		WayPoint wp = WayPoint.fromValues(starttime, values);
+		return wp;
+	}
+	/**
+	 * Devuelve el ultimo WayPoint del segmento o nulo
+	 * @return
+	 */
+	public WayPoint getEndWayPoint() {
+		long endtime = getEndTime();
+		double[] values = getValues(endtime);
+		WayPoint wp = WayPoint.fromValues(endtime, values);
+		return wp;
+	}
+
+	/**
+	 * Devuelve el número de puntos en el segmento
+	 * @return
+	 */
 	public int wayPointCount() {
 		return this.tSerie.size();
 	}
