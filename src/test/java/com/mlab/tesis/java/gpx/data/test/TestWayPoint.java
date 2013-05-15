@@ -4,11 +4,12 @@ package com.mlab.tesis.java.gpx.data.test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 
 import junit.framework.TestCase;
 
-public class WayPointTest extends TestCase {
+public class TestWayPoint extends TestCase {
 
 	Logger logger=LoggerFactory.getLogger(getClass());
 	
@@ -17,12 +18,12 @@ public class WayPointTest extends TestCase {
 		logger.warn("TESTING WayPoint constructor");
 
 		long t=System.currentTimeMillis();
-		WayPoint tp= new WayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
 		assertNotNull(tp);
 		//logger.info("\n"+tp.asGpx());		
 		
 		t=System.currentTimeMillis();
-		WayPoint tp2= new WayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
 		assertNotNull(tp2);
 		//logger.info("\n"+tp2.asGpx());		
 
@@ -33,15 +34,21 @@ public class WayPointTest extends TestCase {
 		
 		// Crear una instancia de TrackPoint para generar una cadena gpx con la que probar el parse
 		long t=System.currentTimeMillis();
-		WayPoint tp= new WayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
 		String cadgpx=tp.asGpx();
+		//System.out.println(GpxFactory.format(cadgpx));
 		
 		// Generar un TrackPoint parseando una cadena gpx y comprobar que no es nulo
-		WayPoint parsedPoint=WayPoint.parseGpxString(cadgpx);
+		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
+		SimpleWayPoint parsedPoint = (SimpleWayPoint)factory.parseWpt(cadgpx);
 		assertNotNull(parsedPoint);
 		//logger.info("\n"+parsedPoint.asGpx());		
 
 		// Comprobar que el TrackPoint del constructor tp y el parsedPoint tienen la misma cadena gpx 
+		//System.out.println(tp.asGpx());
+		//System.out.println("-----------------");
+		//System.out.println(parsedPoint.asGpx());
+		
 		assertEquals(tp.asGpx(), parsedPoint.asGpx());
 		
 	}

@@ -1,15 +1,7 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
+import java.util.concurrent.ExecutionException;
 
 import com.mlab.tesis.java.tserie.TSerie;
 
@@ -27,54 +19,53 @@ import com.mlab.tesis.java.tserie.TSerie;
  * }
  * </pre>
  * */
-public class TrackSegment  extends GpxElement {
+public class TrackSegment  implements GpxElement {
 	
-	private TSerie tSerie;
-	private ArrayList<WayPoint> wpts;
+	private ArrayList<GpxNode> wpts;
+	private TSerie tserie;
 	
 	public TrackSegment() {
 		// (lon,lat,alt,vel,rumbo,accuracy)
-		tSerie=new TSerie(6);
-		wpts= new ArrayList<WayPoint>();
+		//tSerie=new TTSerie(6);
+		tserie = new TSerie();
+		wpts= new ArrayList<GpxNode>();
 		
 	}
 	/**
-	 * Añade un WayPoint al final de la TSerie que contiene
-	 * la lista de WayPoint del TrackSegment. Si el tiempo del 
-	 * WayPoint que se quiere añadir es menor o igual que el
+	 * Añade un AbstractWpt al final de la TSerie que contiene
+	 * la lista de AbstractWpt del TrackSegment. Si el tiempo del 
+	 * AbstractWpt que se quiere añadir es menor o igual que el
 	 * último tiempo de la TSerie no se añade y se devuelve false
-	 * @param wp WayPoint que se quiere añadir al TrackSegment
+	 * @param wp AbstractWpt que se quiere añadir al TrackSegment
 	 * @return boolean true si se añade y false si no se añade
 	 */
 	public boolean addWayPoint(WayPoint wp) {
-		int last=0;
-		if(this.tSerie.size()>0) {
-			last=this.tSerie.size()-1;
-			if(wp.time <= this.tSerie.time(last)) {
-				return false;
-			}
+		boolean result = false;
+		if(this.tserie.canAdd(wp.getTime(), wp.getValues())) {
+			result = this.tserie.add(wp.getTime(), wp.getValues());
+			if(result) {
+				result = this.wpts.add(wp);
+			} 
 		}
-		this.tSerie.add(wp.time, wp.getValues());
-		this.wpts.add(wp);
-		return true;
+		return result;
 	}
 	/**
 	 * Proporciona acceso al ArrayList de WayPoint
 	 * @return Devuelve una referencia al ArrayList de WayPoint
 	 */
-	public ArrayList<WayPoint> getWpts() {
+	public ArrayList<GpxNode> getWpts() {
 		return wpts;
 	}
 	
 	/**
-	 * Da acceso directo a los WayPoint's del segmento
-	 * @param index índice del WayPoint buscado
-	 * @return WayPoint o null
+	 * Da acceso directo a los AbstractWpt's del segmento
+	 * @param index índice del AbstractWpt buscado
+	 * @return AbstractWpt o null
 	 */
 	public WayPoint getWayPoint(int index) {
 		WayPoint pt=null;
 		if(index>=0 && index < this.wpts.size()) {
-			pt = this.wpts.get(index);
+			pt = (WayPoint)this.wpts.get(index);
 		}
 		return pt;
 	}
@@ -84,11 +75,7 @@ public class TrackSegment  extends GpxElement {
 	 * @return long Tiempo del primer WayPoint del TrackSegment
 	 */
 	public long getStartTime() {
-		long t=-1l;
-		if(tSerie.size()>0) {
-			t=tSerie.time(0);
-		}
-		return t;
+		return this.tserie.firsTime();
 	}
 	
 	/**
@@ -96,31 +83,29 @@ public class TrackSegment  extends GpxElement {
 	 * @return long Tiempo del último WayPoint del TrackSegment
 	 */
 	public long getEndTime() {
-		long t=-1l;
-		if(tSerie.size()>0) {
-			t=tSerie.time(tSerie.size()-1);
-		}
-		return t;
+		return this.tserie.lastTime();
 	}
 	/**
-	 * Devuelve el primer WayPoint del segmento
+	 * Devuelve el primer AbstractWpt del segmento
 	 * @return
 	 */
 	public WayPoint getStartWayPoint() {
-		long starttime = getStartTime();
-		double[] values = getValues(starttime);
-		WayPoint wp = WayPoint.fromValues(starttime, values);
-		return wp;
+		WayPoint wpt = null;
+		if (this.size()>0) {
+			wpt = (WayPoint)this.wpts.get(0);
+		}
+		return wpt;
 	}
 	/**
-	 * Devuelve el ultimo WayPoint del segmento o nulo
+	 * Devuelve el ultimo AbstractWpt del segmento o nulo
 	 * @return
 	 */
 	public WayPoint getEndWayPoint() {
-		long endtime = getEndTime();
-		double[] values = getValues(endtime);
-		WayPoint wp = WayPoint.fromValues(endtime, values);
-		return wp;
+		WayPoint wpt = null;
+		if (this.size()>0) {
+			wpt = (WayPoint)this.wpts.get(this.size()-1);
+		}
+		return wpt;
 	}
 
 	/**
@@ -128,7 +113,7 @@ public class TrackSegment  extends GpxElement {
 	 * @return
 	 */
 	public int wayPointCount() {
-		return this.tSerie.size();
+		return this.wpts.size();
 	}
 	/**
 	 * Devuelve un double con los valores de 
@@ -139,7 +124,7 @@ public class TrackSegment  extends GpxElement {
 	 * que el último del trkseg devuelve null
 	 */
 	public double[] getValues(long time) {
-		return this.tSerie.values(time);
+		return this.tserie.getValues(time);
 	}
 	
 	/**
@@ -148,14 +133,13 @@ public class TrackSegment  extends GpxElement {
 	@Override
 	public String asGpx() {
 		String cad="<trkseg>";
-		// Comprobar que hay algún WayPoint
-		if(tSerie.size()>0) {
-			for(int i=0;i<this.tSerie.size(); i++) {
-				long time=this.tSerie.time(i);
-				double[] values=this.tSerie.values(i);
-				WayPoint wp= WayPoint.fromValues(time, values);
+		// Comprobar que hay algún AbstractWpt
+		if(wpts.size()>0) {
+			WayPoint wp = null;
+			for(int i=0;i<this.wpts.size(); i++) {
+				wp = (WayPoint)this.wpts.get(i);
 				if(wp!=null) {
-					wp.TAG = "trkpt";
+					wp.setTag("trkpt");
 					cad += wp.asGpx();					
 				}
 			}
@@ -164,42 +148,20 @@ public class TrackSegment  extends GpxElement {
 		return cad;
 	}
 
-	public static TrackSegment parseGpxString(String cadgpx) {
-		TrackSegment ts= new TrackSegment();
-
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder=null;
-		InputStream is = null;
-		Document doc = null;
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-		    is = new ByteArrayInputStream(cadgpx.getBytes("UTF-8"));
-		    doc = dBuilder.parse(is);	
-			doc.getDocumentElement().normalize();
-		} catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-		if(doc.getDocumentElement().getNodeName().equalsIgnoreCase("trkseg")==false) {
-			return null;
-		}
-		NodeList nl=doc.getElementsByTagName("trkpt");
-		if(nl.getLength()>0) {
-			for (int i=0; i<nl.getLength(); i++) {
-				try {
-					WayPoint wp= WayPoint.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
-					if(wp!=null) {
-						ts.addWayPoint(wp);
-					}
-				} catch (Exception e) {
-		            e.printStackTrace();
-					return null;
-				}
-			}
-		}
-		return ts;
-	}
+	
 	public int size() {
-		return this.tSerie.size();
+		return this.tserie.size();
+	}
+	@Override
+	public boolean add(GpxNode node) {
+		if(WayPoint.class.isAssignableFrom(node.getClass())) {
+			return this.addWayPoint((WayPoint)node);
+		}
+		return false;
+	}
+	
+	@Override
+	public GpxNodeList nodes() {
+		return new SimpleNodeList(this.wpts);
 	}
 }

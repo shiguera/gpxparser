@@ -20,7 +20,7 @@ package com.mlab.tesis.java.gpx.data;
  * @author shiguera
  *
  */
-public class Metadata extends GpxElement {
+public class Metadata implements GpxNode {
 	
 	public Metadata() {
 		

@@ -5,7 +5,8 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.TrackSegment;
 
 public class TrackSegmentTest extends TestCase {
@@ -13,12 +14,12 @@ public class TrackSegmentTest extends TestCase {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	
 	public void test() {
-		this.logger.info("TESTING TrackSegment");
+		this.logger.info("TESTING TrackSegment.test()");
 		
 		long t=System.currentTimeMillis();
-		WayPoint tp= new WayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
-		WayPoint tp2= new WayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
-		WayPoint tp3= new WayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp3= new SimpleWayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0,23.7,123.2,-1.0);
 		
 		TrackSegment ts=new TrackSegment();
 		assertNotNull(ts);
@@ -33,20 +34,22 @@ public class TrackSegmentTest extends TestCase {
 	}
 	
 	public void testParseGpx() {
-		this.logger.info("TESTING TrackSegment.parseGpx()");
-		
+		this.logger.info("TESTING TrackSegment.testParseGpx()");
 		TrackSegment ts=new TrackSegment();
+		assertNotNull(ts);
 		long t=System.currentTimeMillis();
-		WayPoint tp= new WayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
 		ts.addWayPoint(tp);
-		WayPoint tp2= new WayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
 		ts.addWayPoint(tp2);
-		WayPoint tp3= new WayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp3= new SimpleWayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0,23.7,123.2,-1.0);
 		ts.addWayPoint(tp3);
-		
+		assertEquals(3,ts.wayPointCount());
 		String cadgpx=ts.asGpx();
+		//System.out.println(GpxFactory.format(cadgpx));
 		
-		TrackSegment parsed=TrackSegment.parseGpxString(cadgpx);
+		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
+		TrackSegment parsed = factory.parseSegment(cadgpx);
 		assertNotNull(parsed);
 		assertEquals(3,parsed.wayPointCount());
 		

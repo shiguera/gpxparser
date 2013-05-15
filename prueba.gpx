@@ -4,14 +4,16 @@
    <trk>
       <number>0</number>
       <trkseg>
-         <trkpt lat="42.500000" lon="-3.800000">
+         <wpt lat="42.500000" lon="-3.800000">
             <ele>900.00</ele>
-            <time>2013-04-28T19:15:20.20Z</time>
+            <time>2013-05-06T22:25:12.12Z</time>
+            <name>Pto1</name>
+            <desc>Punto de pruebas</desc>
             <extensions>
                <mlab:bearing>123.20</mlab:bearing>
                <mlab:speed>23.70</mlab:speed>
             </extensions>
-         </trkpt>
+         </wpt>
       </trkseg>
    </trk>
 </gpx>

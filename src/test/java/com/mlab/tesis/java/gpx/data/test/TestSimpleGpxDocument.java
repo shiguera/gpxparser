@@ -16,12 +16,13 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
+import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.TrackSegment;
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 
-public class GpxDocumentTest extends TestCase {
+public class TestSimpleGpxDocument extends TestCase {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+
@@ -31,7 +32,7 @@ public class GpxDocumentTest extends TestCase {
 			"<salary>200000</salary></staff></company>";
 
 	
-	private GpxDocument gpxdoc=null;
+	private SimpleGpxDocument gpxdoc=null;
 	
 	public void test() {
 		this.logger.info("TESTING GpxDocument Constructor");
@@ -79,13 +80,19 @@ public class GpxDocumentTest extends TestCase {
 	public void testParseGpxString() {
 		this.logger.info("TESTING GpxDocument.parseGpxString()");
 		gpxdoc = buildGpxdoc();
+		//System.out.println(GpxFactory.format(gpxdoc.asGpx()));
+		assertNotNull(gpxdoc);
+		assertEquals(2,gpxdoc.wayPointCount());
+		assertEquals(1,gpxdoc.trackCount());		
+	
 		if(gpxdoc != null) {
 			String cadgpx=gpxdoc.asGpx();
-			GpxDocument parsed= GpxDocument.parseGpxDocument(cadgpx);
-		
+			GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
+			SimpleGpxDocument parsed= factory.parseGpxDocument(cadgpx);
+			assertNotNull(parsed);
 			assertEquals(2,parsed.wayPointCount());
-			assertEquals(1,this.gpxdoc.trackCount());		
-			logger.info("\n"+GpxDocument.format(cadgpx));			
+			assertEquals(1,gpxdoc.trackCount());		
+			logger.info("\n"+GpxFactory.format(cadgpx));			
 
 		} else {
 			// Error en el constructor, no aquí
@@ -94,13 +101,13 @@ public class GpxDocumentTest extends TestCase {
 		}
 	}
 	
-	private GpxDocument buildGpxdoc() {
-		GpxDocument gpxdoc=new GpxDocument();
+	private SimpleGpxDocument buildGpxdoc() {
+		SimpleGpxDocument gpxdoc=new SimpleGpxDocument(GpxFactory.Type.SimpleGpxFactory);
 		Track track=new Track();
 		long t=System.currentTimeMillis();
-		WayPoint tp= new WayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
 		gpxdoc.addWayPoint(tp);
-		WayPoint tp2= new WayPoint("Pto2","Punto de pruebas",t,-3.9,43.5,920.0,23.7,123.2,-1.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
 		gpxdoc.addWayPoint(tp2);
 		TrackSegment ts=new TrackSegment();		
 		ts.addWayPoint(tp);

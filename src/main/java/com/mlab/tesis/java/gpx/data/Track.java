@@ -32,7 +32,7 @@ import org.w3c.dom.NodeList;
  * }
  * </pre>
  */
-public class Track  extends GpxElement {
+public class Track  implements GpxElement {
 	private String name="";
 	private String cmt="";
 	private String desc="";
@@ -46,13 +46,13 @@ public class Track  extends GpxElement {
 	/**
 	 * Colección de TrackSegment del Track
 	 */
-	public ArrayList<TrackSegment> segments;
+	public ArrayList<GpxNode> segments;
 	
 	/**
 	 * Constructor. Crea un Track vacío e inicializa la colección de TrackSegment
 	 */
 	public Track() {
-		segments=new ArrayList<TrackSegment>();
+		segments=new ArrayList<GpxNode>();
 	}
 	
 	/**
@@ -210,7 +210,7 @@ public class Track  extends GpxElement {
 		if (newTrackSegment==true || segments.size()==0) {
 			this.segments.add(new TrackSegment());
 		} 
-		ts=this.segments.get(segments.size()-1);
+		ts=(TrackSegment)this.segments.get(segments.size()-1);
 		result=ts.addWayPoint(wp);
 		return result;
 	}
@@ -224,7 +224,7 @@ public class Track  extends GpxElement {
 	 */
 	public boolean addTrackSegment(TrackSegment ts) {
 		if(segments.size()>0) {
-			long last = segments.get(segments.size()-1).getEndTime();
+			long last = ((TrackSegment)segments.get(segments.size()-1)).getEndTime();
 			if(ts.getEndTime() <= last) {
 				return false;
 			}
@@ -246,8 +246,9 @@ public class Track  extends GpxElement {
 		double[] result=null;
 		if(this.segments.size()>0) {
 			for(int i=0; i<segments.size(); i++) {
-				if(time>=segments.get(i).getStartTime() && time<=segments.get(i).getEndTime()) {
-					result=segments.get(i).getValues(time);
+				if(time>=((TrackSegment)segments.get(i)).getStartTime() && 
+						time<=((TrackSegment)segments.get(i)).getEndTime()) {
+					result=((TrackSegment)segments.get(i)).getValues(time);
 				}
 			}
 		}
@@ -257,7 +258,7 @@ public class Track  extends GpxElement {
 	public long getStartTime() {
 		long startTime = -1l;
 		if(this.segments.size()>0) {
-			startTime = this.segments.get(0).getStartTime();
+			startTime = ((TrackSegment)this.segments.get(0)).getStartTime();
 		}
 		return startTime;
 	}
@@ -266,7 +267,7 @@ public class Track  extends GpxElement {
 		long lastTime = -1l;
 		if(this.segments.size()>0) {
 			int ultimo = this.segments.size()-1;
-			lastTime = this.segments.get(ultimo).getEndTime();
+			lastTime = ((TrackSegment)this.segments.get(ultimo)).getEndTime();
 		}
 		return lastTime;
 	}
@@ -281,7 +282,7 @@ public class Track  extends GpxElement {
 	public WayPoint getStartWayPoint() {
 		WayPoint waypoint = null;
 		if(this.segments.size()>0) {
-			waypoint = this.segments.get(0).getStartWayPoint();
+			waypoint = ((TrackSegment)this.segments.get(0)).getStartWayPoint();
 		}
 		return waypoint;
 	}
@@ -290,7 +291,7 @@ public class Track  extends GpxElement {
 		WayPoint waypoint = null;
 		if(this.segments.size()>0) {
 			int ultimo = this.segments.size()-1;
-			waypoint = this.segments.get(ultimo).getEndWayPoint();
+			waypoint = ((TrackSegment)this.segments.get(ultimo)).getEndWayPoint();
 		}
 		return waypoint;
 	}
@@ -302,13 +303,13 @@ public class Track  extends GpxElement {
 		double[] result = null;
 		if(this.segments.size()>0) {
 			WayPoint p = getStartWayPoint();
-			double minx = p.longitude;
+			double minx = p.getLongitude();
 			double maxx = minx;
-			double miny = p.latitude;
+			double miny = p.getLatitude();
 			double maxy = miny;
 			for (int i=0; i<segments.size(); i++) {
-				for(int j=0; j<segments.get(i).size(); j++) {
-					p = segments.get(i).getWpts().get(j);
+				for(int j=0; j<((TrackSegment)segments.get(i)).size(); j++) {
+					p = ((TrackSegment)segments.get(i)).getWayPoint(j);
 					double x = p.getLongitude();
 					double y = p.getLatitude();
 					if(x<minx) {
@@ -350,41 +351,18 @@ public class Track  extends GpxElement {
 		return el;
 	}
 
-	// FIXME implementar método static parseGpx() 
-	public static Track parseGpxString(String cadgpx) {
-		Track t= new Track();
-
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder=null;
-		InputStream is = null;
-		Document doc = null;
-		try {
-			dBuilder = dbFactory.newDocumentBuilder();
-		    is = new ByteArrayInputStream(cadgpx.getBytes("UTF-8"));
-		    doc = dBuilder.parse(is);	
-			doc.getDocumentElement().normalize();
-		} catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-		if(doc.getDocumentElement().getNodeName().equalsIgnoreCase("trk")==false) {
-			return null;
+	@Override
+	public boolean add(GpxNode node) {
+		if(TrackSegment.class.isAssignableFrom(node.getClass())) {
+			return this.addTrackSegment((TrackSegment)node);
 		}
-		NodeList nl=doc.getElementsByTagName("trkseg");
-		if(nl.getLength()>0) {
-			for (int i=0; i<nl.getLength(); i++) {
-				try {
-					TrackSegment ts = TrackSegment.parseGpxString(GpxDocument.nodeAsString(nl.item(i),false));
-					if(ts!=null) {
-						t.addTrackSegment(ts);
-					}
-				} catch (Exception e) {
-		            e.printStackTrace();
-					return null;
-				}
-			}
-		}
-		return t;
+		return false;
 	}
 
+	@Override
+	public GpxNodeList nodes() {
+		return new SimpleNodeList(this.segments);
+	}
+
+	
 }
