@@ -1,5 +1,6 @@
 package com.mlab.tesis.java;
 
+import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.Track;
@@ -15,8 +16,9 @@ public class App
 {
     public static void main( String[] args )
     {
-    	SimpleGpxDocument gpxdoc=new SimpleGpxDocument(GpxFactory.Type.SimpleGpxFactory);
-		
+    	GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+    	SimpleGpxDocument gpxdoc=(SimpleGpxDocument) factory.createGpxDocument();
+    	
 		Track track=new Track();
 		long t=System.currentTimeMillis();
 		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);

@@ -10,7 +10,7 @@ import com.mlab.tesis.java.gpx.data.Link;
 import junit.framework.TestCase;
 
 
-public class LinkTest extends TestCase {
+public class TestLink extends TestCase {
 
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	

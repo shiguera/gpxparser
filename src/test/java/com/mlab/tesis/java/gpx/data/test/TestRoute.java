@@ -1,11 +1,15 @@
 package com.mlab.tesis.java.gpx.data.test;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
 import junit.framework.TestCase;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.Route;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.WayPoint;
@@ -30,9 +34,17 @@ public class TestRoute extends TestCase {
 		assertTrue(rte.addWayPoint(tp2));
 		assertTrue(rte.addWayPoint(tp3));
 		assertEquals(3,rte.size());
-		
-		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
-		Route parsed=factory.parseRoute(rte.asGpx());
+				
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		Route parsed = null;
+		try {
+			Method method=GpxFactory.class.getDeclaredMethod("parseRoute", String.class);
+			method.setAccessible(true);
+			parsed = (Route) method.invoke(factory, rte.asGpx());
+		} catch (Exception e) {
+			System.out.println("ERROR");
+			e.printStackTrace();
+		} 
 		assertNotNull(parsed);
 		assertEquals(3,parsed.size());
 		

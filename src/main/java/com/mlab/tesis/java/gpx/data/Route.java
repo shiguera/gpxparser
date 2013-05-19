@@ -3,6 +3,7 @@ package com.mlab.tesis.java.gpx.data;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -14,14 +15,13 @@ import org.w3c.dom.NodeList;
 // TODO Error! Las routes no tienen tiempo en los puntos, no 
 // se pueden resolver a base de TSerie
 
-public class Route  implements GpxElement {
+public class Route extends AbstractGpxElement {
 
-	//TSerie pts=null;
-	ArrayList<GpxNode> pts = null;
-	
+	private final String TAG_RTEPT = "rtept";
+
 	public Route() {
-		//pts=new TSerie(6);
-		pts = new ArrayList<GpxNode>();
+		super();
+		this.tagname = "rte";
 	}
 	
 	/**
@@ -31,53 +31,38 @@ public class Route  implements GpxElement {
 	 * @return boolean true si se añade 
 	 */
 	public boolean addWayPoint(WayPoint wp) {
-		return this.pts.add(wp);
+		wp.setTag(TAG_RTEPT);
+		return this.nodes.add(wp);
 	}
 	public WayPoint getWayPoint(int index) {
 		WayPoint wp=null;
-		int last = this.pts.size()-1;
-		if(index>=0 && index<=last) {
-			wp = (WayPoint)this.pts.get(index);
+		if(index>=0 && index<=this.size()-1) {
+			wp = (WayPoint)this.nodes.get(index);
 		}
 		return wp;
 	}
-	
-	/**
-	 * Numero de puntos del Route.
-	 * @return int número de WayPoint's en el Route
-	 */
-	public int size() {
-		return this.pts.size();
-	}
-	
-	@Override
-	public String asGpx() {
-		String cad="<rte>";
-		for(int i=0; i< this.pts.size(); i++) {
-			WayPoint wp = (WayPoint)pts.get(i);
-			if(wp!=null) {
-				wp.setTag("rtept");
-				cad+=wp.asGpx();
-			}
-		}
-		cad+="</rte>";
-		return cad;
-	}
+
+//	@Override
+//	public String asGpx() {
+//		String cad="<rte>";
+//		for(int i=0; i< this.pts.size(); i++) {
+//			WayPoint wp = (WayPoint)pts.get(i);
+//			if(wp!=null) {
+//				wp.setTag("rtept");
+//				cad+=wp.asGpx();
+//			}
+//		}
+//		cad+="</rte>";
+//		return cad;
+//	}
 
 	@Override
 	public boolean add(GpxNode node) {
 		if(WayPoint.class.isAssignableFrom(node.getClass())) {
+			((WayPoint)node).setTag(TAG_RTEPT);
 			return this.addWayPoint((WayPoint)node);
 		}
 		return false;
 	}
-
-	@Override
-	public GpxNodeList nodes() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	
 	
 }

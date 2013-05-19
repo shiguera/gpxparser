@@ -10,12 +10,43 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 
 public class Util {
+	
+	/**
+	 * Formatea un double a los digitos y precisión deseados, 
+	 * sustituyendo la coma decimal por el punto decimal.<br/>
+	 * Los números se redondeán al número de decimales pedido.
+	 * @param value double valor
+	 * @param digits número total de dígitos
+	 * @param decimals número de decimales
+	 * @return cadena con el número formateado xxx.xxx
+	 * Si value es NaN o infinito, o digits<=0 o decimals<0 
+	 * arroja IllegalArgumentException
+	 */
+	static public String doubleToString(double value, int digits, int decimals) {
+		// System.out.println(value);
+		if(Double.isNaN(value) || Double.isInfinite(value) || digits <= 0 || decimals <0) {
+			throw new IllegalArgumentException();
+		}
+		StringBuilder builder = new StringBuilder();
+		builder.append("%");
+		builder.append(String.format("%d", digits));;
+		builder.append(".");
+		builder.append(String.format("%d", decimals));;
+		builder.append("f");
+		
+		String cad = String.format(builder.toString(), value).replace(',', '.').trim();
+		return cad;
+	}
+	
     /**
      * Devuelve una cadena en la forma 2012-10-09T12:00:23
      * @param t
@@ -26,6 +57,36 @@ public class Util {
     	String cad=Util.dateToString(t,gmt);
     	cad+="T"+Util.timeToString(t,gmt);
     	return cad;
+    }
+    /**
+     * Formatea una fecha 'yyyy-MM-ddThh:mm:ss.ssZ'
+     * @param t tiempo en milisegundos de la fecha
+     * @return 'yyyy-MM-ddThh:mm:ss.ssZ'
+     */
+    static public String dateTimeToStringGpxFormat(long t) {
+    	SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.ss'Z'");
+   		format.setTimeZone(TimeZone.getTimeZone("UTC"));
+    	return format.format(new Date(t));
+    }
+    static public long parseGpxDate(String cadGpxDateTime) {
+    	SimpleDateFormat format = null;
+    	if(cadGpxDateTime.length()==23) {
+    		format= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.ss'Z'");	
+    	} else if (cadGpxDateTime.length()==22) {
+        	format= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.s'Z'");    		
+    	} else if (cadGpxDateTime.length()==20) {
+        	format= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");    		
+    	}
+		format.setTimeZone(TimeZone.getTimeZone("UTC"));
+		Date date;
+		long t = -1l;
+		try {
+			date = format.parse(cadGpxDateTime);
+			t = date.getTime();
+		} catch (ParseException e) {			
+			e.printStackTrace();
+		}
+		return t;
     }
     /**
      * 

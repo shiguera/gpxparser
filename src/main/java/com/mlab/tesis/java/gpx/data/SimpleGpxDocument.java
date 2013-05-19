@@ -28,6 +28,7 @@ import org.w3c.dom.Document;
  * @author shiguera
  */
 public class SimpleGpxDocument  implements GpxDocument {	
+	private final String TAG_WAYPOINT = "wpt";
 	
 	final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
 		"<gpx version=\"1.1\" creator=\"MercatorLab - http:mercatorlab.com\" "+
@@ -51,16 +52,16 @@ public class SimpleGpxDocument  implements GpxDocument {
 	/**
 	 * Colección de WayPoint's del GpxDocument
 	 */
-	protected ArrayList<SimpleWayPoint> wpts; 
+	protected List<WayPoint> wpts; 
 	/**
 	 * Colección de Route's del GpxDocument
 	 */
-	protected ArrayList<Route> routes; 
+	protected List<Route> routes; 
 
 	/**
 	 * Colección de Track's del GpxDocument
 	 */
-	protected ArrayList<Track> tracks;
+	protected List<Track> tracks;
 	
 	// FIXME Falta el elemento <extensions>
 
@@ -70,12 +71,13 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * lo que rompe la compatibilidad con programas ya hechos
 	 * 
 	 */
-	public SimpleGpxDocument(GpxFactory.Type factoryType) {
-		this.gpxFactory = GpxFactory.getFactory(factoryType);
+	SimpleGpxDocument() {
+		this.gpxFactory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
+		this.doc = null;
 		this.metadata= new Metadata();
 		this.routes = new ArrayList<Route>();
 		this.tracks = new ArrayList<Track>();
-		this.wpts = new ArrayList<SimpleWayPoint>();
+		this.wpts = new ArrayList<WayPoint>();
 	}
 
 	@Override
@@ -84,9 +86,9 @@ public class SimpleGpxDocument  implements GpxDocument {
 		return doc;
 	}
 
-	public void setDoc(Document doc) {
-		this.doc = doc;
-	}
+//	public void setDoc(Document doc) {
+//		this.doc = doc;
+//	}
 
 	@Override
 	public Metadata getMetadata() {
@@ -98,16 +100,16 @@ public class SimpleGpxDocument  implements GpxDocument {
 	}
 
 	@Override
-	public ArrayList<SimpleWayPoint> getWayPoints() {
+	public List<WayPoint> getWayPoints() {
 		return wpts;
 	}
 
-	public void setWpts(ArrayList<SimpleWayPoint> wpts) {
+	public void setWpts(ArrayList<WayPoint> wpts) {
 		this.wpts = wpts;
 	}
 
 	@Override
-	public ArrayList<Route> getRoutes() {
+	public List<Route> getRoutes() {
 		return routes;
 	}
 
@@ -116,7 +118,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 	}
 	
 	@Override
-	public ArrayList<Track> getTracks() {
+	public List<Track> getTracks() {
 		return tracks;
 	}
 
@@ -128,6 +130,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * Añade un track a la colección de tracks del GpxDocument
 	 * @param track Track que se quiere añadir
 	 */
+	@Override
 	public void addTrack(Track track) {
 		// Añadir el track a la colección de tracks
 		this.tracks.add(track);
@@ -146,7 +149,9 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * Añade un WayPoint a la colección de WayPoints
 	 * @param wp WayPoint que se quiere añadir
 	 */
-	public void addWayPoint(SimpleWayPoint wp) {
+	@Override
+	public void addWayPoint(WayPoint wp) {
+		wp.setTag(TAG_WAYPOINT);
 		this.wpts.add(wp);
 	}
 	public int wayPointCount() {
@@ -156,6 +161,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * Añade una Route a la colección de rutas del GpxDocument
 	 * @param rte Route que se quiere añadir
 	 */
+	@Override
 	public void addRoute(Route rte) {
 		this.routes.add(rte);
 	}
@@ -175,6 +181,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 		
 		if(this.wpts.size()>0) {
 			for(int i=0; i<this.wpts.size(); i++) {
+				System.out.println(this.wpts.get(i).asGpx());
 				cad += this.wpts.get(i).asGpx();
 			}
 		}

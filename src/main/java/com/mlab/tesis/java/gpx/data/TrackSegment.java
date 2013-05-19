@@ -19,43 +19,19 @@ import com.mlab.tesis.java.tserie.TSerie;
  * }
  * </pre>
  * */
-public class TrackSegment  implements GpxElement {
+public class TrackSegment extends AbstractGpxElement {
 	
-	private ArrayList<GpxNode> wpts;
+	private final String TAG_TRKPT = "trkpt";
+	private final String TAGNAME = "trkseg";
 	private TSerie tserie;
 	
 	public TrackSegment() {
 		// (lon,lat,alt,vel,rumbo,accuracy)
-		//tSerie=new TTSerie(6);
+		super();
 		tserie = new TSerie();
-		wpts= new ArrayList<GpxNode>();
-		
+		this.tagname = TAGNAME;
 	}
-	/**
-	 * Añade un AbstractWpt al final de la TSerie que contiene
-	 * la lista de AbstractWpt del TrackSegment. Si el tiempo del 
-	 * AbstractWpt que se quiere añadir es menor o igual que el
-	 * último tiempo de la TSerie no se añade y se devuelve false
-	 * @param wp AbstractWpt que se quiere añadir al TrackSegment
-	 * @return boolean true si se añade y false si no se añade
-	 */
-	public boolean addWayPoint(WayPoint wp) {
-		boolean result = false;
-		if(this.tserie.canAdd(wp.getTime(), wp.getValues())) {
-			result = this.tserie.add(wp.getTime(), wp.getValues());
-			if(result) {
-				result = this.wpts.add(wp);
-			} 
-		}
-		return result;
-	}
-	/**
-	 * Proporciona acceso al ArrayList de WayPoint
-	 * @return Devuelve una referencia al ArrayList de WayPoint
-	 */
-	public ArrayList<GpxNode> getWpts() {
-		return wpts;
-	}
+	
 	
 	/**
 	 * Da acceso directo a los AbstractWpt's del segmento
@@ -64,8 +40,8 @@ public class TrackSegment  implements GpxElement {
 	 */
 	public WayPoint getWayPoint(int index) {
 		WayPoint pt=null;
-		if(index>=0 && index < this.wpts.size()) {
-			pt = (WayPoint)this.wpts.get(index);
+		if(index>=0 && index < this.size()) {
+			pt = (WayPoint)this.nodes.get(index);
 		}
 		return pt;
 	}
@@ -92,7 +68,7 @@ public class TrackSegment  implements GpxElement {
 	public WayPoint getStartWayPoint() {
 		WayPoint wpt = null;
 		if (this.size()>0) {
-			wpt = (WayPoint)this.wpts.get(0);
+			wpt = (WayPoint)this.nodes.get(0);
 		}
 		return wpt;
 	}
@@ -103,18 +79,11 @@ public class TrackSegment  implements GpxElement {
 	public WayPoint getEndWayPoint() {
 		WayPoint wpt = null;
 		if (this.size()>0) {
-			wpt = (WayPoint)this.wpts.get(this.size()-1);
+			wpt = (WayPoint)this.nodes.get(this.size()-1);
 		}
 		return wpt;
 	}
 
-	/**
-	 * Devuelve el número de puntos en el segmento
-	 * @return
-	 */
-	public int wayPointCount() {
-		return this.wpts.size();
-	}
 	/**
 	 * Devuelve un double con los valores de 
 	 * [lon,lat,alt,vel,rumbo,acc] interpolados para ese tiempo
@@ -128,30 +97,10 @@ public class TrackSegment  implements GpxElement {
 	}
 	
 	/**
-	 * Devuelve una cadena Gpx del segmento TrackSegment
+	 * Comprueba si es un WayPoint y delega en el método
+	 * addWayPoint() que añade a la lista de puntos y a la
+	 * TSerie tras actualizar la etiqueta del wp
 	 */
-	@Override
-	public String asGpx() {
-		String cad="<trkseg>";
-		// Comprobar que hay algún AbstractWpt
-		if(wpts.size()>0) {
-			WayPoint wp = null;
-			for(int i=0;i<this.wpts.size(); i++) {
-				wp = (WayPoint)this.wpts.get(i);
-				if(wp!=null) {
-					wp.setTag("trkpt");
-					cad += wp.asGpx();					
-				}
-			}
-		}
-		cad += "</trkseg>";
-		return cad;
-	}
-
-	
-	public int size() {
-		return this.tserie.size();
-	}
 	@Override
 	public boolean add(GpxNode node) {
 		if(WayPoint.class.isAssignableFrom(node.getClass())) {
@@ -159,9 +108,25 @@ public class TrackSegment  implements GpxElement {
 		}
 		return false;
 	}
-	
-	@Override
-	public GpxNodeList nodes() {
-		return new SimpleNodeList(this.wpts);
+	/**
+	 * Añade un WayPoint a la TSerie y a la List\<GpxNode\> que contiene
+	 * la lista de WayPoint del TrackSegment. Si el tiempo es menor 
+	 * o igual que el último tiempo de la TSerie no se añade y se devuelve false
+	 * @param wp WayPoint que se quiere añadir al TrackSegment
+	 * @return boolean true si se añade y false si no se añade
+	 */
+	public boolean addWayPoint(WayPoint wp) {
+		boolean result = false;
+		if(this.tserie.canAdd(wp.getTime(), wp.getValues())) {
+			result = this.tserie.add(wp.getTime(), wp.getValues());
+			if(result) {
+				wp.setTag(TAG_TRKPT);
+				result = this.nodes.add(wp);
+			} 
+		} else {
+			System.out.println("Can't add waypoint");
+		}
+		return result;
 	}
+	
 }

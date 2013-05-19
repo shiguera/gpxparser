@@ -28,6 +28,8 @@ public class TList {
 	 * @return
 	 */
 	public boolean canAdd(long t) {
+		//System.out.print("TList.canAdd(): t="+t);
+		//System.out.println("  lastTime="+lastTime());
 		if(t<0) {
 			return false;
 		}
@@ -54,7 +56,10 @@ public class TList {
 	 * Throws IndexOutOfBoundsException if size()==0	 
 	 */
 	public long firstTime() {
-		return (Long)this.tlist.get(0).longValue();
+		if(this.size()>0) {
+			return (Long)this.tlist.get(0).longValue();
+		}
+		return -1l;
 	}
 	/**
 	 * Devuelve el último tiempo de la serie
@@ -63,7 +68,10 @@ public class TList {
 	 * Throws IndexOutOfBoundsException if size()==0
 	 */
 	public long lastTime() {
-		return (Long)this.tlist.get(this.tlist.size()-1).longValue();
+		if(this.size()>0) {
+			return (Long)this.tlist.get(this.tlist.size()-1).longValue();
+		}
+		return -1l;
 	}
 	/**
 	 * Devuelve el tiempo cuyo índice es index

@@ -1,16 +1,16 @@
 package com.mlab.tesis.java.gpx.data;
 
 
-public class SimpleGpxAttribute implements GpxAttribute {
+public class SimpleAttribute implements Attribute {
 
 	private String name;
 	private String value;
 	
-	public SimpleGpxAttribute() {
+	public SimpleAttribute() {
 		this.name = "";
 		this.value = "";
 	}
-	public SimpleGpxAttribute(String name, String value) {
+	public SimpleAttribute(String name, String value) {
 		this.name = name;
 		this.value = value;
 	}

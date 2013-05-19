@@ -8,10 +8,15 @@ public interface GpxDocument extends GpxNode {
 	
 	Document getDomDocument();
 	Metadata getMetadata();
-	List<SimpleWayPoint> getWayPoints();
+	List<WayPoint> getWayPoints();
 	List<Route> getRoutes();
 	List<Track> getTracks();
 	Extensions getExtensions();
+	
+	void addTrack(Track track);
+	void addWayPoint(WayPoint wp);
+	void addRoute(Route rte);
+
 	
 
 }

@@ -1,6 +1,6 @@
 package com.mlab.tesis.java.gpx.data;
 
-public interface GpxAttribute extends GpxNode {
+public interface Attribute extends GpxNode {
 	
 	String getName();
 	String getValue();

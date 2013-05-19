@@ -8,5 +8,6 @@ package com.mlab.tesis.java.gpx.data;
  *
  */
 public interface GpxNode {
-	public String asGpx();	
+	
+	String asGpx();	
 }

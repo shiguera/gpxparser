@@ -66,15 +66,7 @@ public class TestTList extends TestCase {
 	public void testFirstTime() {
 		System.out.print("Testing TList.firtTime():... ");
 		TList list = new TList();
-		Throwable thro = null;
-		try {
-			long t = list.firstTime();
-		} catch (Throwable e) {
-			thro = e;
-		}
-		assertNotNull(thro);
-		assertTrue(IndexOutOfBoundsException.class.isAssignableFrom(thro.getClass()));
-
+		assertEquals(-1l, list.firstTime());
 		list.add(new Long(1000l));
 		list.add(new Long(2000l));
 		assertEquals(1000l, list.firstTime());
@@ -85,15 +77,7 @@ public class TestTList extends TestCase {
 	public void testLastTime() {
 		System.out.print("Testing TList.lastTime():... ");
 		TList list = new TList();
-		Throwable thro = null;
-		try {
-			long t = list.lastTime();
-		} catch (Throwable e) {
-			thro = e;
-		}
-		assertNotNull(thro);
-		assertTrue(IndexOutOfBoundsException.class.isAssignableFrom(thro.getClass()));
-
+		assertEquals(-1l, list.lastTime());
 		list.add(new Long(1000l));
 		list.add(new Long(2000l));
 		assertEquals(2000l, list.lastTime());

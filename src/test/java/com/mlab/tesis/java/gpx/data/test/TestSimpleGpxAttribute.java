@@ -2,15 +2,15 @@ package com.mlab.tesis.java.gpx.data.test;
 
 import junit.framework.TestCase;
 
-import com.mlab.tesis.java.gpx.data.SimpleGpxAttribute;
+import com.mlab.tesis.java.gpx.data.SimpleAttribute;
 
 public class TestSimpleGpxAttribute extends TestCase {
 	
 	public void test() {
 		System.out.print("Testing SimpleGpxAttribute():... ");
-		SimpleGpxAttribute att = new SimpleGpxAttribute();
+		SimpleAttribute att = new SimpleAttribute();
 		assertNotNull(att);
-		att = new SimpleGpxAttribute("lon","3.7508");
+		att = new SimpleAttribute("lon","3.7508");
 		assertNotNull(att);
 		assertEquals("lon", att.getName());
 		assertEquals("3.7508", att.getValue());
@@ -20,7 +20,7 @@ public class TestSimpleGpxAttribute extends TestCase {
 	}
 	public void testAsGpx() {
 		System.out.print("Testing SimpleGpxAttribute.asGpx():... ");
-		SimpleGpxAttribute att = new SimpleGpxAttribute("lon","3.7508");
+		SimpleAttribute att = new SimpleAttribute("lon","3.7508");
 		assertEquals("lon='3.7508'", att.asGpx());
 		
 		System.out.println("OK");

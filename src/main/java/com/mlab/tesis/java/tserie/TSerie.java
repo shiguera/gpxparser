@@ -24,6 +24,8 @@ public class TSerie {
 	}
 	
 	public boolean canAdd(long t, double[] values) {
+		//System.out.print("TSerie.canAdd(): t="+tlist.canAdd(t));
+		//System.out.println("  values="+dlist.canAdd(values));
 		return (tlist.canAdd(t) && dlist.canAdd(values));
 	}
 	

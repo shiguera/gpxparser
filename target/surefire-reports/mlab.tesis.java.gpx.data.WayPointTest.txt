@@ -1,4 +1,10 @@
 -------------------------------------------------------------------------------
 Test set: mlab.tesis.java.gpx.data.WayPointTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec
+Tests run: 2, Failures: 0, Errors: 2, Skipped: 0, Time elapsed: 0.017 sec <<< FAILURE!
+testConstructor(mlab.tesis.java.gpx.data.WayPointTest)  Time elapsed: 0.008 sec  <<< ERROR!
+java.lang.InstantiationError: com.mlab.tesis.java.gpx.data.WayPoint
+	at mlab.tesis.java.gpx.data.WayPointTest.testConstructor(WayPointTest.java:20)
+testParseGpx(mlab.tesis.java.gpx.data.WayPointTest)  Time elapsed: 0 sec  <<< ERROR!
+java.lang.InstantiationError: com.mlab.tesis.java.gpx.data.WayPoint
+	at mlab.tesis.java.gpx.data.WayPointTest.testParseGpx(WayPointTest.java:36)

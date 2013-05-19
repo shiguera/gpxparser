@@ -32,7 +32,8 @@ import org.w3c.dom.NodeList;
  * }
  * </pre>
  */
-public class Track  implements GpxElement {
+public class Track  extends AbstractGpxElement {
+	private final String TAGNAME = "trk";
 	private String name="";
 	private String cmt="";
 	private String desc="";
@@ -43,16 +44,13 @@ public class Track  implements GpxElement {
 	private int number=0;
 	private String type="";
 	
-	/**
-	 * Colección de TrackSegment del Track
-	 */
-	public ArrayList<GpxNode> segments;
 	
 	/**
 	 * Constructor. Crea un Track vacío e inicializa la colección de TrackSegment
 	 */
 	public Track() {
-		segments=new ArrayList<GpxNode>();
+		super();
+		this.tagname = TAGNAME;
 	}
 	
 	/**
@@ -177,16 +175,15 @@ public class Track  implements GpxElement {
 		if(!this.type.equals("")) {
 			cad += "<type>"+this.type+"</type>";
 		}
-		if(this.segments.size()>0) {
-			for(int i=0; i<this.segments.size(); i++){
-				cad += this.segments.get(i).asGpx();				
+		if(this.size()>0) {
+			for(int i=0; i<this.size(); i++){
+				cad += this.nodes.get(i).asGpx();				
 			}
 		}
 		cad += "</trk>";
 		return cad;		
 	}
 	
-	// FIXME Implementar addWayPoint()
 	/**
 	 * Añade un WayPoint al último TrackSegment del Track o 
 	 * a un nuevo segmento que se crea al efecto. <br/>
@@ -207,32 +204,13 @@ public class Track  implements GpxElement {
 	public boolean addWayPoint(WayPoint wp, boolean newTrackSegment) {
 		boolean result=false;
 		TrackSegment ts=null;
-		if (newTrackSegment==true || segments.size()==0) {
-			this.segments.add(new TrackSegment());
+		if (newTrackSegment==true || size()==0) {
+			this.nodes.add(new TrackSegment());
 		} 
-		ts=(TrackSegment)this.segments.get(segments.size()-1);
+		ts=(TrackSegment)this.nodes.get(size()-1);
 		result=ts.addWayPoint(wp);
 		return result;
 	}
-	
-	/**
-	 * Añade un TrackSegments a la lista segments.<br/>
-	 * El primer tiempo del TrackSegment que se añade tiene que ser
-	 * mayor que el ,ultimo tiempo del último TrackSegment del Track.
-	 * @param ts TrackSegment 
-	 * @return boolean true si se añade y false si no se añade; 
-	 */
-	public boolean addTrackSegment(TrackSegment ts) {
-		if(segments.size()>0) {
-			long last = ((TrackSegment)segments.get(segments.size()-1)).getEndTime();
-			if(ts.getEndTime() <= last) {
-				return false;
-			}
-		}
-		segments.add(ts);
-		return true;
-	}
-	
 	
 	/**
 	 * Devuelve un double con los valores de 
@@ -244,11 +222,11 @@ public class Track  implements GpxElement {
 	 */
 	public double[] getValues(long time) {
 		double[] result=null;
-		if(this.segments.size()>0) {
-			for(int i=0; i<segments.size(); i++) {
-				if(time>=((TrackSegment)segments.get(i)).getStartTime() && 
-						time<=((TrackSegment)segments.get(i)).getEndTime()) {
-					result=((TrackSegment)segments.get(i)).getValues(time);
+		if(size()>0) {
+			for(int i=0; i<size(); i++) {
+				if(time>=((TrackSegment)nodes.get(i)).getStartTime() && 
+						time<=((TrackSegment)nodes.get(i)).getEndTime()) {
+					result=((TrackSegment)nodes.get(i)).getValues(time);
 				}
 			}
 		}
@@ -257,17 +235,17 @@ public class Track  implements GpxElement {
 	
 	public long getStartTime() {
 		long startTime = -1l;
-		if(this.segments.size()>0) {
-			startTime = ((TrackSegment)this.segments.get(0)).getStartTime();
+		if(size()>0) {
+			startTime = ((TrackSegment)this.nodes.get(0)).getStartTime();
 		}
 		return startTime;
 	}
 
 	public long getEndTime() {
 		long lastTime = -1l;
-		if(this.segments.size()>0) {
-			int ultimo = this.segments.size()-1;
-			lastTime = ((TrackSegment)this.segments.get(ultimo)).getEndTime();
+		if(size()>0) {
+			int ultimo = size()-1;
+			lastTime = ((TrackSegment)this.nodes.get(ultimo)).getEndTime();
 		}
 		return lastTime;
 	}
@@ -281,17 +259,17 @@ public class Track  implements GpxElement {
 	
 	public WayPoint getStartWayPoint() {
 		WayPoint waypoint = null;
-		if(this.segments.size()>0) {
-			waypoint = ((TrackSegment)this.segments.get(0)).getStartWayPoint();
+		if(size()>0) {
+			waypoint = ((TrackSegment)nodes.get(0)).getStartWayPoint();
 		}
 		return waypoint;
 	}
 	
 	public WayPoint getEndWayPoint() {
 		WayPoint waypoint = null;
-		if(this.segments.size()>0) {
-			int ultimo = this.segments.size()-1;
-			waypoint = ((TrackSegment)this.segments.get(ultimo)).getEndWayPoint();
+		if(size()>0) {
+			int ultimo = size()-1;
+			waypoint = ((TrackSegment)nodes.get(ultimo)).getEndWayPoint();
 		}
 		return waypoint;
 	}
@@ -301,15 +279,15 @@ public class Track  implements GpxElement {
 	 */
 	public double[] getBounds() {
 		double[] result = null;
-		if(this.segments.size()>0) {
+		if(size()>0) {
 			WayPoint p = getStartWayPoint();
 			double minx = p.getLongitude();
 			double maxx = minx;
 			double miny = p.getLatitude();
 			double maxy = miny;
-			for (int i=0; i<segments.size(); i++) {
-				for(int j=0; j<((TrackSegment)segments.get(i)).size(); j++) {
-					p = ((TrackSegment)segments.get(i)).getWayPoint(j);
+			for (int i=0; i<size(); i++) {
+				for(int j=0; j<((TrackSegment)nodes.get(i)).size(); j++) {
+					p = ((TrackSegment)nodes.get(i)).getWayPoint(j);
 					double x = p.getLongitude();
 					double y = p.getLatitude();
 					if(x<minx) {
@@ -331,6 +309,19 @@ public class Track  implements GpxElement {
 		return result;
 	}
 
+	/**
+	 * Permite recuperar un TrackSegment del Trac
+	 * @param index índice del TrackSegment
+	 * @return Un TrackSegment o lanza IndexOutOfBoundException
+	 * @exception IndexOutOfBoundException si el índice no existe en la lista
+	 */
+	public TrackSegment getTrackSegment(int index) {
+		if(index>=0 && index<size()) {
+			return (TrackSegment) this.nodes().get(index);
+		} else {
+			throw new IndexOutOfBoundsException();
+		}
+	}
 
 	public Element asElement() {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -358,10 +349,21 @@ public class Track  implements GpxElement {
 		}
 		return false;
 	}
-
-	@Override
-	public GpxNodeList nodes() {
-		return new SimpleNodeList(this.segments);
+	/**
+	 * Añade un TrackSegments a la lista segments.<br/>
+	 * El primer tiempo del TrackSegment que se añade tiene que ser
+	 * mayor que el ,ultimo tiempo del último TrackSegment del Track.
+	 * @param ts TrackSegment 
+	 * @return boolean true si se añade y false si no se añade; 
+	 */
+	public boolean addTrackSegment(TrackSegment ts) {
+		if(size()>0) {
+			long last = ((TrackSegment)nodes.get(size()-1)).getEndTime();
+			if(ts.getStartTime() <= last) {
+				return false;
+			}
+		}
+		return nodes.add(ts);
 	}
 
 	
