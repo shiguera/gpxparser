@@ -3,6 +3,11 @@ package com.mlab.tesis.java.gpx.data.extensions;
 import com.mlab.tesis.java.gpx.data.AbstractWayPoint;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
 
+/**
+ * 
+ * @author shiguera
+ *
+ */
 public class ExtendedWayPoint extends AbstractWayPoint {
 
 	private final String namespace = "mlab";
@@ -19,7 +24,19 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 		this.az=0.0;
 		this.pressure=0.0;
 	}
+	
+	public ExtendedWayPoint(String name, String description, long time, 
+			double longitude, double latitude, double altitude, 
+			double speed, double bearing, double accuracy, double ax, double ay, double az, double pressure) {
+		super(name,description,time,longitude,latitude,altitude,
+				speed,bearing, accuracy);
+		this.ax=ax;
+		this.ay=ay;
+		this.az=az;
+		this.pressure=pressure;
+	}
 
+	
 	
 	@Override
 	public String extensionsAsGpx() {
@@ -31,5 +48,49 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 		return builder.toString();
 	}
 	
+	public String getNamespace() {
+		return namespace;
+	}
+
+	public int getACCELERATION_DECIMALS() {
+		return ACCELERATION_DECIMALS;
+	}
+
+	public int getPRESSURE_DECIMALS() {
+		return PRESSURE_DECIMALS;
+	}
+
+	public double getAx() {
+		return ax;
+	}
+
+	public double getAy() {
+		return ay;
+	}
+
+	public double getAz() {
+		return az;
+	}
+
+	public double getPressure() {
+		return pressure;
+	}
+
+	public void setAx(double ax) {
+		this.ax = ax;
+	}
+
+	public void setAy(double ay) {
+		this.ay = ay;
+	}
+
+	public void setAz(double az) {
+		this.az = az;
+	}
+
+	public void setPressure(double pressure) {
+		this.pressure = pressure;
+	}
+
 
 }

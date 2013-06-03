@@ -1,20 +1,9 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
- * Sirve para guardar los datos de un punto de un track, 
- * o de un route point o de un way point 
- * tomados con un GPS. Tiene campos para name, description, time,
- * longitude, latitude, altitude, speed, bearing y accuracy.
- * Tiene un método 'asGpx()' que devuelve la cadena en formato GPX 
- * correspondiente al WayPoint y otro método estático 'parse()' que
- * devuelve un WayPoint a partir de la cadena gpx 
- * <pre> {@code <wpt>...</wpt> } </pre>
- * @author shiguera
- *
+ * Clase base abstracta para los WayPoint <br>
+ * Incluye campos para: name, description, time, long, lat, alt, speed, bearing, accuraccy
  * @author shiguera
  *
  */
@@ -195,6 +184,14 @@ public abstract class AbstractWayPoint implements WayPoint {
 		return cad;	
 	}
 
+	/**
+	 * Método abstracto utilizado por el método 'asGpx()'
+	 * Las clases derivadas deben implementar este método que devolverá una
+	 * cadena Gpx con sus extensiones en la forma:<br>
+	 * <ns:extensionName1>....</ns:extensionName1>...<ns:extensionName2>...</ns:extensionName2>
+	 * La cadena se insertará durante la ejecución del método 'asGpx()'
+	 * @return
+	 */
 	public abstract String extensionsAsGpx();
 	
 	@Override

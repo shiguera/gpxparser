@@ -1,14 +1,9 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -25,6 +20,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
 
 /**
  * Clase base abstracta para las implementaciones concretas de
@@ -57,8 +54,7 @@ public abstract class GpxFactory {
 	 * Variable de tipo de Factory a instanciar a través 
 	 * del método estático 'getFactory()' 	
 	 */
-	public enum Type {SimpleGpxFactory};
-	 
+	public enum Type {SimpleGpxFactory, ExtendedGpxFactory};
 	protected GpxFactory.Type factoryType; 
 	
 	/**
@@ -69,8 +65,10 @@ public abstract class GpxFactory {
 	 */
 	public static GpxFactory getFactory(GpxFactory.Type factoryType) {
 		switch(factoryType) {
-		case SimpleGpxFactory:
-			return new SimpleGpxFactory();
+			case SimpleGpxFactory:
+				return new SimpleGpxFactory();
+			case ExtendedGpxFactory:
+				return new ExtendedGpxFactory();
 		}
 		return null;
 	}
@@ -108,7 +106,7 @@ public abstract class GpxFactory {
 	public GpxDocument parseGpxDocument(String cadgpx) {
 		Document doc= parseXmlDocument(cadgpx);
 		//System.out.println(doc.getTextContent());
-		if(doc == null || doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {
+		if(!isValidGpxDocument(doc)) {
 			return null;
 		}
 		//Element gpx=doc.getDocumentElement();
@@ -147,6 +145,12 @@ public abstract class GpxFactory {
 		// TODO Procesar nodos Extensions
 
 		return gpxDocument;
+	}
+	private boolean isValidGpxDocument(Document doc) {
+		if(doc == null || doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -337,6 +341,12 @@ public abstract class GpxFactory {
 	}
 	
 	// parse tags
+	/**
+	 * Lee el contenido double de un tag determinado del Document xml
+	 * @param doc XML Document
+	 * @param tagname String Nobre de la etiqueta de la que extraer el valor double
+	 * @return double contenido de la etiqueta o -1.0 si hay errores
+	 */
 	protected double parseDoubleTag(Document doc, String tagname) {
 		double result=-1.0;
 		NodeList nl=doc.getElementsByTagName(tagname);
@@ -455,22 +465,28 @@ public abstract class GpxFactory {
 	}
 	
 	// Abstract methods
-	public abstract GpxDocument createGpxDocument();
+	public GpxDocument createGpxDocument() {
+		return new SimpleGpxDocument();
+	}
+	
 	/**
 	 *  Abstract method para creación de un WayPoint.
-	 *  Cada implementación tendrá una tamaño del List\<Double\>
-	 * @param name
-	 * @param description
-	 * @param time
-	 * @param values
-	 * @return
+	 *  Cada implementación tendrá un tamaño del List\<Double\> diferente
+	 * @param name String name of WayPoint
+	 * @param description String description of WayPoint
+	 * @param time long time for the WayPoint
+	 * @param values List<Double> con los valores necesarios para el constructor de la clase WayPoint concreta.
+	 * @return WayPoint de la clase concreta o null
 	 */
 	public abstract WayPoint createWayPoint(String name,
 			String description, long time, List<Double> values);
+
 	/**
+	 * Abstract method utilizado por el método 'parseWayPoint()'
 	 * Devuelve un List\<Double\> con los valores de las extensiones
 	 * que añade la implementación concreta de WayPoint
-	 * @param doc
+	 * @param doc Recibe el DOM Document completo. La clase derivada deberá
+	 * extraer sus extensiones y devolverlas como List<Double>
 	 * @return
 	 */
 	public abstract List<Double> parseWayPointExtensions(Document doc);

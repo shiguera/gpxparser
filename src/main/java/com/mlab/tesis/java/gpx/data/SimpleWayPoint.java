@@ -1,22 +1,12 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 
 /**
+ * Implementación simple de AbstractWayPoint
+ * Representa un WayPoint con name, description, time, long, lat, alt, speed, bearing, accuracy
+ * @author shiguera
  *
  */
 public class SimpleWayPoint  extends AbstractWayPoint {

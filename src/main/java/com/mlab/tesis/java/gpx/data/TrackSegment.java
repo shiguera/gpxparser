@@ -1,8 +1,5 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
 import com.mlab.tesis.java.tserie.TSerie;
 
 /**

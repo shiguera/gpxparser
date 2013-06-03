@@ -1,15 +1,9 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 public class SimpleGpxFactory extends GpxFactory {
 
@@ -18,12 +12,7 @@ public class SimpleGpxFactory extends GpxFactory {
 		this.factoryType = GpxFactory.Type.SimpleGpxFactory;
 	}
 
-	// Abstract method
-	@Override
-	public GpxDocument createGpxDocument() {
-		return new SimpleGpxDocument();
-	}
-	
+	// Abstract method	
 	/**
 	 * Construye un WayPoint a partir de un name, descrip, long con el time y un 
 	 * List\<Double\> con los valores {lon,lat,alt,speed,bearing,accuracy}

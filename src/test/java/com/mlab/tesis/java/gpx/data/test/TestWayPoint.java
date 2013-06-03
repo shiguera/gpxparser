@@ -55,7 +55,7 @@ public class TestWayPoint extends TestCase {
 
 		// Comprobar que el TrackPoint del constructor tp y el parsedPoint 
 		// tienen la misma cadena gpx 
-		System.out.println(GpxFactory.format(tp.asGpx()));
+		//System.out.println(GpxFactory.format(tp.asGpx()));
 //		System.out.println("-----------------");
 //		System.out.println(parsedPoint.asGpx());
 		assertEquals(tp.asGpx(), parsedPoint.asGpx());

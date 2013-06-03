@@ -71,7 +71,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * lo que rompe la compatibilidad con programas ya hechos
 	 * 
 	 */
-	SimpleGpxDocument() {
+	public SimpleGpxDocument() {
 		this.gpxFactory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
 		this.doc = null;
 		this.metadata= new Metadata();
@@ -181,7 +181,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 		
 		if(this.wpts.size()>0) {
 			for(int i=0; i<this.wpts.size(); i++) {
-				System.out.println(this.wpts.get(i).asGpx());
+				//System.out.println(this.wpts.get(i).asGpx());
 				cad += this.wpts.get(i).asGpx();
 			}
 		}

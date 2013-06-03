@@ -1,15 +1,5 @@
 package com.mlab.tesis.java.gpx.data;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 
 
 // TODO Error! Las routes no tienen tiempo en los puntos, no 
@@ -41,20 +31,6 @@ public class Route extends AbstractGpxElement {
 		}
 		return wp;
 	}
-
-//	@Override
-//	public String asGpx() {
-//		String cad="<rte>";
-//		for(int i=0; i< this.pts.size(); i++) {
-//			WayPoint wp = (WayPoint)pts.get(i);
-//			if(wp!=null) {
-//				wp.setTag("rtept");
-//				cad+=wp.asGpx();
-//			}
-//		}
-//		cad+="</rte>";
-//		return cad;
-//	}
 
 	@Override
 	public boolean add(GpxNode node) {

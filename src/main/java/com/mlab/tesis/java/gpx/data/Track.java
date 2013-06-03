@@ -1,14 +1,12 @@
 package com.mlab.tesis.java.gpx.data;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 /**
  * La clase Track guarda un track de un documento GpxDocument. Básicamente consiste
