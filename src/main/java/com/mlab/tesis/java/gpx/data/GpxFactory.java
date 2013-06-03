@@ -491,5 +491,10 @@ public abstract class GpxFactory {
 	 */
 	public abstract List<Double> parseWayPointExtensions(Document doc);
 	
-
+	public String asCsv(WayPoint wp) {
+		StringBuilder builder = new StringBuilder();
+		
+		return builder.toString();
+	}
+	
 }

@@ -39,6 +39,12 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 	
 	
 	@Override
+	public double[] getValues() {		
+		return new double[] {this.longitude, this.latitude, this.altitude,
+				this.speed, this.bearing, this.accuracy, this.ax, this.ay, this.az, this.pressure};
+	}
+
+	@Override
 	public String extensionsAsGpx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append(GpxFactory.createDoubleTag(namespace, "ax", ax, 12, ACCELERATION_DECIMALS));
