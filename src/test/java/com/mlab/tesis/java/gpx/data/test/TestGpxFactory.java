@@ -9,6 +9,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import com.mlab.tesis.java.gpx.data.GpxDocument;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.Track;
@@ -32,7 +33,20 @@ public class TestGpxFactory extends TestCase {
 		"<trkpt lat=\"46.57641667\" lon=\"8.89266667\"><ele>2372</ele><time>2007-10-14T10:12:39Z</time></trkpt>"+
 		"<trkpt lat=\"46.57650000\" lon=\"8.89280556\"><ele>2373</ele><time>2007-10-14T10:13:12Z</time></trkpt>"+
 		"</trkseg></trk>"; 
-
+	private final String docgpx = 	
+			"<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+
+				"<gpx version=\"1.0\">"+
+					"<name>Example gpx</name>"+
+					"<wpt lat=\"46.57638889\" lon=\"8.89263889\">"+
+						"<ele>2372</ele>"+
+						"<name>LAGORETICO</name>"+
+					"</wpt>"+
+					"<trk><name>Example gpx</name><number>1</number><trkseg>"+
+						"<trkpt lat=\"46.57638889\" lon=\"8.89302778\"><ele>2374</ele><time>2007-10-14T10:13:20Z</time></trkpt>"+
+						"<trkpt lat=\"46.57652778\" lon=\"8.89322222\"><ele>2375</ele><time>2007-10-14T10:13:48Z</time></trkpt>"+
+						"<trkpt lat=\"46.57661111\" lon=\"8.89344444\"><ele>2376</ele><time>2007-10-14T10:14:08Z</time></trkpt>"+
+					"</trkseg></trk>"+
+				"</gpx>";
 	GpxFactory factory ;
 	
 	@Override
@@ -52,6 +66,22 @@ public class TestGpxFactory extends TestCase {
 		Element ele = doc.getDocumentElement();
 		assertNotNull(ele);
 		assertEquals("company", ele.getNodeName());
+		System.out.println("OK");
+	}
+	public void testParseGpxDocument() {
+		System.out.print("Testing GpxFactory.parseGpxDocument()...");
+		GpxDocument doc = factory.parseGpxDocument(docgpx);
+		assertNotNull(doc);
+		// WayPoint
+		assertEquals(1,doc.getWayPoints().size());
+		// Tracks
+		assertEquals(1,doc.getTracks().size());
+		// Segments
+		assertEquals(1,doc.getTracks().get(0).size());
+		// trkpt
+		assertEquals(3,doc.getTracks().get(0).getTrackSegment(0).size());
+		
+		
 		System.out.println("OK");
 	}
 	public void testNodeAsFormatedXmlString() {

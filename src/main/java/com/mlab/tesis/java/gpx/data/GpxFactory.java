@@ -34,7 +34,8 @@ import org.xml.sax.InputSource;
  * - getFactory(): nos proporciona la instancia 
  * de factory concreta en base al parámetro 'GpxFactory.Type'.<br/>
  * - parseXmlDocument() : Devuelve un Document a partir de un String xml<br/>
- * - nodeAsString() : Devuelve un String formateado en xml a partir
+ * - parseGpxDocument() : Devuelve un GpxDocument a partirde un String xml <br/>
+ * - nodeAsFormatedXmlString() : Devuelve un String formateado en xml a partir
  * de un org.w3c.dom.Node<br/>
  *  - format(): Devuelve una String xml formateada con saltos de línea y 
  *  tabulaciones a partir de un String xml sin formatear<br/>
@@ -99,6 +100,55 @@ public abstract class GpxFactory {
 		return doc;
 	}
 	
+	/**	
+	 * Parsea un documento de texto gpx a GpxDocument
+	 * @param cadgpx
+	 * @return GpxDocument 
+	 */
+	public GpxDocument parseGpxDocument(String cadgpx) {
+		Document doc= parseXmlDocument(cadgpx);
+		//System.out.println(doc.getTextContent());
+		if(doc == null || doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {
+			return null;
+		}
+		//Element gpx=doc.getDocumentElement();
+		
+		// Abstract method
+		GpxDocument gpxDocument = createGpxDocument();
+		
+		// FIXME Procesar metadata
+		
+		// Procesar nodos WayPoint
+		NodeList nl=doc.getElementsByTagName("wpt");
+		//System.out.println("----------------\n"+nl.getLength()+"---------------\n");
+		for(int i=0; i< nl.getLength(); i++) {
+			WayPoint wp= parseWayPoint(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+			if(wp!=null) {
+				gpxDocument.addWayPoint(wp);
+			}
+		}
+		// Procesar nodos RTE
+		nl=doc.getElementsByTagName("rte");
+		for(int i=0; i< nl.getLength(); i++) {
+			Route rte= parseRoute(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+			if(rte!=null) {
+				gpxDocument.addRoute(rte);
+			}
+		}
+		// Procesar nodos TRK
+		nl=doc.getElementsByTagName("trk");
+		for(int i=0; i< nl.getLength(); i++) {
+			Track trk= parseTrack(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+			if(trk!=null) {
+				gpxDocument.addTrack(trk);
+			}
+		}
+		
+		// TODO Procesar nodos Extensions
+
+		return gpxDocument;
+	}
+	
 	/**
 	 * Convierte un Node xml en una cadena de texto
 	 * @param node org.w3c.dom.Node con el xml
@@ -143,55 +193,7 @@ public abstract class GpxFactory {
 		return xmlString;
 	}
 	
-	/**	
-	 * Parsea un documento de texto gpx a GpxDocument
-	 * @param cadgpx
-	 * @return GpxDocument 
-	 */
-	public GpxDocument parseGpxDocument(String cadgpx) {
-		Document doc= parseXmlDocument(cadgpx);
-		//System.out.println(doc.getTextContent());
-		if(doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {
-			return null;
-		}
-		//Element gpx=doc.getDocumentElement();
 		
-		// Abstract method
-		GpxDocument gpxDocument = createGpxDocument();
-		
-		// FIXME Procesar metadata
-		
-		// Procesar nodos WayPoint
-		NodeList nl=doc.getElementsByTagName("wpt");
-		//System.out.println("----------------\n"+nl.getLength()+"---------------\n");
-		for(int i=0; i< nl.getLength(); i++) {
-			WayPoint wp= parseWayPoint(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
-			if(wp!=null) {
-				gpxDocument.addWayPoint(wp);
-			}
-		}
-		// Procesar nodos RTE
-		nl=doc.getElementsByTagName("rte");
-		for(int i=0; i< nl.getLength(); i++) {
-			Route rte= parseRoute(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
-			if(rte!=null) {
-				gpxDocument.addRoute(rte);
-			}
-		}
-		// Procesar nodos TRK
-		nl=doc.getElementsByTagName("trk");
-		for(int i=0; i< nl.getLength(); i++) {
-			Track trk= parseTrack(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
-			if(trk!=null) {
-				gpxDocument.addTrack(trk);
-			}
-		}
-		
-		// TODO Procesar nodos Extensions
-
-		return gpxDocument;
-	}
-	
 	/**
 	 * Crea una instancia de WayPoint a partir de la cadena
 	 * gpx del mismo 

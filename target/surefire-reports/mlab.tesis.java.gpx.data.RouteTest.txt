@@ -1,7 +1,0 @@
--------------------------------------------------------------------------------
-Test set: mlab.tesis.java.gpx.data.RouteTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.001 sec <<< FAILURE!
-test(mlab.tesis.java.gpx.data.RouteTest)  Time elapsed: 0 sec  <<< ERROR!
-java.lang.InstantiationError: com.mlab.tesis.java.gpx.data.WayPoint
-	at mlab.tesis.java.gpx.data.RouteTest.test(RouteTest.java:23)

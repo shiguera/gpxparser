@@ -46,7 +46,29 @@ public class Util {
 		String cad = String.format(builder.toString(), value).replace(',', '.').trim();
 		return cad;
 	}
-	
+	/**
+	 * Extrae la fecha del vídeo a partir del nombre del fichero
+	 * en formato yyyyMMdd_HHmmss.mp4
+	 * @param file fichero de video a comprobar
+	 * @return long con la fecha o -1l si hay error 
+	 */
+	public static long startTimeFromFilename(File file) {
+		String filename = file.getName();
+		String ext = Util.getFileExtension(file);
+		Date date=null;
+		long t = -1l;
+		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd_HHmmss");
+		df.setTimeZone(TimeZone.getTimeZone("GMT"));
+		try {
+			int end = filename.length()-ext.length()-1;
+			filename = filename.substring(0,end);
+			date=df.parse(filename);
+			t = date.getTime();
+		} catch (ParseException e1) {
+			t = -1l;
+		}
+		return t;
+	}
     /**
      * Devuelve una cadena en la forma 2012-10-09T12:00:23
      * @param t
@@ -121,6 +143,19 @@ public class Util {
     }
 
     /**
+     * Extrae la extensión de un fichero
+     */
+    public static String getFileExtension(File file) {
+    	String ext = "";
+    	int index = file.getName().lastIndexOf('.');
+    	if(index != -1) {
+        	ext = file.getName().substring(index+1, file.getName().length());    		
+    	}
+    	//System.out.println(ext);
+    	return ext;
+    }
+    
+    /**
 	 * Escribe una cadena de texto en un fichero
 	 * 
 	 * @param filename
@@ -153,7 +188,7 @@ public class Util {
 	/**
 	 * Lee un fichero de texto y lo entrega en forma de un String
 	 * @param file File fichero de texto
-	 * @return String con el fichero leido
+	 * @return String con el fichero leido o una cadena vacía
 	 */
 	public static String readFileToString(File file) {
 		StringBuilder builder = new StringBuilder();

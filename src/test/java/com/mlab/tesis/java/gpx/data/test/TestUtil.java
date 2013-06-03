@@ -1,12 +1,23 @@
 package com.mlab.tesis.java.gpx.data.test;
 
 import java.io.File;
+import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
 import com.mlab.tesis.java.gpx.data.Util;
 
 public class TestUtil extends TestCase {
+	
+	public void testStartTimeFromFileName() {
+		System.out.print("Testing Util.startTimeFromFileName()...");
+		long t1 = Util.startTimeFromFilename(new File("prueba.mp4"));
+		assertEquals(-1l,t1);
+		long t2 = Util.startTimeFromFilename(new File("20130405_220300.mp4"));
+		assertFalse(-1l == t2);
+
+		System.out.println("OK");		
+	}
 	
 	public void testReadResourceFile() {
 		System.out.print("Testing Util.readResourceFile()...");
@@ -30,7 +41,6 @@ public class TestUtil extends TestCase {
 	}
 	public void testDoubleToString() {
 		System.out.print("Testing Util.doubleToString()...");
-		
 
 		double d = 1.567;	
 		// Prueba de redondeo a dos decimales
@@ -108,4 +118,12 @@ public class TestUtil extends TestCase {
 		System.out.println("OK");		
 	}
 
+	public void testGetFileExtension() {
+		System.out.print("Testing Util.getFileExtension()...");
+		assertEquals("mp4", Util.getFileExtension(new File("patata.mp4")));
+		assertEquals("mp4", Util.getFileExtension(new File("patata.3.mp4")));
+		assertEquals("", Util.getFileExtension(new File("patatamp4")));
+		
+		System.out.println("OK");		
+	}
 }
