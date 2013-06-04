@@ -6,6 +6,7 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.Util;
 import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class ExtendedGpxFactory extends GpxFactory {
@@ -41,6 +42,20 @@ public class ExtendedGpxFactory extends GpxFactory {
 		list.add(Double.valueOf(this.parseDoubleTag(doc, "mlab:az")));
 		list.add(Double.valueOf(this.parseDoubleTag(doc, "mlab:pressure")));		
 		return list;
+	}
+	
+	@Override
+	public String asCsv(WayPoint wp) {
+		StringBuilder builder = new StringBuilder();
+		builder.append(super.asCsv(wp));
+		builder.append(Util.doubleToString(((ExtendedWayPoint)wp).getAx(), 6, 3));
+		builder.append(",");				
+		builder.append(Util.doubleToString(((ExtendedWayPoint)wp).getAy(), 6, 3));
+		builder.append(",");				
+		builder.append(Util.doubleToString(((ExtendedWayPoint)wp).getAz(), 6, 3));
+		builder.append(",");				
+		builder.append(Util.doubleToString(((ExtendedWayPoint)wp).getPressure(), 8, 3));
+		return builder.toString();
 	}
 
 }

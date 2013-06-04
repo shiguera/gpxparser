@@ -493,7 +493,24 @@ public abstract class GpxFactory {
 	
 	public String asCsv(WayPoint wp) {
 		StringBuilder builder = new StringBuilder();
-		
+		builder.append(wp.getName());
+		builder.append(",");
+		builder.append(wp.getDescription());
+		builder.append(",");
+		builder.append(String.format("%d", wp.getTime()));
+		builder.append(",");
+		builder.append(Util.doubleToString(wp.getLongitude(), 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(wp.getLatitude(), 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(wp.getAltitude(), 12, 3));
+		builder.append(",");
+		builder.append(Util.doubleToString(wp.getSpeed(), 6, 2));
+		builder.append(",");
+		builder.append(Util.doubleToString(wp.getBearing(), 6, 2));
+		builder.append(",");
+		builder.append(Util.doubleToString(wp.getAccuracy(), 3, 1));
+		builder.append(",");				
 		return builder.toString();
 	}
 	
