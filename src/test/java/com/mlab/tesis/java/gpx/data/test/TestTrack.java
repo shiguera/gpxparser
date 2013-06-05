@@ -57,10 +57,9 @@ public class TestTrack extends TestCase {
 		ts.addWayPoint(tp);
 		ts.addWayPoint(tp2);
 		track.add(ts);
-		//System.out.println(track.asCsv());
-		//assertEquals("1370444592180,-3.800000,42.500000,900.00,23.70,123.20,-1.00\n1370444593180,-3.900000,43.500000,920.00,23.70,123.20,-1.00\n",track.asCsv());
-		//System.out.println(track.asCsv().substring(60,65));
-		assertEquals("13704",track.asCsv().substring(60,65));
+		//System.out.println(track.asCsv(false));
+		//System.out.println(track.asCsv(false).substring(108,113));
+		assertEquals("13704",track.asCsv(false).substring(108,113));
 		System.out.println("OK");
 	}
 	

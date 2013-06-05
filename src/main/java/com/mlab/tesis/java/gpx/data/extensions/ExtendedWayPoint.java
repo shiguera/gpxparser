@@ -100,9 +100,9 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 	}
 
 	@Override
-	public String asCsv() {
+	public String asCsv(boolean withUtmCoords) {
 		StringBuilder builder = new StringBuilder();
-		builder.append(super.asCsv());
+		builder.append(super.asCsv(withUtmCoords));
 		//System.out.println(builder.toString());
 		builder.append(",");
 		builder.append(Util.doubleToString(this.ax, 12, 6));

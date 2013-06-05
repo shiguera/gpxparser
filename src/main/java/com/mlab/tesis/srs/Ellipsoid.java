@@ -10,7 +10,12 @@ public abstract class Ellipsoid {
 	abstract double getFlattening();
 	abstract double getInverseFlattening();
 	
-	
+	/**
+	 * Obtiene la proyección UTM de un punto dado por sus coordenadas longitud, latitud
+	 * @param longitude 
+	 * @param latitude
+	 * @return double[] con la xutm y la yutm
+	 */
 	public double[] proyUTM(double longitude, double latitude) {
 		double lonrad = longitude * Math.PI / 180.0;
 		//System.out.println("lonrad = "+lonrad);

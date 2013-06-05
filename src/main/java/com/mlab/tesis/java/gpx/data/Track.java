@@ -182,12 +182,12 @@ public class Track  extends AbstractGpxElement {
 		return cad;		
 	}
 	
-	public String asCsv() {
+	public String asCsv(boolean withUtmCoords) {
 		StringBuilder builder = new StringBuilder();
 		if(this.size()>0) {
 			for(int i=0; i<this.nodes.size(); i++) {
 				if(((TrackSegment)this.nodes.get(i)).size()>0) {
-					builder.append(((TrackSegment)this.nodes.get(i)).asCsv());
+					builder.append(((TrackSegment)this.nodes.get(i)).asCsv(withUtmCoords));
 					if(!isLastSegment(i)) {
 						builder.append("\n");
 					}

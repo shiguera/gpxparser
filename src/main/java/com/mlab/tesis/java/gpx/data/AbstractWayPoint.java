@@ -1,5 +1,7 @@
 package com.mlab.tesis.java.gpx.data;
 
+import com.mlab.tesis.srs.EllipsoidWGS84;
+
 
 /**
  * Clase base abstracta para los WayPoint <br>
@@ -194,8 +196,10 @@ public abstract class AbstractWayPoint implements WayPoint {
 	 */
 	public abstract String extensionsAsGpx();
 	@Override
-	public String asCsv() {
+	public String asCsv(boolean withUtmCoords) {
 		StringBuilder builder = new StringBuilder();
+		builder.append(Util.dateTimeToStringGpxFormat(this.time));
+		builder.append(",");
 		builder.append(String.format("%d", this.time));
 		builder.append(",");
 		builder.append(Util.doubleToString(this.longitude, 12, 6));
@@ -203,6 +207,14 @@ public abstract class AbstractWayPoint implements WayPoint {
 		builder.append(Util.doubleToString(this.latitude, 12, 6));
 		builder.append(",");
 		builder.append(Util.doubleToString(this.altitude, 12, 2));
+		if(withUtmCoords) {
+			EllipsoidWGS84 ell = new EllipsoidWGS84();
+			double[] xy= ell.proyUTM(this.longitude, this.latitude);
+			builder.append(",");
+			builder.append(Util.doubleToString(xy[0], 12, 2));
+			builder.append(",");
+			builder.append(Util.doubleToString(xy[1], 12, 2));
+		}
 		builder.append(",");
 		builder.append(Util.doubleToString(this.speed, 12, 2));
 		builder.append(",");
