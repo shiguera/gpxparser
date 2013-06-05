@@ -364,5 +364,17 @@ public class Track  extends AbstractGpxElement {
 		return nodes.add(ts);
 	}
 
+	/**
+	 * Devuelve el número de WayPoints totales del track
+	 */
+	public int wayPointCount() {
+		int wpc = 0;
+		if(this.size()>0) {
+			for(GpxNode segment: this.nodes()) {
+				wpc += ((TrackSegment)segment).size();
+			}
+		}
+		return wpc;
+	}
 	
 }
