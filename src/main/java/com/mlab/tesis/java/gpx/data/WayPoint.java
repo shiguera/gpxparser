@@ -68,4 +68,7 @@ public interface WayPoint extends GpxNode {
 		
 	public  double[] getValues();
 	
+	public String asCsv();
+
+	
 }

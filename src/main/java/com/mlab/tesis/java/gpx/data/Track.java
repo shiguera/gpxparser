@@ -182,6 +182,27 @@ public class Track  extends AbstractGpxElement {
 		return cad;		
 	}
 	
+	public String asCsv() {
+		StringBuilder builder = new StringBuilder();
+		if(this.size()>0) {
+			for(int i=0; i<this.nodes.size(); i++) {
+				if(((TrackSegment)this.nodes.get(i)).size()>0) {
+					builder.append(((TrackSegment)this.nodes.get(i)).asCsv());
+					if(!isLastSegment(i)) {
+						builder.append("\n");
+					}
+				}
+			}
+		}
+		return builder.toString();
+	}
+	private boolean isLastSegment(int index) {
+		if(index==this.nodes.size()-1) {
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Añade un WayPoint al último TrackSegment del Track o 
 	 * a un nuevo segmento que se crea al efecto. <br/>

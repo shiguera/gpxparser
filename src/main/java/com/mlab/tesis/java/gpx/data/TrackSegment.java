@@ -125,5 +125,24 @@ public class TrackSegment extends AbstractGpxElement {
 		}
 		return result;
 	}
+
+	public String asCsv() {
+		StringBuilder builder = new StringBuilder();
+		if(this.size()>0) {
+			for(int i=0; i< this.nodes.size(); i++) {
+				builder.append(((WayPoint)this.nodes.get(i)).asCsv());
+				if(!isLastPoint(i)) {
+					builder.append("\n");
+				}
+			}
+		}
+		return builder.toString();
+	}
 	
+	private boolean isLastPoint(int index) {
+		if(index==this.nodes.size()-1) {
+			return true;
+		}
+		return false;
+	}
 }

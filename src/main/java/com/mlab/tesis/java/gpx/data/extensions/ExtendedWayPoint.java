@@ -2,6 +2,7 @@ package com.mlab.tesis.java.gpx.data.extensions;
 
 import com.mlab.tesis.java.gpx.data.AbstractWayPoint;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.Util;
 
 /**
  * 
@@ -98,5 +99,19 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 		this.pressure = pressure;
 	}
 
-
+	@Override
+	public String asCsv() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(super.asCsv());
+		//System.out.println(builder.toString());
+		builder.append(",");
+		builder.append(Util.doubleToString(this.ax, 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.ay, 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.az, 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.pressure, 12, 2));
+		return builder.toString();
+	}
 }

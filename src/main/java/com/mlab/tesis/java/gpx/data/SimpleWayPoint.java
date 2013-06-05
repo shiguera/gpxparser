@@ -37,5 +37,6 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 	@Override
 	public String extensionsAsGpx() {
 		return "";
-	}	
+	}
+
 }

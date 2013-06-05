@@ -193,7 +193,25 @@ public abstract class AbstractWayPoint implements WayPoint {
 	 * @return
 	 */
 	public abstract String extensionsAsGpx();
-	
+	@Override
+	public String asCsv() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(String.format("%d", this.time));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.longitude, 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.latitude, 12, 6));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.altitude, 12, 2));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.speed, 12, 2));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.bearing, 12, 2));
+		builder.append(",");
+		builder.append(Util.doubleToString(this.accuracy, 12, 2));
+		return builder.toString();
+	}	
+
 	@Override
 	public long getTime() {
 		return time;

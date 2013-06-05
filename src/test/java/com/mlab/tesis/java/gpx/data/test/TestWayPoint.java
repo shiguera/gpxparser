@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.extensions.ExtendedWayPoint;
 
 public class TestWayPoint extends TestCase {
 
@@ -17,10 +19,11 @@ public class TestWayPoint extends TestCase {
 	
 	
 	public void testConstructor() {
-		logger.warn("\nTESTING WayPoint constructor");
-
+		//logger.warn("\nTESTING WayPoint constructor");
+		System.out.print("Testing WayPoint()...");
 		long t=System.currentTimeMillis();
 		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		
 		assertNotNull(tp);
 		//logger.info("\n"+tp.asGpx());		
 		
@@ -28,11 +31,25 @@ public class TestWayPoint extends TestCase {
 		SimpleWayPoint tp2= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
 		assertNotNull(tp2);
 		//logger.info("\n"+tp2.asGpx());		
+		System.out.println("OK");
+	}
+	
+	public void testAsCsv() {
+		System.out.print("Testing WayPoint.asCsv()...");
+		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		//System.out.println(tp.asCsv());
+		assertEquals("1000,-3.800000,42.500000,900.00,23.70,123.20,-1.00", tp.asCsv());
 
+		
+		WayPoint tp2= new ExtendedWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0,23.7,123.2,-1.0,10.01,9.81,3.4,980.0);
+		//System.out.println(tp2.asCsv());
+		assertEquals("1000,-3.800000,42.500000,900.00,23.70,123.20,-1.00,10.010000,9.810000,3.400000,980.00", tp2.asCsv());
+		System.out.println("OK");
 	}
 	
 	public void testParseGpx() {
-		logger.warn("TESTING WayPoint.parseGpx()");
+		//logger.warn("TESTING WayPoint.parseGpx()");
+		System.out.print("Testing WayPoint.parseGpx()...");
 		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);		
 		// Crear una instancia de TrackPoint para generar una cadena gpx con la que probar el parse
 		long t=System.currentTimeMillis();
@@ -59,6 +76,7 @@ public class TestWayPoint extends TestCase {
 //		System.out.println("-----------------");
 //		System.out.println(parsedPoint.asGpx());
 		assertEquals(tp.asGpx(), parsedPoint.asGpx());
+		System.out.println("OK");
 		
 	}
 }

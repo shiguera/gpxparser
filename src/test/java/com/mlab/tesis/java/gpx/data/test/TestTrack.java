@@ -2,12 +2,10 @@ package com.mlab.tesis.java.gpx.data.test;
 
 import junit.framework.TestCase;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.TrackSegment;
+import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class TestTrack extends TestCase {
 	//private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -47,6 +45,23 @@ public class TestTrack extends TestCase {
 	
 		System.out.println("OK");
 		
+	}
+	
+	public void testAsCsv() {
+		System.out.print("Testing Track.asCsv()...");
+		Track track= new Track();
+		long t=System.currentTimeMillis();
+		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		WayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000l,-3.9,43.5,920.0,23.7,123.2,-1.0);
+		TrackSegment ts=new TrackSegment();		
+		ts.addWayPoint(tp);
+		ts.addWayPoint(tp2);
+		track.add(ts);
+		//System.out.println(track.asCsv());
+		//assertEquals("1370444592180,-3.800000,42.500000,900.00,23.70,123.20,-1.00\n1370444593180,-3.900000,43.500000,920.00,23.70,123.20,-1.00\n",track.asCsv());
+		//System.out.println(track.asCsv().substring(60,65));
+		assertEquals("13704",track.asCsv().substring(60,65));
+		System.out.println("OK");
 	}
 	
 }
