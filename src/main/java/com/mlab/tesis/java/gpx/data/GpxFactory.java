@@ -1,5 +1,6 @@
 package com.mlab.tesis.java.gpx.data;
 
+import java.io.File;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.ArrayList;
@@ -151,6 +152,15 @@ public abstract class GpxFactory {
 			return false;
 		}
 		return true;
+	}
+	
+	public static GpxDocument readGpxDocument(File gpxFile) {
+		String cad = Util.readFileToString(gpxFile);
+		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory).parseGpxDocument(cad);
+		if(gpxDoc==null) {
+			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
+		}
+		return gpxDoc;
 	}
 	
 	/**

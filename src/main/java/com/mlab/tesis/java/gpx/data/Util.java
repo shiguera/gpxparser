@@ -66,23 +66,7 @@ public class Util {
 		}
 		return t;
 	}
-	/**
-	 * Devuelve el nombre del fichero sin extensión
-	 * @param file Fichero
-	 * @return String Nombre sin extensión del fichero
-	 */
-	public static String fileNameWithoutExtension(File file) {
-		String filename = file.getName();
-		String ext = Util.getFileExtension(file);
-		try {
-			int end = filename.length()-ext.length()-1;
-			filename = filename.substring(0,end);
-		} catch (Exception e1) {
-			System.out.println(e1.getMessage());
-			filename = "";
-		}
-		return filename;		
-	}
+	
     /**
      * Devuelve una cadena en la forma 2012-10-09T12:00:23
      * @param t
@@ -168,6 +152,24 @@ public class Util {
     	//System.out.println(ext);
     	return ext;
     }
+    
+    /**
+	 * Devuelve el nombre del fichero sin extensión
+	 * @param file Fichero
+	 * @return String Nombre sin extensión del fichero
+	 */
+	public static String fileNameWithoutExtension(File file) {
+		String filename = file.getName();
+		String ext = Util.getFileExtension(file);
+		try {
+			int end = filename.length()-ext.length()-1;
+			filename = filename.substring(0,end);
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
+			filename = "";
+		}
+		return filename;		
+	}
     
     /**
 	 * Escribe una cadena de texto en un fichero
