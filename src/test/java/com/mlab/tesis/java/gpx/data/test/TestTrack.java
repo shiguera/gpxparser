@@ -58,8 +58,8 @@ public class TestTrack extends TestCase {
 		ts.addWayPoint(tp2);
 		track.add(ts);
 		//System.out.println(track.asCsv(false));
-		//System.out.println(track.asCsv(false).substring(108,113));
-		assertEquals("13704",track.asCsv(false).substring(108,113));
+		//System.out.println(track.asCsv(false).substring(122,127));
+		assertEquals("-3.90",track.asCsv(false).substring(122,127));
 		System.out.println("OK");
 	}
 	

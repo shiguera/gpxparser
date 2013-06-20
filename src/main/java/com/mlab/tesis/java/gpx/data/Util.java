@@ -53,15 +53,12 @@ public class Util {
 	 * @return long con la fecha o -1l si hay error 
 	 */
 	public static long startTimeFromFilename(File file) {
-		String filename = file.getName();
-		String ext = Util.getFileExtension(file);
+		String filename = fileNameWithoutExtension(file);
 		Date date=null;
 		long t = -1l;
 		SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd_HHmmss");
 		df.setTimeZone(TimeZone.getTimeZone("GMT"));
 		try {
-			int end = filename.length()-ext.length()-1;
-			filename = filename.substring(0,end);
 			date=df.parse(filename);
 			t = date.getTime();
 		} catch (ParseException e1) {
@@ -69,13 +66,30 @@ public class Util {
 		}
 		return t;
 	}
+	/**
+	 * Devuelve el nombre del fichero sin extensión
+	 * @param file Fichero
+	 * @return String Nombre sin extensión del fichero
+	 */
+	public static String fileNameWithoutExtension(File file) {
+		String filename = file.getName();
+		String ext = Util.getFileExtension(file);
+		try {
+			int end = filename.length()-ext.length()-1;
+			filename = filename.substring(0,end);
+		} catch (Exception e1) {
+			System.out.println(e1.getMessage());
+			filename = "";
+		}
+		return filename;		
+	}
     /**
      * Devuelve una cadena en la forma 2012-10-09T12:00:23
      * @param t
      * @param gmt
      * @return Devuelve una cadena en la forma 2012-10-09T12:00:23
      */
-    static public String dateTimeToString(long t, boolean gmt) {    	
+     static public String dateTimeToString(long t, boolean gmt) {    	
     	String cad=Util.dateToString(t,gmt);
     	cad+="T"+Util.timeToString(t,gmt);
     	return cad;
