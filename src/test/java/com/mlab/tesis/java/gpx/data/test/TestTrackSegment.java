@@ -72,5 +72,6 @@ public class TestTrackSegment extends TestCase {
 		
 	}
 	
+	// TODO Falta test para método length()
 
 }

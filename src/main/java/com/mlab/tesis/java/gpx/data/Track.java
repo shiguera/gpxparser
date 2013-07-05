@@ -398,4 +398,14 @@ public class Track  extends AbstractGpxElement {
 		return wpc;
 	}
 	
+	public double length() {
+		double length = 0.0;
+		if(this.nodes.size()>0) {
+			for(int i=0; i< this.nodes.size(); i++) {
+				length += ((TrackSegment)this.nodes().get(i)).length();
+			}
+				
+		}
+		return length;
+	}
 }

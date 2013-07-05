@@ -1,17 +1,29 @@
 package com.mlab.tesis.java.gpx.data.extensions;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
 
+import com.mlab.tesis.java.gpx.data.GpxDocument;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
 import com.mlab.tesis.java.gpx.data.Util;
 import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class ExtendedGpxFactory extends GpxFactory {
 
 
+	public static GpxDocument readGpxDocument(File gpxFile) {
+		String cad = Util.readFileToString(gpxFile);
+		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.ExtendedGpxFactory).parseGpxDocument(cad);
+		if(gpxDoc==null) {
+			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
+		}
+		return gpxDoc;
+	}
+	
 	@Override
 	public WayPoint createWayPoint(String name, String description, long time,
 			List<Double> values) {
