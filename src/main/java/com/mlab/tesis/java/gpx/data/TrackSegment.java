@@ -152,15 +152,17 @@ public class TrackSegment extends AbstractGpxElement {
 		
 		if(this.nodes.size()>0) {
 			EllipsoidWGS84 ell = new EllipsoidWGS84();
-			double dist = 0.0;
 			WayPoint last = (WayPoint)this.nodes().get(0);
 			double[] lastxy= ell.proyUTM(last.getLongitude(), last.getLatitude());
+			
 			for(int i=0; i<this.nodes.size(); i++) {
 				WayPoint current = (WayPoint)this.nodes().get(i);
 				double[] currentxy = ell.proyUTM(current.getLongitude(), current.getLatitude());
 				double incd = Math.sqrt((currentxy[0]-lastxy[0])*(currentxy[0]-lastxy[0])+
 						(currentxy[1]-lastxy[1])*(currentxy[1]-lastxy[1]));
-				dist += incd;
+				length += incd;
+				last = current.clone();
+				lastxy= ell.proyUTM(last.getLongitude(), last.getLatitude());
 			}
 		}
 		

@@ -1,13 +1,18 @@
 package com.mlab.tesis.java.gpx.data.test;
 
+import java.io.File;
 import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
+import com.mlab.tesis.java.gpx.data.GpxDocument;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.TrackSegment;
+import com.mlab.tesis.java.gpx.data.Util;
+import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
 
 public class TestTrackSegment extends TestCase {
 	
@@ -72,6 +77,16 @@ public class TestTrackSegment extends TestCase {
 		
 	}
 	
+	public void testLength() {
+		System.out.print("Testing TrackSegment.length()...");
+		File gpxFile = Util.readResourceFile("test.gpx");
+		GpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
+		assertNotNull(doc);
+		Track track = (Track)doc.getTracks().get(0);
+		TrackSegment segment = (TrackSegment)track.nodes().get(0);
+		assertEquals(9095, (int)segment.length());
+		System.out.println("OK");
+	}
 	// TODO Falta test para método length()
 
 }

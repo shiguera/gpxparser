@@ -79,6 +79,10 @@ public abstract class AbstractWayPoint implements WayPoint {
 		this.tag = TAG_WAYPOINT;
 	}
 	
+	@Override 
+	public abstract WayPoint clone();
+	
+	
 	/**
 	 * Constructor de un objeto WayPoint
 	 * @param time Long Tiempo en milisegundos desde el 

@@ -2,7 +2,9 @@ package com.mlab.tesis.java.gpx.data.extensions;
 
 import com.mlab.tesis.java.gpx.data.AbstractWayPoint;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.Util;
+import com.mlab.tesis.java.gpx.data.WayPoint;
 
 /**
  * 
@@ -25,7 +27,6 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 		this.az=0.0;
 		this.pressure=0.0;
 	}
-	
 	public ExtendedWayPoint(String name, String description, long time, 
 			double longitude, double latitude, double altitude, 
 			double speed, double bearing, double accuracy, double ax, double ay, double az, double pressure) {
@@ -37,7 +38,26 @@ public class ExtendedWayPoint extends AbstractWayPoint {
 		this.pressure=pressure;
 	}
 
-	
+	@Override
+	public WayPoint clone() {
+		ExtendedWayPoint wp = new ExtendedWayPoint();
+		wp.name = this.getName();
+		wp.description = this.getDescription();
+		wp.time = this.getTime();
+		wp.longitude = this.getLongitude();
+		wp.latitude = this.getLatitude();
+		wp.altitude = this.getAltitude();
+		wp.speed = this.getSpeed();
+		wp.bearing = this.getBearing();
+		wp.accuracy = this.getAccuracy();
+		wp.tag = this.getTag();
+		wp.ax = this.ax;
+		wp.ay = this.ay;
+		wp.az = this.az;
+		wp.pressure = this.pressure;
+		return wp;
+
+	}
 	
 	@Override
 	public double[] getValues() {		

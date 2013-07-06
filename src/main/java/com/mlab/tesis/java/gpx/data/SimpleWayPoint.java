@@ -21,7 +21,7 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 		super(name,description,time,longitude,latitude,altitude,
 				speed,bearing, accuracy);
 	}
-
+	
 	public SimpleWayPoint(String name, String descrip, long time, List<Double> values) {
 		this.name = name;
 		this.description = descrip;
@@ -32,6 +32,22 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 		this.speed = values.get(3);
 		this.bearing = values.get(4);
 		this.accuracy = values.get(5);
+	}
+	
+	@Override
+	public SimpleWayPoint clone() {
+		SimpleWayPoint wp = new SimpleWayPoint();
+		wp.name = this.getName();
+		wp.description = this.getDescription();
+		wp.time = this.getTime();
+		wp.longitude = this.getLongitude();
+		wp.latitude = this.getLatitude();
+		wp.altitude = this.getAltitude();
+		wp.speed = this.getSpeed();
+		wp.bearing = this.getBearing();
+		wp.accuracy = this.getAccuracy();
+		wp.tag = this.getTag();
+		return wp;
 	}
 	
 	@Override

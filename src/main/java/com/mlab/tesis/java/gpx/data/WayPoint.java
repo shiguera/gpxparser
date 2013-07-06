@@ -71,5 +71,6 @@ public interface WayPoint extends GpxNode {
 	public String asCsv(boolean withUtmCoords);
 	
 
+	public WayPoint clone();
 	
 }
