@@ -73,8 +73,8 @@ public abstract class AbstractWayPoint implements WayPoint {
 		this.longitude = 0.0;
 		this.latitude = 0.0;
 		this.altitude = 0.0;
-		this.speed = 0.0;
-		this.bearing = 0.0;
+		this.speed = -1.0;
+		this.bearing = -1.0;
 		this.accuracy = -1.0;
 		this.tag = TAG_WAYPOINT;
 	}

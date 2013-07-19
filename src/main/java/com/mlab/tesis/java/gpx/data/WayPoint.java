@@ -1,6 +1,15 @@
 package com.mlab.tesis.java.gpx.data;
 
 
+/**
+ * WayPoint's interface<br>
+ * A WayPoint has name, description, time, longitude, latitude, altitude, speed, bearing and accuracy<br>
+ * It also has a field named 'tag' that allows differentiate WayPoints from RoutePoints and TrackPoints 
+ * inside xml GpxDocuments
+ * 
+ * @author shiguera
+ *
+ */
 public interface WayPoint extends GpxNode {
 	
 	/**

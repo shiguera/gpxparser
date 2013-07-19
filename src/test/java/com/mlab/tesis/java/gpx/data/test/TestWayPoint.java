@@ -2,6 +2,9 @@ package com.mlab.tesis.java.gpx.data.test;
 
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import junit.framework.TestCase;
 
@@ -18,6 +21,10 @@ public class TestWayPoint extends TestCase {
 	Logger logger=LoggerFactory.getLogger(getClass());
 	
 	
+	public void testPruebas() {
+		
+	}
+	
 	public void testConstructor() {
 		//logger.warn("\nTESTING WayPoint constructor");
 		System.out.print("Testing WayPoint()...");
@@ -28,9 +35,21 @@ public class TestWayPoint extends TestCase {
 		//logger.info("\n"+tp.asGpx());		
 		
 		t=System.currentTimeMillis();
-		SimpleWayPoint tp2= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
-		assertNotNull(tp2);
-		//logger.info("\n"+tp2.asGpx());		
+		// testing short values[]
+		List<Double> values = new ArrayList<Double>();
+		values.add(-3.8);
+		values.add(42.5);
+		values.add(900.0);
+		//SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Short values",t,values);
+		//assertNotNull(tp2);
+		//assertEquals(-3.5,tp2.getLongitude());
+		//assertEquals(42.5,tp2.getLatitude());
+		//assertEquals(900.0,tp2.getAltitude());
+		
+		//logger.info("\n"+tp2.asGpx());	
+		
+		
+		
 		System.out.println("OK");
 	}
 	
@@ -60,8 +79,8 @@ public class TestWayPoint extends TestCase {
 		// Crear una instancia de TrackPoint para generar una cadena gpx con la que probar el parse
 		long t=System.currentTimeMillis();
 		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
-		//String cadgpx=tp.asGpx();
-		//System.out.println(GpxFactory.format(cadgpx));
+//		String cadgpx=tp.asGpx();
+//		System.out.println(GpxFactory.format(cadgpx));
 		
 		// Generar un TrackPoint parseando una cadena gpx y comprobar que no es nulo
 
@@ -70,17 +89,25 @@ public class TestWayPoint extends TestCase {
 			Method method=GpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
 			method.setAccessible(true);
 			parsedPoint = (SimpleWayPoint) method.invoke(factory, tp.asGpx());
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		assertNotNull(parsedPoint);
 		//logger.info("\n"+parsedPoint.asGpx());		
-
+		assertEquals(-3.8, parsedPoint.getLongitude());
+		assertEquals(42.5, parsedPoint.getLatitude());
+		assertEquals(900.0, parsedPoint.getAltitude());
+		assertEquals(23.7, parsedPoint.getSpeed());
+		assertEquals(123.2, parsedPoint.getBearing());
+		assertEquals(10.0, parsedPoint.getAccuracy());
+		
+		
 		// Comprobar que el TrackPoint del constructor tp y el parsedPoint 
 		// tienen la misma cadena gpx 
 		//System.out.println(GpxFactory.format(tp.asGpx()));
-//		System.out.println("-----------------");
-//		System.out.println(parsedPoint.asGpx());
+		//System.out.println("-----------------");
+		//System.out.println(parsedPoint.asGpx());
 		assertEquals(tp.asGpx(), parsedPoint.asGpx());
 		System.out.println("OK");
 		

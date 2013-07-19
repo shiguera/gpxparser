@@ -246,21 +246,27 @@ public abstract class GpxFactory {
 		double ele = parseDoubleTag(doc,"ele");
 		values.add(new Double(ele));
 		
-		// extensions por defecto v, bearing, acc
-		double speedd=parseDoubleTag(doc,"mlab:speed");
-		values.add(new Double(speedd));
-		
-		double bearingg=parseDoubleTag(doc,"mlab:bearing");
-		values.add(new Double(bearingg));
-		
-		double acc=parseDoubleTag(doc,"mlab:accuracy");
-		values.add(new Double(acc));
+//		// extensions por defecto v, bearing, acc
+//		double speedd=parseDoubleTag(doc,"mlab:speed");
+//		values.add(new Double(speedd));
+//		
+//		double bearingg=parseDoubleTag(doc,"mlab:bearing");
+//		values.add(new Double(bearingg));
+//		
+//		double acc=parseDoubleTag(doc,"mlab:accuracy");
+//		values.add(new Double(acc));
 		
 		// abstract method: extensiones que añade la implementación
 		// Solo admite doubles
 		List<Double> extValues = parseWayPointExtensions(doc);
 		values.addAll(extValues);
-		
+//		System.out.println("values[0]:"+values.get(0));
+//		System.out.println("values[1]:"+values.get(1));
+//		System.out.println("values[2]:"+values.get(2));
+//		System.out.println("values[3]:"+values.get(3));
+//		System.out.println("values[4]:"+values.get(4));
+//		System.out.println("values[5]:"+values.get(5));
+
 		// Abstract method
 		WayPoint pt=createWayPoint(namee,descrip,t,values);
 		return pt;

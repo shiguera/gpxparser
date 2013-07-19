@@ -3,7 +3,7 @@ package com.mlab.tesis.java.gpx.data;
 import java.util.List;
 
 /**
- * Elemento Composite para elementos GpxNode
+ * Interface for GpxElements that are composite elements
  * @author shiguera
  *
  */

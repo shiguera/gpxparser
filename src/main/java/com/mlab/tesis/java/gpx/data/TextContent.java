@@ -1,5 +1,10 @@
 package com.mlab.tesis.java.gpx.data;
 
+/**
+ * Utility class to add node content in a composite way to GpxElements
+ * @author shiguera
+ *
+ */
 public class TextContent implements GpxNode {
 
 	private String content;

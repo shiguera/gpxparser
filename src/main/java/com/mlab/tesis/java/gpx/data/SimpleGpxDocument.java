@@ -6,7 +6,7 @@ import org.w3c.dom.Document;
 
 /**
  * Clase utilitaria para manipulación de documentos Gpx
- * Básicamente se compone de un elemento Metadata y unas colecciones
+ * Básicamente se compone de un elemento Metadata, uno Extensions y unas colecciones
  * de WayPoint's, Route's y Track's
  * El esquema xsd es:<p>
  * <pre>
