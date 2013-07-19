@@ -73,10 +73,10 @@ public class TestExtendedGpxFactory {
 		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
 		GpxDocument doc = factory.parseGpxDocument(gpxdoc);
 		Assert.assertNotNull(doc);
+		//System.out.println("NUMWAYPOINTS:"+doc.getWayPoints().size());
 		Assert.assertEquals(1,doc.getWayPoints().size());
 		Assert.assertEquals(1.0,((ExtendedWayPoint)(doc.getWayPoints().get(0))).getAx());
 		System.out.println("OK");
-
 	}
 	
 	@Test

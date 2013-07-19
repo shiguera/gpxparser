@@ -123,6 +123,7 @@ public abstract class GpxFactory {
 		for(int i=0; i< nl.getLength(); i++) {
 			WayPoint wp= parseWayPoint(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(wp!=null) {
+				//System.out.println("GpxFactory.parseGpxDocument(): adding way point to gpxdoc...");	
 				gpxDocument.addWayPoint(wp);
 			}
 		}
@@ -218,9 +219,11 @@ public abstract class GpxFactory {
 	private WayPoint parseWayPoint(String cadgpx) {
 		Document doc = parseXmlDocument(cadgpx);
 		if(doc==null) {
+			System.out.println("GpxFactory.prseWayPoint(): ERROR doc=null");
 			return null;
 		}
 		if(!isValidWayPointDocument(doc)) {
+			System.out.println("GpxFactory.prseWayPoint(): ERROR not valid doc");
 			return null;
 		}
 		Element wptElement=doc.getDocumentElement();
@@ -245,28 +248,12 @@ public abstract class GpxFactory {
 		
 		double ele = parseDoubleTag(doc,"ele");
 		values.add(new Double(ele));
-		
-//		// extensions por defecto v, bearing, acc
-//		double speedd=parseDoubleTag(doc,"mlab:speed");
-//		values.add(new Double(speedd));
-//		
-//		double bearingg=parseDoubleTag(doc,"mlab:bearing");
-//		values.add(new Double(bearingg));
-//		
-//		double acc=parseDoubleTag(doc,"mlab:accuracy");
-//		values.add(new Double(acc));
-		
+				
 		// abstract method: extensiones que añade la implementación
 		// Solo admite doubles
 		List<Double> extValues = parseWayPointExtensions(doc);
 		values.addAll(extValues);
-//		System.out.println("values[0]:"+values.get(0));
-//		System.out.println("values[1]:"+values.get(1));
-//		System.out.println("values[2]:"+values.get(2));
-//		System.out.println("values[3]:"+values.get(3));
-//		System.out.println("values[4]:"+values.get(4));
-//		System.out.println("values[5]:"+values.get(5));
-
+		
 		// Abstract method
 		WayPoint pt=createWayPoint(namee,descrip,t,values);
 		return pt;
