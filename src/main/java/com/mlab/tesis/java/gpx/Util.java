@@ -1,4 +1,4 @@
-package com.mlab.tesis.java.gpx.data;
+package com.mlab.tesis.java.gpx;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

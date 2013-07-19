@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
-import com.mlab.tesis.java.gpx.data.Util;
+import com.mlab.tesis.java.gpx.Util;
 
 public class TestUtil extends TestCase {
 	

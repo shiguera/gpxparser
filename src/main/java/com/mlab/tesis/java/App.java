@@ -3,12 +3,12 @@ package com.mlab.tesis.java;
 import java.util.Arrays;
 import java.util.List;
 
+import com.mlab.tesis.java.gpx.Util;
 import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.Track;
-import com.mlab.tesis.java.gpx.data.Util;
 
 /**
  * Hello world!

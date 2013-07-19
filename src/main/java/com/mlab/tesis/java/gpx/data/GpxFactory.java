@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.mlab.tesis.java.gpx.Util;
 import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
 
 /**
