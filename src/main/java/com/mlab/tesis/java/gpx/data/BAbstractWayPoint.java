@@ -10,9 +10,13 @@ import com.mlab.tesis.srs.EllipsoidWGS84;
  * @author shiguera
  *
  */
-public abstract class AbstractWayPoint implements WayPoint {
+public abstract class BAbstractWayPoint implements BWayPoint {
 
 	protected final String TAG_WAYPOINT = "wpt";
+	private final int LONG_DECIMALS = 6;
+	private final int LAT_DECIMALS = 6;
+	private final int ALT_DECIMALS = 2;
+
 	
 	/**
 	 * Tiempo en milisegundos desde 1 Enero 1970 en horario UTC. 
@@ -42,21 +46,6 @@ public abstract class AbstractWayPoint implements WayPoint {
 	 * Altitud del punto. Cuando no se conoce se fija el valor en '-1.0'
 	 */
 	protected double altitude;
-	/**
-	 * Rumbo seguido por el móvil medido en grados desde el Norte hacia el Este. 
-	 * Cuando no se conoce el dato se 
-	 * fija en '-1.0'
-	 */
-	protected double bearing;
-	/**
-	 * Velocidad del móvil medida en m/sg . Cuando no se conoce el dato
-	 * se fija en '-1.0'
-	 */
-	protected double speed;
-	/** Precisión de las medidas de posición en metros. Cuando no se conoce
-	 * se fija en '-1.0'
-	 */
-	protected double accuracy;
 	
 	/**
 	 * Este campo se utiliza para diferenciar en la salida gpx los waypoint aislados del
@@ -66,21 +55,19 @@ public abstract class AbstractWayPoint implements WayPoint {
 	 * respectivamente.
 	 */
 	protected String tag;
-		
-	protected AbstractWayPoint() {
+	
+	/**
+	 * basic constructor
+	 */
+	protected BAbstractWayPoint() {
 		this.name = "";
 		this.description = "";
 		this.time = -1l;
 		this.longitude = 0.0;
 		this.latitude = 0.0;
 		this.altitude = 0.0;
-		this.speed = -1.0;
-		this.bearing = -1.0;
-		this.accuracy = -1.0;
 		this.tag = TAG_WAYPOINT;
 	}
-	
-	
 	
 	/**
 	 * Constructor de un objeto WayPoint
@@ -101,18 +88,14 @@ public abstract class AbstractWayPoint implements WayPoint {
 	 * @param accuracy Precisión de las medidas de posición en metros. Cuando no se conoce
 	 * se fija en '-1.0'
 	 */
-	protected AbstractWayPoint(String name, String description, long time, 
-			double longitude, double latitude, double altitude, 
-			double speed, double bearing, double accuracy) {
+	protected BAbstractWayPoint(String name, String description, long time, 
+			double longitude, double latitude, double altitude) {
 		this.name=name;
 		this.description=description;
 		this.time=time;
 		this.longitude=longitude;
 		this.latitude=latitude;
 		this.altitude=altitude;
-		this.speed=speed;
-		this.bearing=bearing;
-		this.accuracy=accuracy;
 		this.tag = TAG_WAYPOINT;
 	}
 	/**
@@ -125,8 +108,7 @@ public abstract class AbstractWayPoint implements WayPoint {
 	@Override
 	public double[] getValues() {
 		double[] val=new double[] {
-			this.longitude, this.latitude, this.altitude,
-			this.speed, this.bearing, this.accuracy};
+			this.longitude, this.latitude, this.altitude};
 		return val;
 	}
 
@@ -147,13 +129,9 @@ public abstract class AbstractWayPoint implements WayPoint {
 		cad = "<"+this.tag+" ";
 		cad += " lat=\""+slat+"\" lon=\""+slon+"\">";
 		// Altitud
-		if(this.altitude >= 0.0) {
-			cad += "<ele>"+String.format("%8.2f",this.altitude).trim().replace(',', '.')+"</ele>";
-		}
+		cad += "<ele>"+String.format("%8.2f",this.altitude).trim().replace(',', '.')+"</ele>";
 		// Time
-		if(this.time >= 0l) {
-			cad += "<time>"+Util.dateTimeToStringGpxFormat(time)+"</time>";		
-		}		 
+		cad += "<time>"+Util.dateTimeToStringGpxFormat(time)+"</time>";		
 		// name
 		if(!this.name.isEmpty()) {
 			cad += "<name>"+this.name+"</name>";
@@ -163,12 +141,10 @@ public abstract class AbstractWayPoint implements WayPoint {
 			cad += "<desc>"+this.description+"</desc>";
 		}
 		// extensions
-		if(this.bearing != -1.0 || this.speed!=-1.0 || this.accuracy!=-1.0) {
-			cad += "<extensions>";
-			// abstract method
-			cad += extensionsAsGpx();
-			cad += "</extensions>";
-		}
+		//cad += "<extensions>";
+		// abstract method
+		cad += extensionsAsGpx();
+		//cad += "</extensions>";
 		cad += "</"+this.tag+">";
 		return cad;	
 	}
@@ -181,14 +157,14 @@ public abstract class AbstractWayPoint implements WayPoint {
 	 * La cadena se insertará durante la ejecución del método 'asGpx()'
 	 * @return
 	 */
-	public abstract String extensionsAsGpx();
+	protected abstract String extensionsAsGpx();
 
 	/**
-	 * Abstract clonning method 
+	 * Build a copy of clling object
 	 */
 	@Override 
-	public abstract WayPoint clone();
-	
+	public abstract BWayPoint clone();
+
 	@Override
 	public String asCsv(boolean withUtmCoords) {
 		StringBuilder builder = new StringBuilder();
@@ -209,15 +185,34 @@ public abstract class AbstractWayPoint implements WayPoint {
 			builder.append(",");
 			builder.append(Util.doubleToString(xy[1], 12, 2));
 		}
-		builder.append(",");
-		builder.append(Util.doubleToString(this.speed, 12, 2));
-		builder.append(",");
-		builder.append(Util.doubleToString(this.bearing, 12, 2));
-		builder.append(",");
-		builder.append(Util.doubleToString(this.accuracy, 12, 2));
+		String exts = extensionsAsCsv();
+		if(!exts.isEmpty()) {
+			builder.append(",");
+			builder.append(exts);
+		}
 		return builder.toString();
 	}	
 
+	protected abstract String extensionsAsCsv();
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.name);
+		builder.append(",");
+		builder.append(this.description);
+		builder.append(",");
+		builder.append(String.format("%d", time));
+		builder.append(",");
+		builder.append(Util.doubleToString(longitude, 12, LONG_DECIMALS));
+		builder.append(",");
+		builder.append(Util.doubleToString(latitude, 12, LAT_DECIMALS));
+		builder.append(",");
+		builder.append(Util.doubleToString(altitude, 12, ALT_DECIMALS));		
+		return builder.toString();
+	}
+	
+	// getter setter
 	@Override
 	public long getTime() {
 		return time;
@@ -226,17 +221,14 @@ public abstract class AbstractWayPoint implements WayPoint {
 	public String getName() {
 		return name;
 	}
-
 	@Override
 	public String getDescription() {
 		return description;
 	}
-
 	@Override
 	public double getLongitude() {
 		return longitude;
 	}
-
 	@Override
 	public double getLatitude() {
 		return latitude;
@@ -244,18 +236,6 @@ public abstract class AbstractWayPoint implements WayPoint {
 	@Override
 	public double getAltitude() {
 		return altitude;
-	}
-	@Override
-	public double getSpeed() {
-		return speed;
-	}
-	@Override
-	public double getBearing() {
-		return bearing;
-	}
-	@Override
-	public double getAccuracy() {
-		return accuracy;
 	}
 	@Override
 	public String getTag() {
@@ -278,15 +258,6 @@ public abstract class AbstractWayPoint implements WayPoint {
 	}
 	public void setAltitude(double altitude) {
 		this.altitude = altitude;
-	}
-	public void setBearing(double bearing) {
-		this.bearing = bearing;
-	}
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-	public void setAccuracy(double accuracy) {
-		this.accuracy = accuracy;
 	}
 	@Override
 	public void setTag(String tag) {
