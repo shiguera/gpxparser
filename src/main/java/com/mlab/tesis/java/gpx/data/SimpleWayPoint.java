@@ -10,6 +10,13 @@ import java.util.List;
  *
  */
 public class SimpleWayPoint  extends AbstractWayPoint {
+	
+	private final String namespace = "mlab";
+	private final int SPEED_DECIMALS = 6;
+	private final int BEARING_DECIMALS = 2;
+	private final int ACCURACY_DECIMALS = 2;
+	
+
 
 	public SimpleWayPoint() {
 		super();
@@ -81,7 +88,11 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 	
 	@Override
 	public String extensionsAsGpx() {
-		return "";
+		StringBuilder builder = new StringBuilder();
+		builder.append(GpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
+		return builder.toString();
 	}
 
 }

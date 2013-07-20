@@ -167,24 +167,8 @@ public abstract class AbstractWayPoint implements WayPoint {
 		// extensions
 		if(this.bearing != -1.0 || this.speed!=-1.0 || this.accuracy!=-1.0) {
 			cad += "<extensions>";
-			// Bearing
-			if(this.bearing != -1.0) {
-				cad += "<mlab:bearing>"+String.format("%12.2f",this.bearing).trim().replace(',', '.')+"</mlab:bearing>";		
-			}
-	
-			// Speed
-			if(this.speed != -1.0) {
-				cad += "<mlab:speed>"+String.format("%12.2f",this.speed).trim().replace(',', '.')+"</mlab:speed>";		
-			}
-		
-			// Accuracy
-			if(this.accuracy != -1.0) {
-				cad += "<mlab:accuracy>"+String.format("%12.2f",this.accuracy).trim().replace(',', '.')+"</mlab:accuracy>";		
-			}
-			
 			// abstract method
 			cad += extensionsAsGpx();
-			
 			cad += "</extensions>";
 		}
 		cad += "</"+this.tag+">";
