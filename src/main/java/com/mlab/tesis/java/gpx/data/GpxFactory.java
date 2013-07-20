@@ -156,6 +156,11 @@ public abstract class GpxFactory {
 		return true;
 	}
 	
+	/**
+	 * Read a GpxDocument from a file
+	 * @param gpxFile
+	 * @return GpxDocument or null
+	 */
 	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
 		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory).parseGpxDocument(cad);
@@ -260,6 +265,11 @@ public abstract class GpxFactory {
 		return pt;
 	}
 
+	/**
+	 * Build a Route object from a gpx String
+	 * @param cadgpx
+	 * @return
+	 */
 	private Route parseRoute(String cadgpx) {
 		Route rte= new Route();
 		Document doc = parseXmlDocument(cadgpx);
@@ -286,6 +296,11 @@ public abstract class GpxFactory {
 		return rte;
 	}
 	
+	/**
+	 * Build a TrackSegment from a gpx String
+	 * @param cadgpx
+	 * @return
+	 */
 	private TrackSegment parseTrackSegment(String cadgpx) {
 		TrackSegment ts= new TrackSegment();
 		Document doc = parseXmlDocument(cadgpx);
@@ -313,6 +328,11 @@ public abstract class GpxFactory {
 		return ts;	
 	}
 
+	/**
+	 * Build a Track from a gpx String
+	 * @param cadgpx
+	 * @return
+	 */
 	private Track parseTrack(String cadgpx) {
 		Track t= new Track();
 		Document doc = parseXmlDocument(cadgpx);
@@ -425,6 +445,14 @@ public abstract class GpxFactory {
 		builder.append(">");
 		return builder.toString();
 	}
+	/**
+	 * Build a String with an xml tag. The tag can be openning tag or closing tag
+	 * according on isOpeningTag parameter
+	 * @param namespace
+	 * @param name
+	 * @param isOpeningTag
+	 * @return
+	 */
 	static String createTag(String namespace, String name, boolean isOpeningTag) {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<");

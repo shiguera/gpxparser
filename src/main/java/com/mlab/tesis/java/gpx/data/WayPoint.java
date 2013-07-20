@@ -75,11 +75,29 @@ public interface WayPoint extends GpxNode {
 	public void setTag(String tag); 
 	
 		
+	/**
+	 * Devuelve los valores de los campos en forma de Array de doubles. 
+	 * En la versión de SimpleWayPoint será:<br>
+	 * [longitude, latitude, altitude, speed, bearing, accuracy]<br>
+	 * Los puntos con más extensiones añadirán sus valores al double[]
+	 * @return
+	 */
 	public  double[] getValues();
 	
+	/**
+	 * Build a CSV String for the WayPoint. If the withUtmCoords parameter
+	 * is true, then projected coordinates of the point are added to the CSV String.
+	 * @param withUtmCoords
+	 * @return
+	 */
 	public String asCsv(boolean withUtmCoords);
 	
 
+	/**
+	 * Build a WayPoint cloned from calling object. Every derived class
+	 * have to implement the correct clone() method.
+	 * @return
+	 */
 	public WayPoint clone();
 	
 }

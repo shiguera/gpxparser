@@ -63,8 +63,8 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 */
 	protected List<Track> tracks;
 	
-	// FIXME Falta el elemento <extensions>
-
+	protected Extensions extensions;
+	
 	/**
 	 * Constructor de clase. Inicializa las colecciones.
 	 * He añadido el parámetro para el factory,
@@ -78,6 +78,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 		this.routes = new ArrayList<Route>();
 		this.tracks = new ArrayList<Track>();
 		this.wpts = new ArrayList<WayPoint>();
+		this.extensions = new Extensions();
 	}
 
 	@Override
@@ -213,8 +214,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 
 	@Override
 	public Extensions getExtensions() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.extensions;
 	}
 		
 }

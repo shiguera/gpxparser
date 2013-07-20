@@ -3,10 +3,9 @@ package com.mlab.tesis.java.gpx.data;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AbstractGpxElement implements GpxElement {
+public abstract class AbstractGpxElement implements GpxElement {
 
 	protected String tagname;
-
 	protected String namespace;
 	protected List<GpxNode> nodes;
 	
