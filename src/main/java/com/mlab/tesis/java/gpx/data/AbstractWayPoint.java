@@ -147,13 +147,9 @@ public abstract class AbstractWayPoint implements WayPoint {
 		cad = "<"+this.tag+" ";
 		cad += " lat=\""+slat+"\" lon=\""+slon+"\">";
 		// Altitud
-		if(this.altitude >= 0.0) {
-			cad += "<ele>"+String.format("%8.2f",this.altitude).trim().replace(',', '.')+"</ele>";
-		}
+		cad += "<ele>"+String.format("%8.2f",this.altitude).trim().replace(',', '.')+"</ele>";
 		// Time
-		if(this.time >= 0l) {
-			cad += "<time>"+Util.dateTimeToStringGpxFormat(time)+"</time>";		
-		}		 
+		cad += "<time>"+Util.dateTimeToStringGpxFormat(time)+"</time>";		
 		// name
 		if(!this.name.isEmpty()) {
 			cad += "<name>"+this.name+"</name>";
