@@ -37,7 +37,7 @@ public class SimpleGpxFactory extends GpxFactory {
 	 */
 	@Override
 	public List<Double> parseWayPointExtensions(Document doc) {
-		System.out.println("SimpleGpxFactory.parseWayPointExtensions()");
+		//System.out.println("SimpleGpxFactory.parseWayPointExtensions()");
 		// El double[] que hay que devolver es:
 		// [speed, bearing, accuracy]
 		List<Double> res = Arrays.asList(new Double[]{-1.0,-1.0,-1.0});

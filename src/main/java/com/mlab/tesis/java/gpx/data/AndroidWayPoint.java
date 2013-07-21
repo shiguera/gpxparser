@@ -6,10 +6,10 @@ import com.mlab.tesis.java.gpx.Util;
 
 public class AndroidWayPoint extends BSimpleWayPoint {
 
-	private final String namespace = "mlab";
-	private final int SPEED_DECIMALS = 6;
-	private final int BEARING_DECIMALS = 1;
-	private final int ACCURACY_DECIMALS = 1;
+	protected final String namespace = "mlab";
+	protected final int SPEED_DECIMALS = 6;
+	protected final int BEARING_DECIMALS = 1;
+	protected final int ACCURACY_DECIMALS = 1;
 
 	
 	
@@ -96,6 +96,11 @@ public class AndroidWayPoint extends BSimpleWayPoint {
 		builder.append(",");
 		builder.append(Util.doubleToString(this.accuracy, 12, ACCURACY_DECIMALS));
 		return builder.toString();
+	}
+
+	
+	public String getNamespace() {
+		return namespace;
 	}
 
 	

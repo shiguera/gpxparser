@@ -80,8 +80,7 @@ public class TestGpxFactory extends TestCase {
 		assertEquals(1,doc.getTracks().get(0).size());
 		// trkpt
 		assertEquals(3,doc.getTracks().get(0).getTrackSegment(0).size());
-		
-		
+
 		System.out.println("OK");
 	}
 	public void testNodeAsFormatedXmlString() {
@@ -132,8 +131,7 @@ public class TestGpxFactory extends TestCase {
 		assertEquals(46.57638889, wp.getLatitude());
 		assertEquals(8.89263889, wp.getLongitude());
 		assertEquals(2372.0, wp.getAltitude());
-		assertEquals("LAGORETICO", wp.getName());
-		
+		assertEquals("LAGORETICO", wp.getName());		
 
 		System.out.println("OK");
 		
@@ -190,7 +188,6 @@ public class TestGpxFactory extends TestCase {
 		// Etiqueta sin namespace, precisión por defecto
 		name = "Ax";
 		assertEquals("<Ax>0.000000</Ax>",GpxFactory.createDoubleTag(namespace,name,0.0));
-		System.out.println("OK");
 		// Etiqueta completa
 		namespace = "mlab";
 		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0));
@@ -199,8 +196,7 @@ public class TestGpxFactory extends TestCase {
 		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0,12,6));
 		assertEquals("<mlab:Ax>0.000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0,12,3));
 		assertEquals("<mlab:Ax>1.236</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,1.2356,12,3));
-		
-		
+			
 		System.out.println("OK");
 		
 	}
