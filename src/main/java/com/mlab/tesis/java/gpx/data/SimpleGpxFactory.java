@@ -7,11 +7,11 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
-public class BSimpleGpxFactory extends BGpxFactory {
+public class SimpleGpxFactory extends GpxFactory {
 
 	
- 	protected BSimpleGpxFactory() {
-		this.factoryType = BGpxFactory.Type.BSimpleGpxFactory;
+ 	protected SimpleGpxFactory() {
+		this.factoryType = GpxFactory.Type.BSimpleGpxFactory;
 	}
 
 	// Abstract method	
@@ -21,13 +21,13 @@ public class BSimpleGpxFactory extends BGpxFactory {
 	 * @return Devuelve el SimpleWayPoint creado o null si hay errores
 	 */	
 	@Override
-	public BSimpleWayPoint createWayPoint(String name, String description, long time,
+	public SimpleWayPoint createWayPoint(String name, String description, long time,
 			List<Double> values) {
 		if(values==null) {
 			System.out.println("BSimpleGpxFactory.createBWayPoint(): values=null");
 			return null;
 		}
-		BSimpleWayPoint wp= new BSimpleWayPoint(name,description,time, values);
+		SimpleWayPoint wp= new SimpleWayPoint(name,description,time, values);
 		return wp;
 	}
 

@@ -10,7 +10,7 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
-import com.mlab.tesis.java.gpx.data.BSimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 
 public class TestBExtendedWayPoint {
 
@@ -19,7 +19,7 @@ public class TestBExtendedWayPoint {
 		System.out.print("Testing BExtendedWayPoint...");
 
 		// Basic constructor
-		BExtendedWayPoint wp = new BExtendedWayPoint();
+		ExtendedWayPoint wp = new ExtendedWayPoint();
 		Assert.assertNotNull(wp);
 		Assert.assertEquals("", wp.getName());
 		Assert.assertEquals("", wp.getDescription());
@@ -36,7 +36,7 @@ public class TestBExtendedWayPoint {
 		Assert.assertEquals(0.0, wp.getPressure());
 
 		// Constructor with parameters
-		BExtendedWayPoint wp2 = new BExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
+		ExtendedWayPoint wp2 = new ExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
 				30.0,120.0,10.0, 1.0, 2.0, 3.0, 1013.0);
 		Assert.assertNotNull(wp2);
 		Assert.assertEquals("P1", wp2.getName());
@@ -55,7 +55,7 @@ public class TestBExtendedWayPoint {
 		
 		// Constructor from values
 		List<Double> values = Arrays.asList(new Double[]{-3.5, 42.9, 960.0, 30.0, 120.0, 10.0, 1.0, 2.0, 3.0, 1013.0});
-		BExtendedWayPoint wp3 = new BExtendedWayPoint("P1", "Pto de pruebas", 1000l, values);
+		ExtendedWayPoint wp3 = new ExtendedWayPoint("P1", "Pto de pruebas", 1000l, values);
 		Assert.assertEquals("P1", wp3.getName());
 		Assert.assertEquals("Pto de pruebas", wp3.getDescription());
 		Assert.assertEquals(1000l, wp3.getTime());
@@ -77,9 +77,9 @@ public class TestBExtendedWayPoint {
 	@Test
 	public void testClone() {
 		System.out.print("Testing BExtendedWayPoint.clone()...");
-		BExtendedWayPoint wp = new BExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
+		ExtendedWayPoint wp = new ExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
 				30.0,120.0,10.0, 1.0, 2.0, 3.0, 1013.0);
-		BExtendedWayPoint wp2 = wp.clone();
+		ExtendedWayPoint wp2 = wp.clone();
 		Assert.assertNotNull(wp2);
 		Assert.assertEquals("P1", wp2.getName());
 		Assert.assertEquals("Pto de pruebas", wp2.getDescription());
@@ -101,7 +101,7 @@ public class TestBExtendedWayPoint {
 	@Test
 	public void testAsCsv() {
 		System.out.print("Testing BExtendedWayPoint.asCsv()...");
-		BExtendedWayPoint wp = new BExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
+		ExtendedWayPoint wp = new ExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
 				30.0,120.0,10.0, 1.0, 2.0, 3.0, 1013.0);
 		
 		//System.out.println("\n"+wp.asCsv(false));		
@@ -117,7 +117,7 @@ public class TestBExtendedWayPoint {
 	@Test
 	public void testAsGpx() {
 		System.out.print("Testing BExtendedWayPoint.asGpx()...");
-		BExtendedWayPoint wp = new BExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
+		ExtendedWayPoint wp = new ExtendedWayPoint("P1", "Pto de pruebas", 1000l, -3.5, 42.9, 960.0,
 				30.0,120.0,10.0, 1.0, 2.0, 3.0, 1013.0);
 		
 		//System.out.println("\n"+wp.asGpx());		

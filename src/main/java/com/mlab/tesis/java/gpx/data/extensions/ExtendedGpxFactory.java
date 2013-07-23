@@ -7,18 +7,18 @@ import java.util.List;
 import org.w3c.dom.Document;
 
 import com.mlab.tesis.java.gpx.Util;
-import com.mlab.tesis.java.gpx.data.BGpxDocument;
-import com.mlab.tesis.java.gpx.data.BGpxFactory;
-import com.mlab.tesis.java.gpx.data.BSimpleGpxDocument;
-import com.mlab.tesis.java.gpx.data.BWayPoint;
+import com.mlab.tesis.java.gpx.data.GpxDocument;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
+import com.mlab.tesis.java.gpx.data.WayPoint;
 
-public class ExtendedGpxFactory extends BGpxFactory {
+public class ExtendedGpxFactory extends GpxFactory {
 
 
-	public static BGpxDocument readGpxDocument(File gpxFile) {
+	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
-		BGpxDocument gpxDoc = (BSimpleGpxDocument) 
-				BGpxFactory.getFactory(BGpxFactory.Type.ExtendedGpxFactory).parseGpxDocument(cad);
+		GpxDocument gpxDoc = (SimpleGpxDocument) 
+				GpxFactory.getFactory(GpxFactory.Type.ExtendedGpxFactory).parseGpxDocument(cad);
 		if(gpxDoc==null) {
 			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
 		}
@@ -26,7 +26,7 @@ public class ExtendedGpxFactory extends BGpxFactory {
 	}
 	
 	@Override
-	public BWayPoint createWayPoint(String name, String description, long time,
+	public WayPoint createWayPoint(String name, String description, long time,
 			List<Double> values) {
 		if(!isValidSize(values)) {
 			System.out.println("ExtendedGpxFactory.createWayPoint(): ERROR invalid values size "+values.size());
@@ -35,7 +35,7 @@ public class ExtendedGpxFactory extends BGpxFactory {
 			}
 			return null;
 		}
-		return new BExtendedWayPoint(name,description,time,values.get(0),
+		return new ExtendedWayPoint(name,description,time,values.get(0),
 			values.get(1),values.get(2),values.get(3),values.get(4),values.get(5),
 			values.get(6),values.get(7),values.get(8),values.get(9));
 	}
@@ -67,7 +67,7 @@ public class ExtendedGpxFactory extends BGpxFactory {
 	}
 	
 	@Override
-	public String asCsv(BWayPoint wp) {
+	public String asCsv(WayPoint wp) {
 		return wp.asCsv(false);
 	}
 

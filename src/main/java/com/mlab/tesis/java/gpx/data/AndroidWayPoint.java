@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.mlab.tesis.java.gpx.Util;
 
-public class AndroidWayPoint extends BSimpleWayPoint {
+public class AndroidWayPoint extends SimpleWayPoint {
 
 	protected final String namespace = "mlab";
 	protected final int SPEED_DECIMALS = 6;
@@ -81,9 +81,9 @@ public class AndroidWayPoint extends BSimpleWayPoint {
 	protected String extensionsAsGpx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<extensions>");
-		builder.append(BGpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
 		builder.append("</extensions>");
 		return builder.toString();
 	}

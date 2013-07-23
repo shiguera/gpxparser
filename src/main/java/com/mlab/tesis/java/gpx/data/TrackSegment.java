@@ -17,13 +17,13 @@ import com.mlab.tesis.srs.EllipsoidWGS84;
  * }
  * </pre>
  * */
-public class BTrackSegment extends AbstractGpxElement {
+public class TrackSegment extends AbstractGpxElement {
 	
 	private final String TAG_TRKPT = "trkpt";
 	private final String TAGNAME = "trkseg";
 	private TSerie tserie;
 	
-	public BTrackSegment() {
+	public TrackSegment() {
 		// (lon,lat,alt,vel,rumbo,accuracy)
 		super();
 		tserie = new TSerie();
@@ -36,10 +36,10 @@ public class BTrackSegment extends AbstractGpxElement {
 	 * @param index índice del AbstractWpt buscado
 	 * @return AbstractWpt o null
 	 */
-	public BWayPoint getWayPoint(int index) {
-		BWayPoint pt=null;
+	public WayPoint getWayPoint(int index) {
+		WayPoint pt=null;
 		if(index>=0 && index < this.size()) {
-			pt = (BWayPoint)this.nodes.get(index);
+			pt = (WayPoint)this.nodes.get(index);
 		}
 		return pt;
 	}
@@ -63,10 +63,10 @@ public class BTrackSegment extends AbstractGpxElement {
 	 * Devuelve el primer AbstractWpt del segmento
 	 * @return
 	 */
-	public BWayPoint getStartWayPoint() {
-		BWayPoint wpt = null;
+	public WayPoint getStartWayPoint() {
+		WayPoint wpt = null;
 		if (this.size()>0) {
-			wpt = (BWayPoint)this.nodes.get(0);
+			wpt = (WayPoint)this.nodes.get(0);
 		}
 		return wpt;
 	}
@@ -74,10 +74,10 @@ public class BTrackSegment extends AbstractGpxElement {
 	 * Devuelve el ultimo AbstractWpt del segmento o nulo
 	 * @return
 	 */
-	public BWayPoint getEndWayPoint() {
-		BWayPoint wpt = null;
+	public WayPoint getEndWayPoint() {
+		WayPoint wpt = null;
 		if (this.size()>0) {
-			wpt = (BWayPoint)this.nodes.get(this.size()-1);
+			wpt = (WayPoint)this.nodes.get(this.size()-1);
 		}
 		return wpt;
 	}
@@ -101,8 +101,8 @@ public class BTrackSegment extends AbstractGpxElement {
 	 */
 	@Override
 	public boolean add(GpxNode node) {
-		if(BWayPoint.class.isAssignableFrom(node.getClass())) {
-			return this.addWayPoint((BWayPoint)node);
+		if(WayPoint.class.isAssignableFrom(node.getClass())) {
+			return this.addWayPoint((WayPoint)node);
 		}
 		return false;
 	}
@@ -113,7 +113,7 @@ public class BTrackSegment extends AbstractGpxElement {
 	 * @param wp WayPoint que se quiere añadir al TrackSegment
 	 * @return boolean true si se añade y false si no se añade
 	 */
-	public boolean addWayPoint(BWayPoint wp) {
+	public boolean addWayPoint(WayPoint wp) {
 		boolean result = false;
 		if(this.tserie.canAdd(wp.getTime(), wp.getValues())) {
 			result = this.tserie.add(wp.getTime(), wp.getValues());
@@ -131,7 +131,7 @@ public class BTrackSegment extends AbstractGpxElement {
 		StringBuilder builder = new StringBuilder();
 		if(this.size()>0) {
 			for(int i=0; i< this.nodes.size(); i++) {
-				builder.append(((BWayPoint)this.nodes.get(i)).asCsv(withUtmCoords));
+				builder.append(((WayPoint)this.nodes.get(i)).asCsv(withUtmCoords));
 				if(!isLastPoint(i)) {
 					builder.append("\n");
 				}
@@ -152,11 +152,11 @@ public class BTrackSegment extends AbstractGpxElement {
 		
 		if(this.nodes.size()>0) {
 			EllipsoidWGS84 ell = new EllipsoidWGS84();
-			BWayPoint last = (BWayPoint)this.nodes().get(0);
+			WayPoint last = (WayPoint)this.nodes().get(0);
 			double[] lastxy= ell.proyUTM(last.getLongitude(), last.getLatitude());
 			
 			for(int i=0; i<this.nodes.size(); i++) {
-				BWayPoint current = (BWayPoint)this.nodes().get(i);
+				WayPoint current = (WayPoint)this.nodes().get(i);
 				double[] currentxy = ell.proyUTM(current.getLongitude(), current.getLatitude());
 				double incd = Math.sqrt((currentxy[0]-lastxy[0])*(currentxy[0]-lastxy[0])+
 						(currentxy[1]-lastxy[1])*(currentxy[1]-lastxy[1]));

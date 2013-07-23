@@ -6,12 +6,12 @@ import java.lang.reflect.Method;
 import junit.framework.TestCase;
 
 import com.mlab.tesis.java.gpx.Util;
-import com.mlab.tesis.java.gpx.data.BGpxDocument;
-import com.mlab.tesis.java.gpx.data.BGpxFactory;
-import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.BSimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.BTrack;
-import com.mlab.tesis.java.gpx.data.BTrackSegment;
+import com.mlab.tesis.java.gpx.data.GpxDocument;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.Track;
+import com.mlab.tesis.java.gpx.data.TrackSegment;
 import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
 
 public class TestTrackSegment extends TestCase {
@@ -22,13 +22,13 @@ public class TestTrackSegment extends TestCase {
 		//this.logger.info("TESTING TrackSegment.test()");
 		System.out.print("Testing TrackSegment()...");
 		long t=System.currentTimeMillis();
-		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto2","Punto de pruebas",t+1000l,-3.9,43.5,920.0);
-		BSimpleWayPoint tp3= new BSimpleWayPoint("Pto3","Punto de pruebas",t+2000l,-4.0,44.5,940.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000l,-3.9,43.5,920.0);
+		SimpleWayPoint tp3= new SimpleWayPoint("Pto3","Punto de pruebas",t+2000l,-4.0,44.5,940.0);
 		
-		BTrackSegment ts=new BTrackSegment();
+		TrackSegment ts=new TrackSegment();
 		assertNotNull(ts);
 		
-		BSimpleWayPoint tp= new BSimpleWayPoint("Pto1",
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1",
 			"Punto de pruebas",t,-3.8,42.5,900.0);
 		assertTrue(ts.addWayPoint(tp));
 		assertTrue(ts.addWayPoint(tp2));
@@ -44,26 +44,26 @@ public class TestTrackSegment extends TestCase {
 	public void testParseGpx() {
 		//this.logger.info("TESTING TrackSegment.testParseGpx()");
 		System.out.print("Testing TrackSegment.parseGpx()...");
-		BTrackSegment ts=new BTrackSegment();
+		TrackSegment ts=new TrackSegment();
 		assertNotNull(ts);
 		
 		long t=System.currentTimeMillis();
-		BSimpleWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 		ts.addWayPoint(tp);
-		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0);
 		ts.addWayPoint(tp2);
-		BSimpleWayPoint tp3= new BSimpleWayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0);
+		SimpleWayPoint tp3= new SimpleWayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0);
 		ts.addWayPoint(tp3);
 		assertEquals(3,ts.size());
 		//System.out.println(GpxFactory.format(cadgpx));
 		
-		BGpxFactory factory = BGpxFactory.getFactory(Type.BSimpleGpxFactory);
-		BTrackSegment parsed=null;
+		GpxFactory factory = GpxFactory.getFactory(Type.BSimpleGpxFactory);
+		TrackSegment parsed=null;
 		try {
-			Method method=BGpxFactory.class.getDeclaredMethod(
+			Method method=GpxFactory.class.getDeclaredMethod(
 				"parseTrackSegment", String.class);
 			method.setAccessible(true);
-			parsed = (BTrackSegment) method.invoke(factory, ts.asGpx());
+			parsed = (TrackSegment) method.invoke(factory, ts.asGpx());
 		} catch (Exception e) {
 			System.out.println("ERROR");
 			e.printStackTrace();
@@ -80,10 +80,10 @@ public class TestTrackSegment extends TestCase {
 	public void testLength() {
 		System.out.print("Testing TrackSegment.length()...");
 		File gpxFile = Util.readResourceFile("test.gpx");
-		BGpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
+		GpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
 		assertNotNull(doc);
-		BTrack track = (BTrack)doc.getTracks().get(0);
-		BTrackSegment segment = (BTrackSegment)track.nodes().get(0);
+		Track track = (Track)doc.getTracks().get(0);
+		TrackSegment segment = (TrackSegment)track.nodes().get(0);
 		assertEquals(9095, (int)segment.length());
 		System.out.println("OK");
 	}

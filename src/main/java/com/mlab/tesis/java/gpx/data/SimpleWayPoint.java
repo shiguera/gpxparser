@@ -9,14 +9,14 @@ import java.util.List;
  * @author shiguera
  *
  */
-public class BSimpleWayPoint  extends BAbstractWayPoint {
+public class SimpleWayPoint  extends AbstractWayPoint {
 	
 
 	// Constructors
 	/**
 	 * Basic constructor
 	 */
-	public BSimpleWayPoint() {
+	public SimpleWayPoint() {
 		super();
 	}
 
@@ -32,7 +32,7 @@ public class BSimpleWayPoint  extends BAbstractWayPoint {
 	 * @param bearing
 	 * @param accuracy
 	 */
-	public BSimpleWayPoint(String name, String description, long time, 
+	public SimpleWayPoint(String name, String description, long time, 
 			double longitude, double latitude, double altitude) {
 		super(name,description,time,longitude,latitude,altitude);
 	}
@@ -47,7 +47,7 @@ public class BSimpleWayPoint  extends BAbstractWayPoint {
 	 * @param time
 	 * @param values
 	 */
-	public BSimpleWayPoint(String name, String descrip, long time, List<Double> values) {
+	public SimpleWayPoint(String name, String descrip, long time, List<Double> values) {
 		this.name = name;
 		this.description = descrip;
 		this.time = time;
@@ -74,8 +74,8 @@ public class BSimpleWayPoint  extends BAbstractWayPoint {
 	 * Makes a copy of active object
 	 */
 	@Override
-	public BSimpleWayPoint clone() {
-		BSimpleWayPoint wp = new BSimpleWayPoint();
+	public SimpleWayPoint clone() {
+		SimpleWayPoint wp = new SimpleWayPoint();
 		wp.name = this.getName();
 		wp.description = this.getDescription();
 		wp.time = this.getTime();

@@ -10,7 +10,7 @@ import com.mlab.tesis.srs.EllipsoidWGS84;
  * @author shiguera
  *
  */
-public abstract class BAbstractWayPoint implements BWayPoint {
+public abstract class AbstractWayPoint implements WayPoint {
 
 	protected final String TAG_WAYPOINT = "wpt";
 	private final int LONG_DECIMALS = 6;
@@ -59,7 +59,7 @@ public abstract class BAbstractWayPoint implements BWayPoint {
 	/**
 	 * basic constructor
 	 */
-	protected BAbstractWayPoint() {
+	protected AbstractWayPoint() {
 		this.name = "";
 		this.description = "";
 		this.time = -1l;
@@ -88,7 +88,7 @@ public abstract class BAbstractWayPoint implements BWayPoint {
 	 * @param accuracy Precisión de las medidas de posición en metros. Cuando no se conoce
 	 * se fija en '-1.0'
 	 */
-	protected BAbstractWayPoint(String name, String description, long time, 
+	protected AbstractWayPoint(String name, String description, long time, 
 			double longitude, double latitude, double altitude) {
 		this.name=name;
 		this.description=description;
@@ -163,7 +163,7 @@ public abstract class BAbstractWayPoint implements BWayPoint {
 	 * Build a copy of clling object
 	 */
 	@Override 
-	public abstract BWayPoint clone();
+	public abstract WayPoint clone();
 
 	@Override
 	public String asCsv(boolean withUtmCoords) {

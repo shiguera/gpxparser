@@ -44,7 +44,7 @@ import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
  * @author shiguera
  *
  */
-public abstract class BGpxFactory {
+public abstract class GpxFactory {
 	
 	final static int XMLFORMAT_INDENT = 3;
 	final static String DOUBLE_DEFAULTPRECISSION_FORMAT = "%12.6f";
@@ -57,7 +57,7 @@ public abstract class BGpxFactory {
 	 * del método estático 'getFactory()' 	
 	 */
 	public enum Type {BSimpleGpxFactory, ExtendedGpxFactory};
-	protected BGpxFactory.Type factoryType; 
+	protected GpxFactory.Type factoryType; 
 	
 	/**
 	 * Permite instanciar una factory concreta, adaptada al
@@ -65,10 +65,10 @@ public abstract class BGpxFactory {
 	 * @param factoryType
 	 * @return
 	 */
-	public static BGpxFactory getFactory(BGpxFactory.Type factoryType) {
+	public static GpxFactory getFactory(GpxFactory.Type factoryType) {
 		switch(factoryType) {
 			case BSimpleGpxFactory:
-				return new BSimpleGpxFactory();
+				return new SimpleGpxFactory();
 			case ExtendedGpxFactory:
 				return new ExtendedGpxFactory();
 		}
@@ -105,7 +105,7 @@ public abstract class BGpxFactory {
 	 * @param cadgpx
 	 * @return GpxDocument 
 	 */
-	public BGpxDocument parseGpxDocument(String cadgpx) {
+	public GpxDocument parseGpxDocument(String cadgpx) {
 		Document doc= parseXmlDocument(cadgpx);
 		//System.out.println(doc.getTextContent());
 		if(!isValidGpxDocument(doc)) {
@@ -114,7 +114,7 @@ public abstract class BGpxFactory {
 		//Element gpx=doc.getDocumentElement();
 		
 		// Abstract method
-		BGpxDocument gpxDocument = createGpxDocument();
+		GpxDocument gpxDocument = createGpxDocument();
 		
 		// FIXME Procesar metadata
 		
@@ -122,7 +122,7 @@ public abstract class BGpxFactory {
 		NodeList nl=doc.getElementsByTagName("wpt");
 		//System.out.println("----------------\n"+nl.getLength()+"---------------\n");
 		for(int i=0; i< nl.getLength(); i++) {
-			BWayPoint wp= parseWayPoint(BGpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+			WayPoint wp= parseWayPoint(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(wp!=null) {
 				//System.out.println("GpxFactory.parseGpxDocument(): adding way point to gpxdoc...");	
 				gpxDocument.addWayPoint(wp);
@@ -131,7 +131,7 @@ public abstract class BGpxFactory {
 		// Procesar nodos RTE
 		nl=doc.getElementsByTagName("rte");
 		for(int i=0; i< nl.getLength(); i++) {
-			BRoute rte= parseRoute(BGpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+			Route rte= parseRoute(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(rte!=null) {
 				gpxDocument.addRoute(rte);
 			}
@@ -139,7 +139,7 @@ public abstract class BGpxFactory {
 		// Procesar nodos TRK
 		nl=doc.getElementsByTagName("trk");
 		for(int i=0; i< nl.getLength(); i++) {
-			BTrack trk= parseTrack(BGpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+			Track trk= parseTrack(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(trk!=null) {
 				gpxDocument.addTrack(trk);
 			}
@@ -161,9 +161,9 @@ public abstract class BGpxFactory {
 	 * @param gpxFile
 	 * @return GpxDocument or null
 	 */
-	public static BGpxDocument readGpxDocument(File gpxFile) {
+	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
-		BGpxDocument gpxDoc = (BSimpleGpxDocument) BGpxFactory.getFactory(BGpxFactory.Type.BSimpleGpxFactory).parseGpxDocument(cad);
+		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory).parseGpxDocument(cad);
 		if(gpxDoc==null) {
 			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
 		}
@@ -222,7 +222,7 @@ public abstract class BGpxFactory {
 	 * @return WayPoint o null si hay errores
 	 * @throws ParserConfigurationException 
 	 */
-	private BWayPoint parseWayPoint(String cadgpx) {
+	private WayPoint parseWayPoint(String cadgpx) {
 		Document doc = parseXmlDocument(cadgpx);
 		if(doc==null) {
 			System.out.println("GpxFactory.prseWayPoint(): ERROR doc=null");
@@ -261,7 +261,7 @@ public abstract class BGpxFactory {
 		values.addAll(extValues);
 		
 		// Abstract method
-		BWayPoint pt=createWayPoint(namee,descrip,t,values);
+		WayPoint pt=createWayPoint(namee,descrip,t,values);
 		return pt;
 	}
 
@@ -270,8 +270,8 @@ public abstract class BGpxFactory {
 	 * @param cadgpx
 	 * @return
 	 */
-	private BRoute parseRoute(String cadgpx) {
-		BRoute rte= new BRoute();
+	private Route parseRoute(String cadgpx) {
+		Route rte= new Route();
 		Document doc = parseXmlDocument(cadgpx);
 		if(doc==null) {
 			return null;
@@ -283,7 +283,7 @@ public abstract class BGpxFactory {
 		if(nl.getLength()>0) {
 			for (int i=0; i<nl.getLength(); i++) {
 				try {
-					BWayPoint wp= parseWayPoint(BGpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+					WayPoint wp= parseWayPoint(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 					if(wp!=null) {
 						rte.addWayPoint(wp);
 					}
@@ -301,8 +301,8 @@ public abstract class BGpxFactory {
 	 * @param cadgpx
 	 * @return
 	 */
-	private BTrackSegment parseTrackSegment(String cadgpx) {
-		BTrackSegment ts= new BTrackSegment();
+	private TrackSegment parseTrackSegment(String cadgpx) {
+		TrackSegment ts= new TrackSegment();
 		Document doc = parseXmlDocument(cadgpx);
 		if(doc==null) {
 			return null;
@@ -315,7 +315,7 @@ public abstract class BGpxFactory {
 		if(nl.getLength()>0) {
 			for (int i=0; i<nl.getLength(); i++) {
 				try {
-					BWayPoint wp= parseWayPoint(BGpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+					WayPoint wp= parseWayPoint(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 					if(wp!=null) {
 						ts.addWayPoint(wp);
 					}
@@ -333,8 +333,8 @@ public abstract class BGpxFactory {
 	 * @param cadgpx
 	 * @return
 	 */
-	private BTrack parseTrack(String cadgpx) {
-		BTrack t= new BTrack();
+	private Track parseTrack(String cadgpx) {
+		Track t= new Track();
 		Document doc = parseXmlDocument(cadgpx);
 		if(doc==null) {
 			return null;
@@ -351,7 +351,7 @@ public abstract class BGpxFactory {
 		if(nl.getLength()>0) {
 			for (int i=0; i<nl.getLength(); i++) {
 				try {
-					BTrackSegment ts = this.parseTrackSegment(BGpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
+					TrackSegment ts = this.parseTrackSegment(GpxFactory.nodeAsFormatedXmlString(nl.item(i),false));
 					if(ts!=null) {
 						t.addTrackSegment(ts);
 					}
@@ -413,7 +413,7 @@ public abstract class BGpxFactory {
 		StringBuilder builder = new StringBuilder();
 		builder.append(createOpenTag(tagname));
 		builder.append(String.format(DOUBLE_DEFAULTPRECISSION_FORMAT, value).replace(',','.').trim());
-		builder.append(BGpxFactory.createCloseTag(tagname));
+		builder.append(GpxFactory.createCloseTag(tagname));
 		return builder.toString();
 	}
 	public static String createDoubleTag(String namespace, String name, double value, int digits, int decimals) {
@@ -428,7 +428,7 @@ public abstract class BGpxFactory {
 		StringBuilder builder = new StringBuilder();
 		builder.append(createOpenTag(tagname));
 		builder.append(Util.doubleToString(value, digits, decimals));
-		builder.append(BGpxFactory.createCloseTag(tagname));
+		builder.append(GpxFactory.createCloseTag(tagname));
 		return builder.toString();
 	}
 	static String createOpenTag(String name) {
@@ -497,8 +497,8 @@ public abstract class BGpxFactory {
 	}
 	
 	// Abstract methods
-	public BGpxDocument createGpxDocument() {
-		return new BSimpleGpxDocument();
+	public GpxDocument createGpxDocument() {
+		return new SimpleGpxDocument();
 	}
 	
 	/**
@@ -510,7 +510,7 @@ public abstract class BGpxFactory {
 	 * @param values List<Double> con los valores necesarios para el constructor de la clase WayPoint concreta.
 	 * @return WayPoint de la clase concreta o null
 	 */
-	public abstract BWayPoint createWayPoint(String name,
+	public abstract WayPoint createWayPoint(String name,
 			String description, long time, List<Double> values);
 
 	/** Abstract method utilizado por el método 'parseWayPoint()'
@@ -522,7 +522,7 @@ public abstract class BGpxFactory {
 	 */
 	public abstract List<Double> parseWayPointExtensions(Document doc);
 	
-	public String asCsv(BWayPoint wp) {
+	public String asCsv(WayPoint wp) {
 		return wp.asCsv(false);
 	}
 	

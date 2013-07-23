@@ -27,7 +27,7 @@ import org.w3c.dom.Document;
  * 
  * @author shiguera
  */
-public class BSimpleGpxDocument  implements BGpxDocument {	
+public class SimpleGpxDocument  implements GpxDocument {	
 	private final String TAG_WAYPOINT = "wpt";
 	
 	final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
@@ -38,7 +38,7 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 		"xmlns:mlab=\"http://mercatorlab.com/downloads/mlab.xsd\">";
 	final String FOOTER = "</gpx>";
 	
-	protected BGpxFactory gpxFactory;
+	protected GpxFactory gpxFactory;
 	
 	/**
 	 * DOM Document tipo gpx
@@ -52,16 +52,16 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	/**
 	 * Colección de WayPoint's del GpxDocument
 	 */
-	protected List<BWayPoint> wpts; 
+	protected List<WayPoint> wpts; 
 	/**
 	 * Colección de Route's del GpxDocument
 	 */
-	protected List<BRoute> routes; 
+	protected List<Route> routes; 
 
 	/**
 	 * Colección de Track's del GpxDocument
 	 */
-	protected List<BTrack> tracks;
+	protected List<Track> tracks;
 	
 	protected Extensions extensions;
 	
@@ -71,19 +71,19 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	 * lo que rompe la compatibilidad con programas ya hechos
 	 * 
 	 */
-	public BSimpleGpxDocument() {
-		this.gpxFactory = BGpxFactory.getFactory(BGpxFactory.Type.BSimpleGpxFactory);
+	public SimpleGpxDocument() {
+		this.gpxFactory = GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory);
 		this.doc = null;
 		this.metadata= new Metadata();
-		this.routes = new ArrayList<BRoute>();
-		this.tracks = new ArrayList<BTrack>();
-		this.wpts = new ArrayList<BWayPoint>();
+		this.routes = new ArrayList<Route>();
+		this.tracks = new ArrayList<Track>();
+		this.wpts = new ArrayList<WayPoint>();
 		this.extensions = new Extensions();
 	}
 
 	@Override
 	public Document getDomDocument() {
-		doc = BGpxFactory.parseXmlDocument(this.asGpx());
+		doc = GpxFactory.parseXmlDocument(this.asGpx());
 		return doc;
 	}
 
@@ -101,29 +101,29 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	}
 
 	@Override
-	public List<BWayPoint> getWayPoints() {
+	public List<WayPoint> getWayPoints() {
 		return wpts;
 	}
 
-	public void setWpts(ArrayList<BWayPoint> wpts) {
+	public void setWpts(ArrayList<WayPoint> wpts) {
 		this.wpts = wpts;
 	}
 
 	@Override
-	public List<BRoute> getRoutes() {
+	public List<Route> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(ArrayList<BRoute> routes) {
+	public void setRoutes(ArrayList<Route> routes) {
 		this.routes = routes;
 	}
 	
 	@Override
-	public List<BTrack> getTracks() {
+	public List<Track> getTracks() {
 		return tracks;
 	}
 
-	public void setTracks(ArrayList<BTrack> tracks) {
+	public void setTracks(ArrayList<Track> tracks) {
 		this.tracks = tracks;
 	}
 
@@ -132,7 +132,7 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	 * @param track Track que se quiere añadir
 	 */
 	@Override
-	public void addTrack(BTrack track) {
+	public void addTrack(Track track) {
 		// Añadir el track a la colección de tracks
 		this.tracks.add(track);
 		
@@ -151,7 +151,7 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	 * @param wp WayPoint que se quiere añadir
 	 */
 	@Override
-	public void addWayPoint(BWayPoint wp) {
+	public void addWayPoint(WayPoint wp) {
 		wp.setTag(TAG_WAYPOINT);
 		this.wpts.add(wp);
 	}
@@ -163,7 +163,7 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	 * @param rte Route que se quiere añadir
 	 */
 	@Override
-	public void addRoute(BRoute rte) {
+	public void addRoute(Route rte) {
 		this.routes.add(rte);
 	}
 	public int routeCount() {
@@ -209,7 +209,7 @@ public class BSimpleGpxDocument  implements BGpxDocument {
 	
 	public String format() {
 		String xml=this.asGpx();
-        return BGpxFactory.format(xml);
+        return GpxFactory.format(xml);
     }
 
 	@Override

@@ -5,17 +5,17 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
-import com.mlab.tesis.java.gpx.data.BGpxFactory;
-import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.BWayPoint;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
+import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class TestExtendedWayPoint extends TestCase {
 
-	BExtendedWayPoint wp;
+	ExtendedWayPoint wp;
 	
 	@Override
 	protected void setUp() throws Exception {
-		wp = new BExtendedWayPoint();
+		wp = new ExtendedWayPoint();
 		super.setUp();
 	}
 
@@ -34,9 +34,9 @@ public class TestExtendedWayPoint extends TestCase {
 	
 	public void testGetValues() {
 		System.out.print("Testing ExtendedWayPoint.getValues()...");
-		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
+		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		assertEquals(10,wp.getValues().length);
 		System.out.println("OK");
 	}

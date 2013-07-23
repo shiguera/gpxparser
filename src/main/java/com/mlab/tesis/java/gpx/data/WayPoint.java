@@ -1,6 +1,6 @@
 package com.mlab.tesis.java.gpx.data;
 
-public interface BWayPoint extends GpxNode {
+public interface WayPoint extends GpxNode {
 
 	/**
 	 * nombre asignado al punto
@@ -70,5 +70,5 @@ public interface BWayPoint extends GpxNode {
 	 * have to implement the correct clone() method.
 	 * @return
 	 */
-	public BWayPoint clone();
+	public WayPoint clone();
 }

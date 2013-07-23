@@ -12,17 +12,17 @@ import org.w3c.dom.Document;
  * @author shiguera
  *
  */
-public interface BGpxDocument extends GpxNode {
+public interface GpxDocument extends GpxNode {
 	
 	Document getDomDocument();
 	Metadata getMetadata();
-	List<BWayPoint> getWayPoints();
-	List<BRoute> getRoutes();
-	List<BTrack> getTracks();
+	List<WayPoint> getWayPoints();
+	List<Route> getRoutes();
+	List<Track> getTracks();
 	Extensions getExtensions();
 	
-	void addTrack(BTrack track);
-	void addWayPoint(BWayPoint wp);
-	void addRoute(BRoute rte);
+	void addTrack(Track track);
+	void addWayPoint(WayPoint wp);
+	void addRoute(Route rte);
 
 }

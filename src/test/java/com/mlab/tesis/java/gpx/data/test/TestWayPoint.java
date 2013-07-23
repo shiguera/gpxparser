@@ -11,10 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
-import com.mlab.tesis.java.gpx.data.BGpxFactory;
-import com.mlab.tesis.java.gpx.data.BSimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.BWayPoint;
-import com.mlab.tesis.java.gpx.data.extensions.BExtendedWayPoint;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.extensions.ExtendedWayPoint;
 
 public class TestWayPoint extends TestCase {
 
@@ -31,7 +31,7 @@ public class TestWayPoint extends TestCase {
 		long t=System.currentTimeMillis();
 		
 		// Basic constructor
-		BWayPoint wp = new BSimpleWayPoint();
+		WayPoint wp = new SimpleWayPoint();
 		assertNotNull(wp);
 		assertEquals("", wp.getName());
 		assertEquals("", wp.getDescription());
@@ -41,7 +41,7 @@ public class TestWayPoint extends TestCase {
 		assertEquals(0.0,wp.getAltitude());
 
 		// Constructor from parameters
-		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
+		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 		assertNotNull(tp);
 		assertEquals("Pto1", tp.getName());
 		assertEquals("Punto de pruebas", tp.getDescription());
@@ -55,7 +55,7 @@ public class TestWayPoint extends TestCase {
 		values.add(-3.8);
 		values.add(42.5);
 		values.add(900.0);
-		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto1","Punto de pruebas",t,values);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto1","Punto de pruebas",t,values);
 		assertNotNull(tp2);
 		assertEquals("Pto1", tp2.getName());
 		assertEquals("Punto de pruebas", tp2.getDescription());
@@ -69,7 +69,7 @@ public class TestWayPoint extends TestCase {
 	
 	public void testAsCsv() {
 		System.out.print("Testing WayPoint.asCsv()...");
-		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0);
+		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0);
 		//System.out.println(tp.asCsv(false));
 		assertEquals("1970-01-01T00:00:01.01Z,1000,-3.800000,42.500000,900.00",
 				tp.asCsv(false));
@@ -80,20 +80,20 @@ public class TestWayPoint extends TestCase {
 	public void testParseGpx() {
 		//logger.warn("TESTING WayPoint.parseGpx()");
 		System.out.print("Testing WayPoint.parseGpx()...");
-		BGpxFactory factory = BGpxFactory.getFactory(BGpxFactory.Type.BSimpleGpxFactory);		
+		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory);		
 		// Crear una instancia de TrackPoint para generar una cadena gpx con la que probar el parse
 		long t=System.currentTimeMillis();
-		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
+		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 //		String cadgpx=tp.asGpx();
 //		System.out.println(GpxFactory.format(cadgpx));
 		
 		// Generar un TrackPoint parseando una cadena gpx y comprobar que no es nulo
 
-		BWayPoint parsedPoint = null;
+		WayPoint parsedPoint = null;
 		try {
-			Method method=BGpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
+			Method method=GpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
 			method.setAccessible(true);
-			parsedPoint = (BSimpleWayPoint) method.invoke(factory, tp.asGpx());
+			parsedPoint = (SimpleWayPoint) method.invoke(factory, tp.asGpx());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -118,8 +118,8 @@ public class TestWayPoint extends TestCase {
 	public void testClone() {
 		System.out.print("Testing WayPoint.clone()...");
 		long t=System.currentTimeMillis();
-		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
-		BWayPoint tp2 = tp.clone();
+		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
+		WayPoint tp2 = tp.clone();
 		assertNotNull(tp2);
 		assertEquals("Pto1", tp2.getName());
 		assertEquals("Punto de pruebas", tp2.getDescription());

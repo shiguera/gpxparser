@@ -4,14 +4,14 @@ import java.util.List;
 
 import com.mlab.tesis.java.gpx.Util;
 import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
-import com.mlab.tesis.java.gpx.data.BGpxFactory;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
 
 /**
  * 
  * @author shiguera
  *
  */
-public class BExtendedWayPoint extends AndroidWayPoint {
+public class ExtendedWayPoint extends AndroidWayPoint {
 
 	protected final int ACCELERATION_DECIMALS = 6;
 	protected final int PRESSURE_DECIMALS = 2;
@@ -19,14 +19,14 @@ public class BExtendedWayPoint extends AndroidWayPoint {
 	// Valores de las aceleraciones x,y,z y de la presión
 	private double ax,ay,az,pressure;
 
-	public BExtendedWayPoint() {
+	public ExtendedWayPoint() {
 		super();
 		this.ax=0.0;
 		this.ay=0.0;
 		this.az=0.0;
 		this.pressure=0.0;
 	}
-	public BExtendedWayPoint(String name, String description, long time, 
+	public ExtendedWayPoint(String name, String description, long time, 
 			double longitude, double latitude, double altitude, 
 			double speed, double bearing, double accuracy, double ax, double ay, double az, double pressure) {
 		super(name,description,time,longitude,latitude,altitude,
@@ -37,7 +37,7 @@ public class BExtendedWayPoint extends AndroidWayPoint {
 		this.pressure=pressure;
 	}
 	
-	public BExtendedWayPoint(String name, String descrip, long time, List<Double> values) {
+	public ExtendedWayPoint(String name, String descrip, long time, List<Double> values) {
 		super(name, descrip, time, values);
 		this.ax = 0.0;
 		this.ay = 0.0;
@@ -53,8 +53,8 @@ public class BExtendedWayPoint extends AndroidWayPoint {
 
 
 	@Override
-	public BExtendedWayPoint clone() {
-		BExtendedWayPoint wp = new BExtendedWayPoint();
+	public ExtendedWayPoint clone() {
+		ExtendedWayPoint wp = new ExtendedWayPoint();
 		wp.name = this.getName();
 		wp.description = this.getDescription();
 		wp.time = this.getTime();
@@ -82,13 +82,13 @@ public class BExtendedWayPoint extends AndroidWayPoint {
 	public String extensionsAsGpx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<extensions>");
-		builder.append(BGpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "ax", ax, 12, ACCELERATION_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "ay", ay, 12, ACCELERATION_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "az", az, 12, ACCELERATION_DECIMALS));
-		builder.append(BGpxFactory.createDoubleTag(namespace, "pressure", pressure, 12, PRESSURE_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "ax", ax, 12, ACCELERATION_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "ay", ay, 12, ACCELERATION_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "az", az, 12, ACCELERATION_DECIMALS));
+		builder.append(GpxFactory.createDoubleTag(namespace, "pressure", pressure, 12, PRESSURE_DECIMALS));
 		builder.append("</extensions>");
 		return builder.toString();
 	}

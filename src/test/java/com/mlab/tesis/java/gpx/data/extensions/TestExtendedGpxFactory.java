@@ -7,10 +7,10 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.mlab.tesis.java.gpx.data.BGpxDocument;
-import com.mlab.tesis.java.gpx.data.BGpxFactory;
-import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.BWayPoint;
+import com.mlab.tesis.java.gpx.data.GpxDocument;
+import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
+import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class TestExtendedGpxFactory {
 
@@ -29,10 +29,10 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void test() {
 		System.out.print("Testing ExtendedGpxFactory()...");
-		BGpxFactory factory = new ExtendedGpxFactory();
+		GpxFactory factory = new ExtendedGpxFactory();
 		Assert.assertNotNull(factory);
 		
-		BGpxFactory factory2 = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
+		GpxFactory factory2 = GpxFactory.getFactory(Type.ExtendedGpxFactory);
 		Assert.assertNotNull(factory);
 		System.out.println("OK");
 
@@ -41,10 +41,10 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void testCreateWayPoint() {
 		System.out.print("Testing ExtendedGpxFactory.createWayPoint()...");
-		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
+		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
 		Assert.assertNotNull(factory);	
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		Assert.assertNotNull(wp);
 		//System.out.println(wp.asGpx());
 		
@@ -55,10 +55,10 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void testParseWayPointExtensions() {
 		System.out.print("Testing ExtendedGpxFactory.ParseWayPointExtensions()...");
-		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
-		BGpxDocument doc = factory.createGpxDocument();
+		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
+		GpxDocument doc = factory.createGpxDocument();
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		doc.addWayPoint(wp);
 		Assert.assertEquals(1,doc.getWayPoints().size());
 		//System.out.println(doc.asGpx());
@@ -70,21 +70,21 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void testParseGpxDocument() {
 		System.out.print("Testing ExtendedGpxFactory.ParseGpxDocument()...");
-		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
-		BGpxDocument doc = factory.parseGpxDocument(gpxdoc);
+		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
+		GpxDocument doc = factory.parseGpxDocument(gpxdoc);
 		Assert.assertNotNull(doc);
 		//System.out.println("NUMWAYPOINTS:"+doc.getWayPoints().size());
 		Assert.assertEquals(1,doc.getWayPoints().size());
-		Assert.assertEquals(1.0,((BExtendedWayPoint)(doc.getWayPoints().get(0))).getAx());
+		Assert.assertEquals(1.0,((ExtendedWayPoint)(doc.getWayPoints().get(0))).getAx());
 		System.out.println("OK");
 	}
 	
 	@Test
 	public void testAsCsv() {
 		System.out.print("Testing ExtendedGpxFactory.asCsv()...");
-		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
+		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		//System.out.println(factory.asCsv(wp));
 		Assert.assertEquals("1970-01-01T00:00:01.01Z,1000,-3.900000,43.500000,900.00,35.000000,175.3,-1.0,1.000000,1.000000,1.000000,1000.00", 
 			factory.asCsv(wp));

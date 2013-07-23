@@ -30,7 +30,7 @@ import org.w3c.dom.Element;
  * }
  * </pre>
  */
-public class BTrack  extends AbstractGpxElement {
+public class Track  extends AbstractGpxElement {
 	private final String TAGNAME = "trk";
 	private String name="";
 	private String cmt="";
@@ -46,7 +46,7 @@ public class BTrack  extends AbstractGpxElement {
 	/**
 	 * Constructor. Crea un Track vacío e inicializa la colección de TrackSegment
 	 */
-	public BTrack() {
+	public Track() {
 		super();
 		this.tagname = TAGNAME;
 	}
@@ -186,8 +186,8 @@ public class BTrack  extends AbstractGpxElement {
 		StringBuilder builder = new StringBuilder();
 		if(this.size()>0) {
 			for(int i=0; i<this.nodes.size(); i++) {
-				if(((BTrackSegment)this.nodes.get(i)).size()>0) {
-					builder.append(((BTrackSegment)this.nodes.get(i)).asCsv(withUtmCoords));
+				if(((TrackSegment)this.nodes.get(i)).size()>0) {
+					builder.append(((TrackSegment)this.nodes.get(i)).asCsv(withUtmCoords));
 					if(!isLastSegment(i)) {
 						builder.append("\n");
 					}
@@ -220,13 +220,13 @@ public class BTrack  extends AbstractGpxElement {
 	 * al último TrackSegment del Track
 	 * @return boolean true si se añade el punto, false si no se pudo añadir
 	 */
-	public boolean addWayPoint(BWayPoint wp, boolean newTrackSegment) {
+	public boolean addWayPoint(WayPoint wp, boolean newTrackSegment) {
 		boolean result=false;
-		BTrackSegment ts=null;
+		TrackSegment ts=null;
 		if (newTrackSegment==true || size()==0) {
-			this.nodes.add(new BTrackSegment());
+			this.nodes.add(new TrackSegment());
 		} 
-		ts=(BTrackSegment)this.nodes.get(size()-1);
+		ts=(TrackSegment)this.nodes.get(size()-1);
 		result=ts.addWayPoint(wp);
 		return result;
 	}
@@ -243,9 +243,9 @@ public class BTrack  extends AbstractGpxElement {
 		double[] result=null;
 		if(size()>0) {
 			for(int i=0; i<size(); i++) {
-				if(time>=((BTrackSegment)nodes.get(i)).getStartTime() && 
-						time<=((BTrackSegment)nodes.get(i)).getEndTime()) {
-					result=((BTrackSegment)nodes.get(i)).getValues(time);
+				if(time>=((TrackSegment)nodes.get(i)).getStartTime() && 
+						time<=((TrackSegment)nodes.get(i)).getEndTime()) {
+					result=((TrackSegment)nodes.get(i)).getValues(time);
 				}
 			}
 		}
@@ -255,7 +255,7 @@ public class BTrack  extends AbstractGpxElement {
 	public long getStartTime() {
 		long startTime = -1l;
 		if(size()>0) {
-			startTime = ((BTrackSegment)this.nodes.get(0)).getStartTime();
+			startTime = ((TrackSegment)this.nodes.get(0)).getStartTime();
 		}
 		return startTime;
 	}
@@ -264,7 +264,7 @@ public class BTrack  extends AbstractGpxElement {
 		long lastTime = -1l;
 		if(size()>0) {
 			int ultimo = size()-1;
-			lastTime = ((BTrackSegment)this.nodes.get(ultimo)).getEndTime();
+			lastTime = ((TrackSegment)this.nodes.get(ultimo)).getEndTime();
 		}
 		return lastTime;
 	}
@@ -276,19 +276,19 @@ public class BTrack  extends AbstractGpxElement {
 		return getValues(getEndTime());
 	}
 	
-	public BWayPoint getStartWayPoint() {
-		BWayPoint waypoint = null;
+	public WayPoint getStartWayPoint() {
+		WayPoint waypoint = null;
 		if(size()>0) {
-			waypoint = ((BTrackSegment)nodes.get(0)).getStartWayPoint();
+			waypoint = ((TrackSegment)nodes.get(0)).getStartWayPoint();
 		}
 		return waypoint;
 	}
 	
-	public BWayPoint getEndWayPoint() {
-		BWayPoint waypoint = null;
+	public WayPoint getEndWayPoint() {
+		WayPoint waypoint = null;
 		if(size()>0) {
 			int ultimo = size()-1;
-			waypoint = ((BTrackSegment)nodes.get(ultimo)).getEndWayPoint();
+			waypoint = ((TrackSegment)nodes.get(ultimo)).getEndWayPoint();
 		}
 		return waypoint;
 	}
@@ -299,14 +299,14 @@ public class BTrack  extends AbstractGpxElement {
 	public double[] getBounds() {
 		double[] result = null;
 		if(size()>0) {
-			BWayPoint p = getStartWayPoint();
+			WayPoint p = getStartWayPoint();
 			double minx = p.getLongitude();
 			double maxx = minx;
 			double miny = p.getLatitude();
 			double maxy = miny;
 			for (int i=0; i<size(); i++) {
-				for(int j=0; j<((BTrackSegment)nodes.get(i)).size(); j++) {
-					p = ((BTrackSegment)nodes.get(i)).getWayPoint(j);
+				for(int j=0; j<((TrackSegment)nodes.get(i)).size(); j++) {
+					p = ((TrackSegment)nodes.get(i)).getWayPoint(j);
 					double x = p.getLongitude();
 					double y = p.getLatitude();
 					if(x<minx) {
@@ -334,9 +334,9 @@ public class BTrack  extends AbstractGpxElement {
 	 * @return Un TrackSegment o lanza IndexOutOfBoundException
 	 * @exception IndexOutOfBoundException si el índice no existe en la lista
 	 */
-	public BTrackSegment getTrackSegment(int index) {
+	public TrackSegment getTrackSegment(int index) {
 		if(index>=0 && index<size()) {
-			return (BTrackSegment) this.nodes().get(index);
+			return (TrackSegment) this.nodes().get(index);
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
@@ -363,8 +363,8 @@ public class BTrack  extends AbstractGpxElement {
 
 	@Override
 	public boolean add(GpxNode node) {
-		if(BTrackSegment.class.isAssignableFrom(node.getClass())) {
-			return this.addTrackSegment((BTrackSegment)node);
+		if(TrackSegment.class.isAssignableFrom(node.getClass())) {
+			return this.addTrackSegment((TrackSegment)node);
 		}
 		return false;
 	}
@@ -375,9 +375,9 @@ public class BTrack  extends AbstractGpxElement {
 	 * @param ts TrackSegment 
 	 * @return boolean true si se añade y false si no se añade; 
 	 */
-	public boolean addTrackSegment(BTrackSegment ts) {
+	public boolean addTrackSegment(TrackSegment ts) {
 		if(size()>0) {
-			long last = ((BTrackSegment)nodes.get(size()-1)).getEndTime();
+			long last = ((TrackSegment)nodes.get(size()-1)).getEndTime();
 			if(ts.getStartTime() <= last) {
 				return false;
 			}
@@ -392,7 +392,7 @@ public class BTrack  extends AbstractGpxElement {
 		int wpc = 0;
 		if(this.size()>0) {
 			for(GpxNode segment: this.nodes()) {
-				wpc += ((BTrackSegment)segment).size();
+				wpc += ((TrackSegment)segment).size();
 			}
 		}
 		return wpc;
@@ -402,7 +402,7 @@ public class BTrack  extends AbstractGpxElement {
 		double length = 0.0;
 		if(this.nodes.size()>0) {
 			for(int i=0; i< this.nodes.size(); i++) {
-				length += ((BTrackSegment)this.nodes().get(i)).length();
+				length += ((TrackSegment)this.nodes().get(i)).length();
 			}
 				
 		}
