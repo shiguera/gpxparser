@@ -23,11 +23,11 @@ public abstract class AbstractGpxElement implements GpxElement {
 	@Override
 	public String asGpx() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(GpxFactory.createTag(namespace,tagname,true));
+		builder.append(BGpxFactory.createTag(namespace,tagname,true));
 		for(GpxNode node: nodes()) {
 			builder.append(node.asGpx());
 		}
-		builder.append(GpxFactory.createTag(namespace,tagname,false));
+		builder.append(BGpxFactory.createTag(namespace,tagname,false));
 		return builder.toString();
 	}
 

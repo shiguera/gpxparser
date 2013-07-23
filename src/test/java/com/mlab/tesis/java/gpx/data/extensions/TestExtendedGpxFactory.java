@@ -7,10 +7,10 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.BGpxDocument;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
+import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
+import com.mlab.tesis.java.gpx.data.BWayPoint;
 
 public class TestExtendedGpxFactory {
 
@@ -29,10 +29,10 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void test() {
 		System.out.print("Testing ExtendedGpxFactory()...");
-		GpxFactory factory = new ExtendedGpxFactory();
+		BGpxFactory factory = new ExtendedGpxFactory();
 		Assert.assertNotNull(factory);
 		
-		GpxFactory factory2 = GpxFactory.getFactory(Type.ExtendedGpxFactory);
+		BGpxFactory factory2 = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
 		Assert.assertNotNull(factory);
 		System.out.println("OK");
 
@@ -41,10 +41,10 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void testCreateWayPoint() {
 		System.out.print("Testing ExtendedGpxFactory.createWayPoint()...");
-		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
+		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
 		Assert.assertNotNull(factory);	
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		Assert.assertNotNull(wp);
 		//System.out.println(wp.asGpx());
 		
@@ -55,10 +55,10 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void testParseWayPointExtensions() {
 		System.out.print("Testing ExtendedGpxFactory.ParseWayPointExtensions()...");
-		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
-		GpxDocument doc = factory.createGpxDocument();
+		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
+		BGpxDocument doc = factory.createGpxDocument();
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		doc.addWayPoint(wp);
 		Assert.assertEquals(1,doc.getWayPoints().size());
 		//System.out.println(doc.asGpx());
@@ -70,23 +70,23 @@ public class TestExtendedGpxFactory {
 	@Test
 	public void testParseGpxDocument() {
 		System.out.print("Testing ExtendedGpxFactory.ParseGpxDocument()...");
-		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
-		GpxDocument doc = factory.parseGpxDocument(gpxdoc);
+		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
+		BGpxDocument doc = factory.parseGpxDocument(gpxdoc);
 		Assert.assertNotNull(doc);
 		//System.out.println("NUMWAYPOINTS:"+doc.getWayPoints().size());
 		Assert.assertEquals(1,doc.getWayPoints().size());
-		Assert.assertEquals(1.0,((ExtendedWayPoint)(doc.getWayPoints().get(0))).getAx());
+		Assert.assertEquals(1.0,((BExtendedWayPoint)(doc.getWayPoints().get(0))).getAx());
 		System.out.println("OK");
 	}
 	
 	@Test
 	public void testAsCsv() {
 		System.out.print("Testing ExtendedGpxFactory.asCsv()...");
-		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);
+		BGpxFactory factory = BGpxFactory.getFactory(Type.ExtendedGpxFactory);
 		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0,35.0,175.3,-1.0,1.0,1.0,1.0,1000.0});
-		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		BWayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
 		//System.out.println(factory.asCsv(wp));
-		Assert.assertEquals("Prueba point,Punto de pruebas,1000,-3.900000,43.500000,900.000,35.00,175.30,-1.0,1.000,1.000,1.000,1000.000", 
+		Assert.assertEquals("1970-01-01T00:00:01.01Z,1000,-3.900000,43.500000,900.00,35.000000,175.3,-1.0,1.000000,1.000000,1.000000,1000.00", 
 			factory.asCsv(wp));
 		System.out.println("OK");
 	}

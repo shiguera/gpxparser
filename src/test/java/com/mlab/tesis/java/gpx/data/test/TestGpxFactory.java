@@ -9,12 +9,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.Track;
-import com.mlab.tesis.java.gpx.data.TrackSegment;
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.BGpxDocument;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
+import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
+import com.mlab.tesis.java.gpx.data.BTrack;
+import com.mlab.tesis.java.gpx.data.BTrackSegment;
+import com.mlab.tesis.java.gpx.data.BWayPoint;
 
 public class TestGpxFactory extends TestCase {
 	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+
@@ -47,11 +47,11 @@ public class TestGpxFactory extends TestCase {
 						"<trkpt lat=\"46.57661111\" lon=\"8.89344444\"><ele>2376</ele><time>2007-10-14T10:14:08Z</time></trkpt>"+
 					"</trkseg></trk>"+
 				"</gpx>";
-	GpxFactory factory ;
+	BGpxFactory factory ;
 	
 	@Override
 	protected void setUp() throws Exception {
-		factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		factory = BGpxFactory.getFactory(Type.BSimpleGpxFactory);
 		super.setUp();
 	}
 	public void test() {
@@ -61,7 +61,7 @@ public class TestGpxFactory extends TestCase {
 	}
 	public void testParseXmlDocument() {
 		System.out.print("Testing GpxFactory.parseXmlDocument()...");
-		Document doc = GpxFactory.parseXmlDocument(cadxml);
+		Document doc = BGpxFactory.parseXmlDocument(cadxml);
 		assertNotNull(doc);
 		Element ele = doc.getDocumentElement();
 		assertNotNull(ele);
@@ -70,7 +70,7 @@ public class TestGpxFactory extends TestCase {
 	}
 	public void testParseGpxDocument() {
 		System.out.print("Testing GpxFactory.parseGpxDocument()...");
-		GpxDocument doc = factory.parseGpxDocument(docgpx);
+		BGpxDocument doc = factory.parseGpxDocument(docgpx);
 		assertNotNull(doc);
 		// WayPoint
 		assertEquals(1,doc.getWayPoints().size());
@@ -85,17 +85,17 @@ public class TestGpxFactory extends TestCase {
 	}
 	public void testNodeAsFormatedXmlString() {
 		System.out.print("Testing GpxFactory.nodeAsFormatedXmlString()...");
-		Document doc = GpxFactory.parseXmlDocument(cadxml);
+		Document doc = BGpxFactory.parseXmlDocument(cadxml);
 		Element ele = doc.getDocumentElement();
 		NodeList list = ele.getElementsByTagName("salary");
-		String cad = GpxFactory.nodeAsFormatedXmlString(list.item(0),false);
+		String cad = BGpxFactory.nodeAsFormatedXmlString(list.item(0),false);
 		//System.out.println(cad);
 		assertEquals("<salary>100000</salary>\n", cad);
 		System.out.println("OK");
 	}
 	public void testFormat() {
 		System.out.print("Testing GpxFactory.format()...");
-		String cad = GpxFactory.format(cadxml);
+		String cad = BGpxFactory.format(cadxml);
 		//System.out.println(cad);
 		assertTrue(cad.length()>0);
 		System.out.println("OK");
@@ -105,7 +105,7 @@ public class TestGpxFactory extends TestCase {
 		System.out.print("Testing GpxFactory.parseWayPoint()...");
 		Method method = null;
 		try {
-			method = GpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
+			method = BGpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
 		} catch (SecurityException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -114,9 +114,9 @@ public class TestGpxFactory extends TestCase {
 			e1.printStackTrace();
 		}
 		method.setAccessible(true);
-		WayPoint wp = null;
+		BWayPoint wp = null;
 		try {
-			wp = (WayPoint) method.invoke(factory, wpt);
+			wp = (BWayPoint) method.invoke(factory, wpt);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -140,7 +140,7 @@ public class TestGpxFactory extends TestCase {
 		System.out.print("Testing GpxFactory.parseTrack()...");
 		Method method = null;
 		try {
-			method = GpxFactory.class.getDeclaredMethod("parseTrack", String.class);
+			method = BGpxFactory.class.getDeclaredMethod("parseTrack", String.class);
 		} catch (SecurityException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -149,9 +149,9 @@ public class TestGpxFactory extends TestCase {
 			e1.printStackTrace();
 		}
 		method.setAccessible(true);
-		Track track = null;
+		BTrack track = null;
 		try {
-			track = (Track) method.invoke(factory, trk);
+			track = (BTrack) method.invoke(factory, trk);
 		} catch (IllegalArgumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,7 +166,7 @@ public class TestGpxFactory extends TestCase {
 		// numero de segmentos
 		assertEquals(1,track.size());
 		// numero de puntos en el segmento
-		assertEquals(4,((TrackSegment)track.nodes().get(0)).size());
+		assertEquals(4,((BTrackSegment)track.nodes().get(0)).size());
 		System.out.println("OK");
 		
 	}
@@ -178,7 +178,7 @@ public class TestGpxFactory extends TestCase {
 		// Metodo createDoubleTag(): Exception tag vacía
 		Throwable t=null;
 		try {
-			tag = GpxFactory.createDoubleTag(namespace, name, 0.0);
+			tag = BGpxFactory.createDoubleTag(namespace, name, 0.0);
 		} catch(Exception e) {
 			t = e;
 		}
@@ -187,15 +187,15 @@ public class TestGpxFactory extends TestCase {
 
 		// Etiqueta sin namespace, precisión por defecto
 		name = "Ax";
-		assertEquals("<Ax>0.000000</Ax>",GpxFactory.createDoubleTag(namespace,name,0.0));
+		assertEquals("<Ax>0.000000</Ax>",BGpxFactory.createDoubleTag(namespace,name,0.0));
 		// Etiqueta completa
 		namespace = "mlab";
-		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0));
+		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",BGpxFactory.createDoubleTag(namespace,name,0.0));
 		
 		// Método doubleToString(..., digits, decimals)
-		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0,12,6));
-		assertEquals("<mlab:Ax>0.000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0,12,3));
-		assertEquals("<mlab:Ax>1.236</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,1.2356,12,3));
+		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",BGpxFactory.createDoubleTag(namespace,name,0.0,12,6));
+		assertEquals("<mlab:Ax>0.000</mlab:Ax>",BGpxFactory.createDoubleTag(namespace,name,0.0,12,3));
+		assertEquals("<mlab:Ax>1.236</mlab:Ax>",BGpxFactory.createDoubleTag(namespace,name,1.2356,12,3));
 			
 		System.out.println("OK");
 		

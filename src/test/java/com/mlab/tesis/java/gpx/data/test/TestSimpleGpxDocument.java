@@ -1,27 +1,18 @@
 package com.mlab.tesis.java.gpx.data.test;
 
-import java.io.IOException;
-import java.io.StringReader;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-
 import junit.framework.TestCase;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.InputSource;
-import org.xml.sax.SAXException;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
-import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.Track;
-import com.mlab.tesis.java.gpx.data.TrackSegment;
+import com.mlab.tesis.java.gpx.data.BGpxDocument;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
+import com.mlab.tesis.java.gpx.data.BSimpleGpxDocument;
+import com.mlab.tesis.java.gpx.data.BSimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.BTrack;
+import com.mlab.tesis.java.gpx.data.BTrackSegment;
 
 public class TestSimpleGpxDocument extends TestCase {
 	
@@ -33,30 +24,30 @@ public class TestSimpleGpxDocument extends TestCase {
 			"<salary>200000</salary></staff></company>";
 
 	
-	private SimpleGpxDocument gpxdoc=null;
-	private GpxFactory factory;
+	private BSimpleGpxDocument gpxdoc=null;
+	private BGpxFactory factory;
 	
 	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
+		factory = BGpxFactory.getFactory(BGpxFactory.Type.BSimpleGpxFactory);
 		gpxdoc=buildGpxdoc();	
 	}
-	private SimpleGpxDocument buildGpxdoc() {
-		GpxDocument gpxdoc=(SimpleGpxDocument) factory.createGpxDocument();
-		Track track=new Track();
+	private BSimpleGpxDocument buildGpxdoc() {
+		BGpxDocument gpxdoc=(BSimpleGpxDocument) factory.createGpxDocument();
+		BTrack track=new BTrack();
 		long t=System.currentTimeMillis();
-		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 		gpxdoc.addWayPoint(tp);
-		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0);
 		gpxdoc.addWayPoint(tp2);
-		TrackSegment ts=new TrackSegment();		
+		BTrackSegment ts=new BTrackSegment();		
 		ts.addWayPoint(tp);
 		ts.addWayPoint(tp2);
 		track.add(ts);		
 		gpxdoc.addTrack(track);
-		return (SimpleGpxDocument) gpxdoc;		
+		return (BSimpleGpxDocument) gpxdoc;		
 	}
 	
 	public void test() {

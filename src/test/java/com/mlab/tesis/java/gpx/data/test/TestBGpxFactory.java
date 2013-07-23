@@ -15,7 +15,7 @@ import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.BTrack;
 import com.mlab.tesis.java.gpx.data.BTrackSegment;
 import com.mlab.tesis.java.gpx.data.BWayPoint;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
 
 public class TestBGpxFactory extends TestCase {
 	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+
@@ -62,7 +62,7 @@ public class TestBGpxFactory extends TestCase {
 	}
 	public void testParseXmlDocument() {
 		System.out.print("Testing GpxFactory.parseXmlDocument()...");
-		Document doc = GpxFactory.parseXmlDocument(cadxml);
+		Document doc = BGpxFactory.parseXmlDocument(cadxml);
 		assertNotNull(doc);
 		Element ele = doc.getDocumentElement();
 		assertNotNull(ele);
@@ -86,10 +86,10 @@ public class TestBGpxFactory extends TestCase {
 	}
 	public void testNodeAsFormatedXmlString() {
 		System.out.print("Testing GpxFactory.nodeAsFormatedXmlString()...");
-		Document doc = GpxFactory.parseXmlDocument(cadxml);
+		Document doc = BGpxFactory.parseXmlDocument(cadxml);
 		Element ele = doc.getDocumentElement();
 		NodeList list = ele.getElementsByTagName("salary");
-		String cad = GpxFactory.nodeAsFormatedXmlString(list.item(0),false);
+		String cad = BGpxFactory.nodeAsFormatedXmlString(list.item(0),false);
 		//System.out.println(cad);
 		assertEquals("<salary>100000</salary>\n", cad);
 		System.out.println("OK");

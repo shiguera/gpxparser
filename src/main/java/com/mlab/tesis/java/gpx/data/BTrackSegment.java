@@ -101,7 +101,7 @@ public class BTrackSegment extends AbstractGpxElement {
 	 */
 	@Override
 	public boolean add(GpxNode node) {
-		if(WayPoint.class.isAssignableFrom(node.getClass())) {
+		if(BWayPoint.class.isAssignableFrom(node.getClass())) {
 			return this.addWayPoint((BWayPoint)node);
 		}
 		return false;

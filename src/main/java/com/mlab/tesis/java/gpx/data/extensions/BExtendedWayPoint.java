@@ -4,8 +4,7 @@ import java.util.List;
 
 import com.mlab.tesis.java.gpx.Util;
 import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
 
 /**
  * 
@@ -83,13 +82,13 @@ public class BExtendedWayPoint extends AndroidWayPoint {
 	public String extensionsAsGpx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<extensions>");
-		builder.append(GpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "ax", ax, 12, ACCELERATION_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "ay", ay, 12, ACCELERATION_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "az", az, 12, ACCELERATION_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "pressure", pressure, 12, PRESSURE_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "ax", ax, 12, ACCELERATION_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "ay", ay, 12, ACCELERATION_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "az", az, 12, ACCELERATION_DECIMALS));
+		builder.append(BGpxFactory.createDoubleTag(namespace, "pressure", pressure, 12, PRESSURE_DECIMALS));
 		builder.append("</extensions>");
 		return builder.toString();
 	}

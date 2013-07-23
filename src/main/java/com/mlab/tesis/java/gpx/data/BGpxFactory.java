@@ -56,7 +56,7 @@ public abstract class BGpxFactory {
 	 * Variable de tipo de Factory a instanciar a través 
 	 * del método estático 'getFactory()' 	
 	 */
-	public enum Type {BSimpleGpxFactory};
+	public enum Type {BSimpleGpxFactory, ExtendedGpxFactory};
 	protected BGpxFactory.Type factoryType; 
 	
 	/**
@@ -69,6 +69,8 @@ public abstract class BGpxFactory {
 		switch(factoryType) {
 			case BSimpleGpxFactory:
 				return new BSimpleGpxFactory();
+			case ExtendedGpxFactory:
+				return new ExtendedGpxFactory();
 		}
 		return null;
 	}

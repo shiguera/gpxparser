@@ -6,12 +6,12 @@ import java.lang.reflect.Method;
 import junit.framework.TestCase;
 
 import com.mlab.tesis.java.gpx.Util;
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.Track;
-import com.mlab.tesis.java.gpx.data.TrackSegment;
+import com.mlab.tesis.java.gpx.data.BGpxDocument;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
+import com.mlab.tesis.java.gpx.data.BGpxFactory.Type;
+import com.mlab.tesis.java.gpx.data.BSimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.BTrack;
+import com.mlab.tesis.java.gpx.data.BTrackSegment;
 import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
 
 public class TestTrackSegment extends TestCase {
@@ -22,14 +22,14 @@ public class TestTrackSegment extends TestCase {
 		//this.logger.info("TESTING TrackSegment.test()");
 		System.out.print("Testing TrackSegment()...");
 		long t=System.currentTimeMillis();
-		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000l,-3.9,43.5,920.0,23.7,123.2,-1.0);
-		SimpleWayPoint tp3= new SimpleWayPoint("Pto3","Punto de pruebas",t+2000l,-4.0,44.5,940.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto2","Punto de pruebas",t+1000l,-3.9,43.5,920.0);
+		BSimpleWayPoint tp3= new BSimpleWayPoint("Pto3","Punto de pruebas",t+2000l,-4.0,44.5,940.0);
 		
-		TrackSegment ts=new TrackSegment();
+		BTrackSegment ts=new BTrackSegment();
 		assertNotNull(ts);
 		
-		SimpleWayPoint tp= new SimpleWayPoint("Pto1",
-			"Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp= new BSimpleWayPoint("Pto1",
+			"Punto de pruebas",t,-3.8,42.5,900.0);
 		assertTrue(ts.addWayPoint(tp));
 		assertTrue(ts.addWayPoint(tp2));
 		assertTrue(ts.addWayPoint(tp3));
@@ -44,26 +44,26 @@ public class TestTrackSegment extends TestCase {
 	public void testParseGpx() {
 		//this.logger.info("TESTING TrackSegment.testParseGpx()");
 		System.out.print("Testing TrackSegment.parseGpx()...");
-		TrackSegment ts=new TrackSegment();
+		BTrackSegment ts=new BTrackSegment();
 		assertNotNull(ts);
 		
 		long t=System.currentTimeMillis();
-		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 		ts.addWayPoint(tp);
-		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto2","Punto de pruebas",t+1000,-3.9,43.5,920.0);
 		ts.addWayPoint(tp2);
-		SimpleWayPoint tp3= new SimpleWayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0,23.7,123.2,-1.0);
+		BSimpleWayPoint tp3= new BSimpleWayPoint("Pto3","Punto de pruebas",t+2000,-4.0,44.5,940.0);
 		ts.addWayPoint(tp3);
 		assertEquals(3,ts.size());
 		//System.out.println(GpxFactory.format(cadgpx));
 		
-		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
-		TrackSegment parsed=null;
+		BGpxFactory factory = BGpxFactory.getFactory(Type.BSimpleGpxFactory);
+		BTrackSegment parsed=null;
 		try {
-			Method method=GpxFactory.class.getDeclaredMethod(
+			Method method=BGpxFactory.class.getDeclaredMethod(
 				"parseTrackSegment", String.class);
 			method.setAccessible(true);
-			parsed = (TrackSegment) method.invoke(factory, ts.asGpx());
+			parsed = (BTrackSegment) method.invoke(factory, ts.asGpx());
 		} catch (Exception e) {
 			System.out.println("ERROR");
 			e.printStackTrace();
@@ -80,10 +80,10 @@ public class TestTrackSegment extends TestCase {
 	public void testLength() {
 		System.out.print("Testing TrackSegment.length()...");
 		File gpxFile = Util.readResourceFile("test.gpx");
-		GpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
+		BGpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
 		assertNotNull(doc);
-		Track track = (Track)doc.getTracks().get(0);
-		TrackSegment segment = (TrackSegment)track.nodes().get(0);
+		BTrack track = (BTrack)doc.getTracks().get(0);
+		BTrackSegment segment = (BTrackSegment)track.nodes().get(0);
 		assertEquals(9095, (int)segment.length());
 		System.out.println("OK");
 	}

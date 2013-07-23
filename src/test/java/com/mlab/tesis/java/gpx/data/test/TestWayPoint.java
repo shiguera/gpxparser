@@ -3,7 +3,6 @@ package com.mlab.tesis.java.gpx.data.test;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -11,10 +10,11 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.WayPoint;
-import com.mlab.tesis.java.gpx.data.extensions.ExtendedWayPoint;
+import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
+import com.mlab.tesis.java.gpx.data.BGpxFactory;
+import com.mlab.tesis.java.gpx.data.BSimpleWayPoint;
+import com.mlab.tesis.java.gpx.data.BWayPoint;
+import com.mlab.tesis.java.gpx.data.extensions.BExtendedWayPoint;
 
 public class TestWayPoint extends TestCase {
 
@@ -29,66 +29,71 @@ public class TestWayPoint extends TestCase {
 		//logger.warn("\nTESTING WayPoint constructor");
 		System.out.print("Testing WayPoint()...");
 		long t=System.currentTimeMillis();
-		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,-1.0);
 		
+		// Basic constructor
+		BWayPoint wp = new BSimpleWayPoint();
+		assertNotNull(wp);
+		assertEquals("", wp.getName());
+		assertEquals("", wp.getDescription());
+		assertEquals(-1l, wp.getTime());
+		assertEquals(0.0, wp.getLongitude());
+		assertEquals(0.0,wp.getLatitude());
+		assertEquals(0.0,wp.getAltitude());
+
+		// Constructor from parameters
+		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 		assertNotNull(tp);
-		//logger.info("\n"+tp.asGpx());		
-		
-		t=System.currentTimeMillis();
-		// testing short values[]
+		assertEquals("Pto1", tp.getName());
+		assertEquals("Punto de pruebas", tp.getDescription());
+		assertEquals(t, tp.getTime());
+		assertEquals(-3.8, tp.getLongitude());
+		assertEquals(42.5,tp.getLatitude());
+		assertEquals(900.0,tp.getAltitude());
+
+		// Constructor from List<Double> 				
 		List<Double> values = new ArrayList<Double>();
 		values.add(-3.8);
 		values.add(42.5);
 		values.add(900.0);
-		//SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Short values",t,values);
-		//assertNotNull(tp2);
-		//assertEquals(-3.5,tp2.getLongitude());
-		//assertEquals(42.5,tp2.getLatitude());
-		//assertEquals(900.0,tp2.getAltitude());
-		
-		//logger.info("\n"+tp2.asGpx());	
-		
-		
+		BSimpleWayPoint tp2= new BSimpleWayPoint("Pto1","Punto de pruebas",t,values);
+		assertNotNull(tp2);
+		assertEquals("Pto1", tp2.getName());
+		assertEquals("Punto de pruebas", tp2.getDescription());
+		assertEquals(t, tp2.getTime());		
+		assertEquals(-3.8,tp2.getLongitude());
+		assertEquals(42.5,tp2.getLatitude());
+		assertEquals(900.0,tp2.getAltitude());
 		
 		System.out.println("OK");
 	}
 	
 	public void testAsCsv() {
 		System.out.print("Testing WayPoint.asCsv()...");
-		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0,23.7,123.2,-1.0);
+		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0);
 		//System.out.println(tp.asCsv(false));
-		assertEquals("1970-01-01T00:00:01.01Z,1000,-3.800000,42.500000,900.00,23.70,123.20,-1.00", 
+		assertEquals("1970-01-01T00:00:01.01Z,1000,-3.800000,42.500000,900.00",
 				tp.asCsv(false));
-
 		
-		WayPoint tp2= new ExtendedWayPoint("Pto1","Punto de pruebas",1000l,-3.8,42.5,900.0,23.7,123.2,-1.0,10.01,9.81,3.4,980.0);
-		//System.out.println(tp2.asCsv(false));
-		assertEquals("1970-01-01T00:00:01.01Z,1000,-3.800000,42.500000,900.00,23.70,123.20,-1.00,10.010000,9.810000,3.400000,980.00",
-				tp2.asCsv(false));
-		
-		//System.out.println(tp2.asCsv(true));
-		assertEquals("1970-01-01T00:00:01.01Z,1000,-3.800000,42.500000,900.00,434266.90,4705603.11,23.70,123.20,-1.00,10.010000,9.810000,3.400000,980.00",
-				tp2.asCsv(true));
 		System.out.println("OK");
 	}
 	
 	public void testParseGpx() {
 		//logger.warn("TESTING WayPoint.parseGpx()");
 		System.out.print("Testing WayPoint.parseGpx()...");
-		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);		
+		BGpxFactory factory = BGpxFactory.getFactory(BGpxFactory.Type.BSimpleGpxFactory);		
 		// Crear una instancia de TrackPoint para generar una cadena gpx con la que probar el parse
 		long t=System.currentTimeMillis();
-		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0,23.7,123.2,10.0);
+		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
 //		String cadgpx=tp.asGpx();
 //		System.out.println(GpxFactory.format(cadgpx));
 		
 		// Generar un TrackPoint parseando una cadena gpx y comprobar que no es nulo
 
-		SimpleWayPoint parsedPoint = null;
+		BWayPoint parsedPoint = null;
 		try {
-			Method method=GpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
+			Method method=BGpxFactory.class.getDeclaredMethod("parseWayPoint", String.class);
 			method.setAccessible(true);
-			parsedPoint = (SimpleWayPoint) method.invoke(factory, tp.asGpx());
+			parsedPoint = (BSimpleWayPoint) method.invoke(factory, tp.asGpx());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -98,9 +103,6 @@ public class TestWayPoint extends TestCase {
 		assertEquals(-3.8, parsedPoint.getLongitude());
 		assertEquals(42.5, parsedPoint.getLatitude());
 		assertEquals(900.0, parsedPoint.getAltitude());
-		assertEquals(23.7, parsedPoint.getSpeed());
-		assertEquals(123.2, parsedPoint.getBearing());
-		assertEquals(10.0, parsedPoint.getAccuracy());
 		
 		
 		// Comprobar que el TrackPoint del constructor tp y el parsedPoint 
@@ -109,6 +111,23 @@ public class TestWayPoint extends TestCase {
 		//System.out.println("-----------------");
 		//System.out.println(parsedPoint.asGpx());
 		assertEquals(tp.asGpx(), parsedPoint.asGpx());
+		System.out.println("OK");
+		
+	}
+	
+	public void testClone() {
+		System.out.print("Testing WayPoint.clone()...");
+		long t=System.currentTimeMillis();
+		BWayPoint tp= new BSimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
+		BWayPoint tp2 = tp.clone();
+		assertNotNull(tp2);
+		assertEquals("Pto1", tp2.getName());
+		assertEquals("Punto de pruebas", tp2.getDescription());
+		assertEquals(t, tp2.getTime());		
+		assertEquals(-3.8,tp2.getLongitude());
+		assertEquals(42.5,tp2.getLatitude());
+		assertEquals(900.0,tp2.getAltitude());
+		
 		System.out.println("OK");
 		
 	}
