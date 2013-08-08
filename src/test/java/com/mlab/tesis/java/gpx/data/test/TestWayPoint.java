@@ -80,7 +80,7 @@ public class TestWayPoint extends TestCase {
 	public void testParseGpx() {
 		//logger.warn("TESTING WayPoint.parseGpx()");
 		System.out.print("Testing WayPoint.parseGpx()...");
-		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory);		
+		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);		
 		// Crear una instancia de TrackPoint para generar una cadena gpx con la que probar el parse
 		long t=System.currentTimeMillis();
 		WayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);

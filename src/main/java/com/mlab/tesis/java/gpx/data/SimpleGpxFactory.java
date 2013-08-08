@@ -11,7 +11,7 @@ public class SimpleGpxFactory extends GpxFactory {
 
 	
  	protected SimpleGpxFactory() {
-		this.factoryType = GpxFactory.Type.BSimpleGpxFactory;
+		this.factoryType = GpxFactory.Type.SimpleGpxFactory;
 	}
 
 	// Abstract method	

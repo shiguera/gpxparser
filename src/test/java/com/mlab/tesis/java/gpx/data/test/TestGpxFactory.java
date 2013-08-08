@@ -51,7 +51,7 @@ public class TestGpxFactory extends TestCase {
 	
 	@Override
 	protected void setUp() throws Exception {
-		factory = GpxFactory.getFactory(Type.BSimpleGpxFactory);
+		factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
 		super.setUp();
 	}
 	public void test() {

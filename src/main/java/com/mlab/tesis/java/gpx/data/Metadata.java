@@ -22,6 +22,12 @@ package com.mlab.tesis.java.gpx.data;
  */
 public class Metadata extends AbstractGpxElement {
 	
+	private String name;
+	private String desc;
+	private String author;
+	private String copyright;
+	
+	
 	public Metadata() {
 		
 	}

@@ -34,7 +34,7 @@ public class TestRoute extends TestCase {
 		assertTrue(rte.addWayPoint(tp3));
 		assertEquals(3,rte.size());
 				
-		GpxFactory factory = GpxFactory.getFactory(Type.BSimpleGpxFactory);
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
 		Route parsed = null;
 		try {
 			Method method=GpxFactory.class.getDeclaredMethod("parseRoute", String.class);

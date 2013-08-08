@@ -56,7 +56,7 @@ public abstract class GpxFactory {
 	 * Variable de tipo de Factory a instanciar a través 
 	 * del método estático 'getFactory()' 	
 	 */
-	public enum Type {BSimpleGpxFactory, ExtendedGpxFactory};
+	public enum Type {SimpleGpxFactory, ExtendedGpxFactory};
 	protected GpxFactory.Type factoryType; 
 	
 	/**
@@ -67,7 +67,7 @@ public abstract class GpxFactory {
 	 */
 	public static GpxFactory getFactory(GpxFactory.Type factoryType) {
 		switch(factoryType) {
-			case BSimpleGpxFactory:
+			case SimpleGpxFactory:
 				return new SimpleGpxFactory();
 			case ExtendedGpxFactory:
 				return new ExtendedGpxFactory();
@@ -163,7 +163,7 @@ public abstract class GpxFactory {
 	 */
 	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
-		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory).parseGpxDocument(cad);
+		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory).parseGpxDocument(cad);
 		if(gpxDoc==null) {
 			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
 		}

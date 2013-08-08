@@ -72,7 +72,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * 
 	 */
 	public SimpleGpxDocument() {
-		this.gpxFactory = GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory);
+		this.gpxFactory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
 		this.doc = null;
 		this.metadata= new Metadata();
 		this.routes = new ArrayList<Route>();

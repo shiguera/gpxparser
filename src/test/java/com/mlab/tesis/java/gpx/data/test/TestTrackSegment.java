@@ -57,7 +57,7 @@ public class TestTrackSegment extends TestCase {
 		assertEquals(3,ts.size());
 		//System.out.println(GpxFactory.format(cadgpx));
 		
-		GpxFactory factory = GpxFactory.getFactory(Type.BSimpleGpxFactory);
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
 		TrackSegment parsed=null;
 		try {
 			Method method=GpxFactory.class.getDeclaredMethod(

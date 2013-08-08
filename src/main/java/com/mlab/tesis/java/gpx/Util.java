@@ -31,7 +31,7 @@ public class Util {
 	 * Si value es NaN o infinito, o digits<=0 o decimals<0 
 	 * arroja IllegalArgumentException
 	 */
-	static public String doubleToString(double value, int digits, int decimals) {
+	public static String doubleToString(double value, int digits, int decimals) {
 		// System.out.println(value);
 		if(Double.isNaN(value) || Double.isInfinite(value) || digits <= 0 || decimals <0) {
 			throw new IllegalArgumentException();
@@ -73,7 +73,7 @@ public class Util {
      * @param gmt
      * @return Devuelve una cadena en la forma 2012-10-09T12:00:23
      */
-     static public String dateTimeToString(long t, boolean gmt) {    	
+ 	public static String dateTimeToString(long t, boolean gmt) {    	
     	String cad=Util.dateToString(t,gmt);
     	cad+="T"+Util.timeToString(t,gmt);
     	return cad;
@@ -83,12 +83,18 @@ public class Util {
      * @param t tiempo en milisegundos de la fecha
      * @return 'yyyy-MM-ddThh:mm:ss.ssZ'
      */
-    static public String dateTimeToStringGpxFormat(long t) {
+    public static String dateTimeToStringGpxFormat(long t) {
     	SimpleDateFormat format= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.ss'Z'");
    		format.setTimeZone(TimeZone.getTimeZone("UTC"));
     	return format.format(new Date(t));
     }
-    static public long parseGpxDate(String cadGpxDateTime) {
+    /**
+     * Extrae la fecha y hora de una cadena en formato de fecha GPX
+     * @param cadGpxDateTime Cadena de fecha y hora en la forma:<br>
+     * yyyy-MM-dd'T'HH:mm:ss.ss'Z'
+     * @return long con la fecha-hora o -1l si hay errores
+     */
+    public static long parseGpxDate(String cadGpxDateTime) {
     	SimpleDateFormat format = null;
     	if(cadGpxDateTime.length()==23) {
     		format= new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.ss'Z'");	
@@ -114,7 +120,7 @@ public class Util {
      * @param gmt si true, se utilizará hora GMT
      * @return Cadena con la hora en formato hh:mm:ss
      */
-    static public String timeToString(long t, boolean gmt) {
+    public static String timeToString(long t, boolean gmt) {
     	//Log.i("HAL","Util.timeToString()");
     	Calendar cal=Calendar.getInstance();
     	cal.setTimeInMillis(t);
@@ -127,7 +133,7 @@ public class Util {
     	//Log.d("HAL","Time:"+date);
         return date;
     }
-    static public String dateToString(long t, boolean gmt) {
+    public static String dateToString(long t, boolean gmt) {
     	//Log.i("HAL","Util.dateToString()");
     	Calendar cal=Calendar.getInstance();
     	if(gmt) {

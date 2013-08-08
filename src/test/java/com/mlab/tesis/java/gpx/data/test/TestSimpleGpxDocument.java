@@ -31,7 +31,7 @@ public class TestSimpleGpxDocument extends TestCase {
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		factory = GpxFactory.getFactory(GpxFactory.Type.BSimpleGpxFactory);
+		factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
 		gpxdoc=buildGpxdoc();	
 	}
 	private SimpleGpxDocument buildGpxdoc() {
