@@ -29,15 +29,91 @@ public class Metadata extends AbstractGpxElement {
 	
 	
 	public Metadata() {
-		
+		this.name = "";
+		this.desc = "";
+		this.author = "";
+		this.copyright = "";
 	}
 	
 	@Override
 	public String asGpx() {
-		String cad="<metadata>";
-		
-		cad += "</metadata>";
-		return cad;
+		StringBuilder builder = new StringBuilder();
+		builder.append("<metadata>");
+		builder.append(nameTag());
+		builder.append(descTag());
+		builder.append(authorTag());
+		builder.append(copyrightTag());
+		builder.append("</metadata>");
+		return builder.toString();
+	}
+	private String nameTag() {
+		StringBuilder builder = new StringBuilder();
+		if(!name.isEmpty()) {
+			builder.append("<name>");
+			builder.append(this.name);
+			builder.append("</name>");
+		}		
+		return builder.toString();
+	}
+	private String descTag() {
+		StringBuilder builder = new StringBuilder();
+		if(!desc.isEmpty()) {
+			builder.append("<desc>");
+			builder.append(this.desc);
+			builder.append("</desc>");
+		}		
+		return builder.toString();
+	}
+	private String authorTag() {
+		StringBuilder builder = new StringBuilder();
+		if(!author.isEmpty()) {
+			builder.append("<author>");
+			builder.append(this.author);
+			builder.append("</author>");
+		}		
+		return builder.toString();
+	}
+	private String copyrightTag() {
+		StringBuilder builder = new StringBuilder();
+		if(!copyright.isEmpty()) {
+			builder.append("<copyright>");
+			builder.append(this.copyright);
+			builder.append("</copyright>");
+		}		
+		return builder.toString();
+	}
+
+
+	public String getName() {
+		return name;
+	}
+
+	public String getDesc() {
+		return desc;
+	}
+
+	public String getAuthor() {
+		return author;
+	}
+
+	public String getCopyright() {
+		return copyright;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setAuthor(String author) {
+		this.author = author;
+	}
+
+	public void setCopyright(String copyright) {
+		this.copyright = copyright;
 	}
 
 }
