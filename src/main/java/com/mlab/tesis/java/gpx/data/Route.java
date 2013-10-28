@@ -5,11 +5,12 @@ package com.mlab.tesis.java.gpx.data;
 
 public class Route extends AbstractGpxElement {
 
+	private final String TAGNAME = "rte";
 	private final String TAG_RTEPT = "rtept";
 
 	public Route() {
 		super();
-		this.tagname = "rte";
+		this.tagname = TAGNAME;
 	}
 	
 	/**

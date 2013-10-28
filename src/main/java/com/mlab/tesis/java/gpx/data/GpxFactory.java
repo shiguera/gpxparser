@@ -82,6 +82,9 @@ public abstract class GpxFactory {
 	 * @return
 	 */
 	public static Document parseXmlDocument(String cadxml) {
+		if(cadxml==null || cadxml.length()==0) {
+			return null;
+		}
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder dBuilder=null;
 		InputSource is = null;
