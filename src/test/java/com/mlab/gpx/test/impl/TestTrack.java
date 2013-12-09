@@ -63,6 +63,21 @@ public class TestTrack extends TestCase {
 		System.out.println("OK");
 	}
 	
+	public void testHasSegments() {
+		Track track= new Track();
+		assertTrue(track.hasSegments()==false);
+		assertTrue(track.segmentsCount()==0);
+		
+		long t=System.currentTimeMillis();
+		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
+		SimpleWayPoint tp2= new SimpleWayPoint("Pto2","Punto de pruebas",t+1000l,-3.9,43.5,920.0);
+		TrackSegment ts=new TrackSegment();		
+		ts.addWayPoint(tp);
+		ts.addWayPoint(tp2);
+		track.addTrackSegment(ts);
+		assertTrue(track.hasSegments()==true);
+		assertTrue(track.segmentsCount()==1);
+	}
 	// TODO Falta test para método length()
 
 	

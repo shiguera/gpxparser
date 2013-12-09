@@ -345,6 +345,7 @@ public class Track  extends AbstractGpxElement {
 			throw new IndexOutOfBoundsException();
 		}
 	}
+	
 
 	public Element asElement() {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -389,6 +390,12 @@ public class Track  extends AbstractGpxElement {
 		return nodes.add(ts);
 	}
 
+	public int segmentsCount() {
+		return this.size();
+	}
+	public boolean hasSegments() {
+		return(this.size()>0);
+	}
 	/**
 	 * Devuelve el número de WayPoints totales del track
 	 */
