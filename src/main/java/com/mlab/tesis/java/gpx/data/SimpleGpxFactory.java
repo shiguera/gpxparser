@@ -7,10 +7,12 @@ import java.util.List;
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 
+import com.mlab.gpx.api.GpxFactory;
+
 public class SimpleGpxFactory extends GpxFactory {
 
 	
- 	protected SimpleGpxFactory() {
+ 	public SimpleGpxFactory() {
 		this.factoryType = GpxFactory.Type.SimpleGpxFactory;
 	}
 

@@ -1,8 +1,13 @@
-package com.mlab.tesis.java.gpx.data;
+package com.mlab.gpx.api;
 
 import java.util.List;
 
 import org.w3c.dom.Document;
+
+import com.mlab.tesis.java.gpx.data.Extensions;
+import com.mlab.tesis.java.gpx.data.Metadata;
+import com.mlab.tesis.java.gpx.data.Route;
+import com.mlab.tesis.java.gpx.data.Track;
 
 /**
  * Interface for GpxDocuments. A GpxDocument has one Metadata element,

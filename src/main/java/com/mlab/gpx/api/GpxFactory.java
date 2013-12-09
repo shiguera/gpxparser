@@ -1,4 +1,4 @@
-package com.mlab.tesis.java.gpx.data;
+package com.mlab.gpx.api;
 
 import java.io.File;
 import java.io.StringReader;
@@ -23,6 +23,11 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.mlab.tesis.java.gpx.Util;
+import com.mlab.tesis.java.gpx.data.Route;
+import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
+import com.mlab.tesis.java.gpx.data.SimpleGpxFactory;
+import com.mlab.tesis.java.gpx.data.Track;
+import com.mlab.tesis.java.gpx.data.TrackSegment;
 import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
 
 /**
@@ -456,7 +461,7 @@ public abstract class GpxFactory {
 	 * @param isOpeningTag
 	 * @return
 	 */
-	static String createTag(String namespace, String name, boolean isOpeningTag) {
+	public static String createTag(String namespace, String name, boolean isOpeningTag) {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<");
 		if(!isOpeningTag) {

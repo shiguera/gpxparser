@@ -9,13 +9,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
+import com.mlab.gpx.api.GpxDocument;
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.api.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.TrackSegment;
-import com.mlab.tesis.java.gpx.data.WayPoint;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
 
 public class TestBGpxFactory extends TestCase {
 	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+

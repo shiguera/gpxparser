@@ -1,5 +1,8 @@
 package com.mlab.tesis.java.gpx.data;
 
+import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.GpxNode;
+import com.mlab.gpx.api.WayPoint;
 import com.mlab.tesis.java.tserie.TSerie;
 import com.mlab.tesis.srs.EllipsoidWGS84;
 

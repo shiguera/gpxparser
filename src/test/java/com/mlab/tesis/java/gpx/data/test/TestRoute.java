@@ -7,11 +7,11 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.api.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.Route;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class TestRoute extends TestCase {
 	

@@ -2,6 +2,7 @@ package com.mlab.tesis.java.gpx.data;
 
 import java.util.List;
 
+import com.mlab.gpx.api.GpxFactory;
 import com.mlab.tesis.java.gpx.Util;
 
 public class AndroidWayPoint extends SimpleWayPoint {

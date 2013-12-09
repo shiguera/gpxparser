@@ -2,10 +2,10 @@ package com.mlab.tesis.java.gpx.data.test;
 
 import junit.framework.TestCase;
 
+import com.mlab.gpx.api.WayPoint;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.TrackSegment;
-import com.mlab.tesis.java.gpx.data.WayPoint;
 
 public class TestTrack extends TestCase {
 	//private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());

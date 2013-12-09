@@ -5,10 +5,10 @@ import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
+import com.mlab.gpx.api.GpxDocument;
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.Util;
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.Track;
 import com.mlab.tesis.java.gpx.data.TrackSegment;

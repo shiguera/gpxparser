@@ -4,6 +4,10 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 
+import com.mlab.gpx.api.GpxDocument;
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.WayPoint;
+
 /**
  * Clase utilitaria para manipulación de documentos Gpx
  * Básicamente se compone de un elemento Metadata, uno Extensions y unas colecciones

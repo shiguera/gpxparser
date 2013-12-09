@@ -2,6 +2,8 @@ package com.mlab.tesis.java.gpx.data;
 
 import java.util.List;
 
+import com.mlab.gpx.api.AbstractWayPoint;
+
 
 /**
  * Implementación simple de AbstractWayPoint

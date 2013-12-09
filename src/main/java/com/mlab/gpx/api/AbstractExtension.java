@@ -1,4 +1,5 @@
-package com.mlab.tesis.java.gpx.data;
+package com.mlab.gpx.api;
+
 
 public class AbstractExtension extends AbstractGpxElement {
 

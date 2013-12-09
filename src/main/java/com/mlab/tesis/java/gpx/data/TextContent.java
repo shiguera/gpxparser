@@ -1,5 +1,7 @@
 package com.mlab.tesis.java.gpx.data;
 
+import com.mlab.gpx.api.GpxNode;
+
 /**
  * Utility class to add node content in a composite way to GpxElements
  * @author shiguera

@@ -10,10 +10,10 @@ import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.WayPoint;
 import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
-import com.mlab.tesis.java.gpx.data.WayPoint;
 import com.mlab.tesis.java.gpx.data.extensions.ExtendedWayPoint;
 
 public class TestWayPoint extends TestCase {

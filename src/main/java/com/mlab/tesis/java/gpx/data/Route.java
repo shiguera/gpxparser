@@ -1,5 +1,9 @@
 package com.mlab.tesis.java.gpx.data;
 
+import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.GpxNode;
+import com.mlab.gpx.api.WayPoint;
+
 
 
 

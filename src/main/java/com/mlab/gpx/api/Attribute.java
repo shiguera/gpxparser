@@ -1,4 +1,5 @@
-package com.mlab.tesis.java.gpx.data;
+package com.mlab.gpx.api;
+
 
 /**
  * Interface for attribute elements. They are GpxElements that have name and value

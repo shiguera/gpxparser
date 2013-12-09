@@ -8,6 +8,10 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.GpxNode;
+import com.mlab.gpx.api.WayPoint;
+
 /**
  * La clase Track guarda un track de un documento GpxDocument. Básicamente consiste
  * en una serie de metadatos y una colección de TrackSegment<p> 

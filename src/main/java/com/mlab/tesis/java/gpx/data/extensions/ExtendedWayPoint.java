@@ -2,9 +2,9 @@ package com.mlab.tesis.java.gpx.data.extensions;
 
 import java.util.List;
 
+import com.mlab.gpx.api.GpxFactory;
 import com.mlab.tesis.java.gpx.Util;
 import com.mlab.tesis.java.gpx.data.AndroidWayPoint;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
 
 /**
  * 

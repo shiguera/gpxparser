@@ -7,8 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
+import com.mlab.gpx.api.GpxDocument;
+import com.mlab.gpx.api.GpxFactory;
 import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
 import com.mlab.tesis.java.gpx.data.SimpleWayPoint;
 import com.mlab.tesis.java.gpx.data.Track;

@@ -1,5 +1,7 @@
 package com.mlab.tesis.java.gpx.data;
 
+import com.mlab.gpx.api.Attribute;
+
 
 public class SimpleAttribute implements Attribute {
 

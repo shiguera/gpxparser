@@ -1,5 +1,7 @@
 package com.mlab.tesis.java.gpx.data;
 
+import com.mlab.gpx.api.AbstractGpxElement;
+
 /**
  * Clase para el elemento metadata de un documento gpx.
  * El esquema xsd:

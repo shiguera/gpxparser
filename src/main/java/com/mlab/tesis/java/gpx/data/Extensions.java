@@ -3,6 +3,9 @@ package com.mlab.tesis.java.gpx.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.GpxNode;
+
 public class Extensions extends AbstractGpxElement {
 
 	private List<GpxNode> nodes;

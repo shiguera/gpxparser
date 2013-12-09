@@ -7,10 +7,10 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import com.mlab.tesis.java.gpx.data.GpxDocument;
-import com.mlab.tesis.java.gpx.data.GpxFactory;
-import com.mlab.tesis.java.gpx.data.GpxFactory.Type;
-import com.mlab.tesis.java.gpx.data.WayPoint;
+import com.mlab.gpx.api.GpxDocument;
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.api.GpxFactory.Type;
 
 public class TestExtendedGpxFactory {
 
