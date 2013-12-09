@@ -1,7 +1,7 @@
 package com.mlab.gpx.api;
 
-import com.mlab.tesis.java.gpx.Util;
-import com.mlab.tesis.srs.EllipsoidWGS84;
+import com.mlab.gpx.impl.srs.EllipsoidWGS84;
+import com.mlab.gpx.impl.util.Util;
 
 
 /**

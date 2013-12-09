@@ -22,13 +22,13 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.mlab.tesis.java.gpx.Util;
-import com.mlab.tesis.java.gpx.data.Route;
-import com.mlab.tesis.java.gpx.data.SimpleGpxDocument;
-import com.mlab.tesis.java.gpx.data.SimpleGpxFactory;
-import com.mlab.tesis.java.gpx.data.Track;
-import com.mlab.tesis.java.gpx.data.TrackSegment;
-import com.mlab.tesis.java.gpx.data.extensions.ExtendedGpxFactory;
+import com.mlab.gpx.impl.Route;
+import com.mlab.gpx.impl.SimpleGpxDocument;
+import com.mlab.gpx.impl.SimpleGpxFactory;
+import com.mlab.gpx.impl.Track;
+import com.mlab.gpx.impl.TrackSegment;
+import com.mlab.gpx.impl.extensions.ExtendedGpxFactory;
+import com.mlab.gpx.impl.util.Util;
 
 /**
  * Clase base abstracta para las implementaciones concretas de

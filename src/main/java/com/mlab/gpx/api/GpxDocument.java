@@ -4,10 +4,10 @@ import java.util.List;
 
 import org.w3c.dom.Document;
 
-import com.mlab.tesis.java.gpx.data.Extensions;
-import com.mlab.tesis.java.gpx.data.Metadata;
-import com.mlab.tesis.java.gpx.data.Route;
-import com.mlab.tesis.java.gpx.data.Track;
+import com.mlab.gpx.impl.Extensions;
+import com.mlab.gpx.impl.Metadata;
+import com.mlab.gpx.impl.Route;
+import com.mlab.gpx.impl.Track;
 
 /**
  * Interface for GpxDocuments. A GpxDocument has one Metadata element,
