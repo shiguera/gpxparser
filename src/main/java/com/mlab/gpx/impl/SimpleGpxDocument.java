@@ -149,6 +149,11 @@ public class SimpleGpxDocument  implements GpxDocument {
 	public int trackCount() {
 		return this.tracks.size();
 	}
+	@Override
+	public boolean hasTracks() {
+		return (this.tracks.size()>0);
+	}
+
 	
 	/**
 	 * Añade un WayPoint a la colección de WayPoints
@@ -220,5 +225,6 @@ public class SimpleGpxDocument  implements GpxDocument {
 	public Extensions getExtensions() {
 		return this.extensions;
 	}
+
 		
 }

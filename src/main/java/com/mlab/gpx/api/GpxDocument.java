@@ -29,5 +29,8 @@ public interface GpxDocument extends GpxNode {
 	void addTrack(Track track);
 	void addWayPoint(WayPoint wp);
 	void addRoute(Route rte);
+	
+	boolean hasTracks();
+	
 
 }
