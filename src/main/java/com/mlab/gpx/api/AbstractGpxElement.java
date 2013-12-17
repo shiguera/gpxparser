@@ -3,6 +3,8 @@ package com.mlab.gpx.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.mlab.gpx.impl.util.XmlFactory;
+
 public abstract class AbstractGpxElement implements GpxElement {
 
 	protected String tagname;
@@ -23,11 +25,11 @@ public abstract class AbstractGpxElement implements GpxElement {
 	@Override
 	public String asGpx() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(GpxFactory.createTag(namespace,tagname,true));
+		builder.append(XmlFactory.createTag(namespace,tagname,true));
 		for(GpxNode node: nodes()) {
 			builder.append(node.asGpx());
 		}
-		builder.append(GpxFactory.createTag(namespace,tagname,false));
+		builder.append(XmlFactory.createTag(namespace,tagname,false));
 		return builder.toString();
 	}
 

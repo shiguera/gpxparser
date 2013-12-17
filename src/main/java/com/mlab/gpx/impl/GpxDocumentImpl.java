@@ -7,6 +7,7 @@ import org.w3c.dom.Document;
 import com.mlab.gpx.api.GpxDocument;
 import com.mlab.gpx.api.GpxFactory;
 import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.impl.util.XmlFactory;
 
 /**
  * Clase utilitaria para manipulación de documentos Gpx
@@ -87,7 +88,7 @@ public class GpxDocumentImpl  implements GpxDocument {
 
 	@Override
 	public Document getDomDocument() {
-		doc = GpxFactory.parseXmlDocument(this.asGpx());
+		doc = XmlFactory.parseXmlDocument(this.asGpx());
 		return doc;
 	}
 
@@ -231,7 +232,7 @@ public class GpxDocumentImpl  implements GpxDocument {
 	
 	public String format() {
 		String xml=this.asGpx();
-        return GpxFactory.format(xml);
+        return XmlFactory.format(xml);
     }
 
 	@Override

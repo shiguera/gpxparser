@@ -2,8 +2,8 @@ package com.mlab.gpx.impl;
 
 import java.util.List;
 
-import com.mlab.gpx.api.GpxFactory;
 import com.mlab.gpx.impl.util.Util;
+import com.mlab.gpx.impl.util.XmlFactory;
 
 public class AndroidWayPoint extends SimpleWayPoint {
 
@@ -88,9 +88,9 @@ public class AndroidWayPoint extends SimpleWayPoint {
 	protected String extensionsAsGpx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<extensions>");
-		builder.append(GpxFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
-		builder.append(GpxFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
+		builder.append(XmlFactory.createDoubleTag(namespace, "speed", speed, 12, SPEED_DECIMALS));
+		builder.append(XmlFactory.createDoubleTag(namespace, "bearing", bearing, 12, BEARING_DECIMALS));
+		builder.append(XmlFactory.createDoubleTag(namespace, "accuracy", accuracy, 12, ACCURACY_DECIMALS));
 		builder.append("</extensions>");
 		return builder.toString();
 	}

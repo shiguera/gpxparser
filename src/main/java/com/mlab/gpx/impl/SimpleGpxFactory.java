@@ -3,6 +3,7 @@ package com.mlab.gpx.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
@@ -11,6 +12,7 @@ import com.mlab.gpx.api.GpxFactory;
 
 public class SimpleGpxFactory extends GpxFactory {
 
+	private final Logger LOG = Logger.getLogger(getClass().getName());
 	
  	public SimpleGpxFactory() {
 		this.factoryType = GpxFactory.Type.SimpleGpxFactory;
@@ -26,7 +28,7 @@ public class SimpleGpxFactory extends GpxFactory {
 	public SimpleWayPoint createWayPoint(String name, String description, long time,
 			List<Double> values) {
 		if(values==null) {
-			System.out.println("BSimpleGpxFactory.createBWayPoint(): values=null");
+			LOG.warning("SimpleGpxFactory.createWayPoint(): values=null");
 			return null;
 		}
 		SimpleWayPoint wp= new SimpleWayPoint(name,description,time, values);

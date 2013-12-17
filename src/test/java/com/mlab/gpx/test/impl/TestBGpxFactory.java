@@ -15,6 +15,7 @@ import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.api.GpxFactory.Type;
 import com.mlab.gpx.impl.Track;
 import com.mlab.gpx.impl.TrackSegment;
+import com.mlab.gpx.impl.util.XmlFactory;
 
 public class TestBGpxFactory extends TestCase {
 	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+
@@ -61,7 +62,7 @@ public class TestBGpxFactory extends TestCase {
 	}
 	public void testParseXmlDocument() {
 		System.out.print("Testing GpxFactory.parseXmlDocument()...");
-		Document doc = GpxFactory.parseXmlDocument(cadxml);
+		Document doc = XmlFactory.parseXmlDocument(cadxml);
 		assertNotNull(doc);
 		Element ele = doc.getDocumentElement();
 		assertNotNull(ele);
@@ -85,17 +86,17 @@ public class TestBGpxFactory extends TestCase {
 	}
 	public void testNodeAsFormatedXmlString() {
 		System.out.print("Testing GpxFactory.nodeAsFormatedXmlString()...");
-		Document doc = GpxFactory.parseXmlDocument(cadxml);
+		Document doc = XmlFactory.parseXmlDocument(cadxml);
 		Element ele = doc.getDocumentElement();
 		NodeList list = ele.getElementsByTagName("salary");
-		String cad = GpxFactory.nodeAsFormatedXmlString(list.item(0),false);
+		String cad = XmlFactory.nodeAsFormatedXmlString(list.item(0),false);
 		//System.out.println(cad);
 		assertEquals("<salary>100000</salary>\n", cad);
 		System.out.println("OK");
 	}
 	public void testFormat() {
 		System.out.print("Testing GpxFactory.format()...");
-		String cad = GpxFactory.format(cadxml);
+		String cad = XmlFactory.format(cadxml);
 		//System.out.println(cad);
 		assertTrue(cad.length()>0);
 		System.out.println("OK");
@@ -178,7 +179,7 @@ public class TestBGpxFactory extends TestCase {
 		// Metodo createDoubleTag(): Exception tag vacía
 		Throwable t=null;
 		try {
-			tag = GpxFactory.createDoubleTag(namespace, name, 0.0);
+			tag = XmlFactory.createDoubleTag(namespace, name, 0.0);
 		} catch(Exception e) {
 			t = e;
 		}
@@ -187,15 +188,15 @@ public class TestBGpxFactory extends TestCase {
 
 		// Etiqueta sin namespace, precisión por defecto
 		name = "Ax";
-		assertEquals("<Ax>0.000000</Ax>",GpxFactory.createDoubleTag(namespace,name,0.0));
+		assertEquals("<Ax>0.000000</Ax>",XmlFactory.createDoubleTag(namespace,name,0.0));
 		// Etiqueta completa
 		namespace = "mlab";
-		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0));
+		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",XmlFactory.createDoubleTag(namespace,name,0.0));
 		
 		// Método doubleToString(..., digits, decimals)
-		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0,12,6));
-		assertEquals("<mlab:Ax>0.000</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,0.0,12,3));
-		assertEquals("<mlab:Ax>1.236</mlab:Ax>",GpxFactory.createDoubleTag(namespace,name,1.2356,12,3));
+		assertEquals("<mlab:Ax>0.000000</mlab:Ax>",XmlFactory.createDoubleTag(namespace,name,0.0,12,6));
+		assertEquals("<mlab:Ax>0.000</mlab:Ax>",XmlFactory.createDoubleTag(namespace,name,0.0,12,3));
+		assertEquals("<mlab:Ax>1.236</mlab:Ax>",XmlFactory.createDoubleTag(namespace,name,1.2356,12,3));
 			
 		System.out.println("OK");
 		
