@@ -30,7 +30,8 @@ public interface GpxDocument extends GpxNode {
 	void addWayPoint(WayPoint wp);
 	void addRoute(Route rte);
 	
-	boolean hasTracks();
-	
+	boolean hasWayPoints();
+	boolean hasRoutes();
+	boolean hasTracks();	
 
 }

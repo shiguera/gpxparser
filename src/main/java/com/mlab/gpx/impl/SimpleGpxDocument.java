@@ -164,6 +164,14 @@ public class SimpleGpxDocument  implements GpxDocument {
 		return this.wpts.size();
 	}
 	/**
+	 * Devuelve true si el GpxDocument tiene algún WayPoint individual
+	 * @return true si existen WayPoints individuales en el documento.
+	 * false en caso contrario
+	 */
+	public boolean hasWayPoints() {
+		return (this.wpts.size()>0);
+	}
+	/**
 	 * Añade una Route a la colección de rutas del GpxDocument
 	 * @param rte Route que se quiere añadir
 	 */
@@ -173,6 +181,14 @@ public class SimpleGpxDocument  implements GpxDocument {
 	}
 	public int routeCount() {
 		return this.routes.size();
+	}
+	/**
+	 * Devuelve true si el GpxDocument tiene algún Route
+	 * @return true si existe algún Route en el documento.
+	 * false en caso contrario
+	 */
+	public boolean hasRoutes() {
+		return (this.routes.size()>0);
 	}
 	/**
 	 * Devuelve una cadena con el documento xml
