@@ -3,15 +3,15 @@ package com.mlab.gpx.api;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.logging.Logger;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.mlab.gpx.impl.Route;
+import com.mlab.gpx.impl.AndroidGpxFactory;
 import com.mlab.gpx.impl.GpxDocumentImpl;
+import com.mlab.gpx.impl.Route;
 import com.mlab.gpx.impl.SimpleGpxFactory;
 import com.mlab.gpx.impl.Track;
 import com.mlab.gpx.impl.TrackSegment;
@@ -39,12 +39,14 @@ import com.mlab.gpx.impl.util.XmlFactory;
  *
  */
 public abstract class GpxFactory {
+	private final Logger LOG = Logger.getLogger(getClass().getName());
+	
 	
 	/**
 	 * Variable de tipo de Factory a instanciar a través 
 	 * del método estático 'getFactory()' 	
 	 */
-	public enum Type {SimpleGpxFactory, ExtendedGpxFactory};
+	public enum Type {SimpleGpxFactory, AndroidGpxFactory, ExtendedGpxFactory};
 	protected GpxFactory.Type factoryType; 
 	
 	/**
@@ -57,6 +59,8 @@ public abstract class GpxFactory {
 		switch(factoryType) {
 			case SimpleGpxFactory:
 				return new SimpleGpxFactory();
+			case AndroidGpxFactory:
+				return new AndroidGpxFactory();
 			case ExtendedGpxFactory:
 				return new ExtendedGpxFactory();
 		}
@@ -138,7 +142,6 @@ public abstract class GpxFactory {
 	 * gpx del mismo 
 	 * @param cadgpx String <wpt lon=....></wpt>
 	 * @return WayPoint o null si hay errores
-	 * @throws ParserConfigurationException 
 	 */
 	private WayPoint parseWayPoint(String cadgpx) {
 		Document doc = XmlFactory.parseXmlDocument(cadgpx);
@@ -296,7 +299,7 @@ public abstract class GpxFactory {
 			try {
 				result=Double.parseDouble(nl.item(0).getTextContent());
 			} catch (Exception e) {
-	            e.printStackTrace();
+				LOG.warning("GpxFactory.parseDoubleTag(): can't parse number\n"+e.getMessage());
 			}
 		}
 		return result;		
@@ -347,11 +350,11 @@ public abstract class GpxFactory {
 		return true;
 	}
 	
-	// Abstract methods
+	
 	public GpxDocument createGpxDocument() {
 		return new GpxDocumentImpl();
 	}
-	
+	// Abstract methods
 	/**
 	 *  Abstract method para creación de un WayPoint.
 	 *  Cada implementación tendrá un tamaño del List\<Double\> diferente
@@ -373,8 +376,8 @@ public abstract class GpxFactory {
 	 */
 	public abstract List<Double> parseWayPointExtensions(Document doc);
 	
-	public String asCsv(WayPoint wp) {
-		return wp.asCsv(false);
-	}
+//	public String asCsv(WayPoint wp) {
+//		return wp.asCsv(false);
+//	}
 	
 }

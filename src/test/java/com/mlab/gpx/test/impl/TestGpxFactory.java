@@ -18,12 +18,7 @@ import com.mlab.gpx.impl.TrackSegment;
 import com.mlab.gpx.impl.util.XmlFactory;
 
 public class TestGpxFactory extends TestCase {
-	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+
-			"<company><staff id=\"1001\"><firstname>yong</firstname><lastname>mook kim</lastname>"+
-			"<nickname>mkyong</nickname><salary>100000</salary></staff><staff id=\"2001\">"+
-			"<firstname>low</firstname><lastname>yin fong</lastname><nickname>fong fong</nickname>"+
-			"<salary>200000</salary></staff></company>";
-
+	
 	private final String wpt = "<wpt lat=\"46.57638889\" lon=\"8.89263889\">"+
 									"<ele>2372</ele>"+
 									"<name>LAGORETICO</name>"+
@@ -60,15 +55,6 @@ public class TestGpxFactory extends TestCase {
 		assertNotNull(factory);
 		System.out.println("OK");
 	}
-	public void testParseXmlDocument() {
-		System.out.print("Testing GpxFactory.parseXmlDocument()...");
-		Document doc = XmlFactory.parseXmlDocument(cadxml);
-		assertNotNull(doc);
-		Element ele = doc.getDocumentElement();
-		assertNotNull(ele);
-		assertEquals("company", ele.getNodeName());
-		System.out.println("OK");
-	}
 	public void testParseGpxDocument() {
 		System.out.print("Testing GpxFactory.parseGpxDocument()...");
 		GpxDocument doc = factory.parseGpxDocument(docgpx);
@@ -83,24 +69,6 @@ public class TestGpxFactory extends TestCase {
 		assertEquals(3,doc.getTracks().get(0).getTrackSegment(0).size());
 
 		System.out.println("OK");
-	}
-	public void testNodeAsFormatedXmlString() {
-		System.out.print("Testing GpxFactory.nodeAsFormatedXmlString()...");
-		Document doc = XmlFactory.parseXmlDocument(cadxml);
-		Element ele = doc.getDocumentElement();
-		NodeList list = ele.getElementsByTagName("salary");
-		String cad = XmlFactory.nodeAsFormatedXmlString(list.item(0),false);
-		//System.out.println(cad);
-		assertEquals("<salary>100000</salary>\n", cad);
-		System.out.println("OK");
-	}
-	public void testFormat() {
-		System.out.print("Testing GpxFactory.format()...");
-		String cad = XmlFactory.format(cadxml);
-		//System.out.println(cad);
-		assertTrue(cad.length()>0);
-		System.out.println("OK");
-		
 	}
 	public void testParseWayPoint() {
 		System.out.print("Testing GpxFactory.parseWayPoint()...");
