@@ -36,6 +36,7 @@ public class TestExtendedWayPoint extends TestCase {
 		System.out.println("OK");
 	}
 	
+	@Test
 	public void testGetValues() {
 		System.out.print("Testing ExtendedWayPoint.getValues()...");
 		GpxFactory factory = GpxFactory.getFactory(Type.ExtendedGpxFactory);

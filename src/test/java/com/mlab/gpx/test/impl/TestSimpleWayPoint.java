@@ -1,5 +1,7 @@
 package com.mlab.gpx.test.impl;
 
+import static org.junit.Assert.*;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +11,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.GpxFactory.Type;
+import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.impl.SimpleWayPoint;
 
-public class TestBSimpleWayPoint {
+public class TestSimpleWayPoint {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -52,6 +57,16 @@ public class TestBSimpleWayPoint {
 		Assert.assertEquals(960.0, wp3.getAltitude());
 		//System.out.println(wp2.toString());
 		
+		System.out.println("OK");
+	}
+
+	@Test
+	public void testGetValues() {
+		System.out.print("Testing SimpleWayPoint.getValues()...");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		List<Double> values = Arrays.asList(new Double[]{-3.9,43.5,900.0});
+		WayPoint wp = factory.createWayPoint("Prueba point", "Punto de pruebas", 1000l, values);
+		assertEquals(3,wp.getValues().length);
 		System.out.println("OK");
 	}
 	

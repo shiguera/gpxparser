@@ -79,6 +79,12 @@ public class AndroidWayPoint extends SimpleWayPoint {
 	}
 	
 	@Override
+	public double[] getValues() {		
+		return new double[] {this.longitude, this.latitude, this.altitude,
+				this.speed, this.bearing, this.accuracy};
+	}
+	
+	@Override
 	protected String extensionsAsGpx() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<extensions>");

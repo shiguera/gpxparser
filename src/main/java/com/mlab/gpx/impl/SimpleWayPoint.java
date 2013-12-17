@@ -62,7 +62,11 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 			this.altitude=(values.get(2)!=null?values.get(2):0.0);
 		}
 	}
-	
+	@Override
+	public double[] getValues()	{
+		return new double[] {longitude, latitude, altitude};
+	}
+
 	@Override
 	protected String extensionsAsGpx() {
 		return "";

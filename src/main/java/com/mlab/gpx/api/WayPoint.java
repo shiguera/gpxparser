@@ -51,7 +51,7 @@ public interface WayPoint extends GpxNode {
 	/**
 	 * Devuelve los valores de los campos en forma de Array de doubles. 
 	 * En la versión de SimpleWayPoint será:<br>
-	 * [longitude, latitude, altitude, speed, bearing, accuracy]<br>
+	 * [longitude, latitude, altitude]<br>
 	 * Los puntos con más extensiones añadirán sus valores al double[]
 	 * @return
 	 */

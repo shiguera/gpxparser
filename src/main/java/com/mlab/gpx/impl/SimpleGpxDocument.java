@@ -91,10 +91,6 @@ public class SimpleGpxDocument  implements GpxDocument {
 		return doc;
 	}
 
-//	public void setDoc(Document doc) {
-//		this.doc = doc;
-//	}
-
 	@Override
 	public Metadata getMetadata() {
 		return metadata;

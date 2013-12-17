@@ -6,7 +6,7 @@ import com.mlab.gpx.impl.util.Util;
 
 /**
  * Clase base abstracta para los WayPoint <br>
- * Incluye campos para: name, description, time, long, lat, alt, speed, bearing, accuraccy
+ * Incluye campos para: name, description, time, longitude, latitude, altitude
  * @author shiguera
  *
  */
@@ -99,18 +99,14 @@ public abstract class AbstractWayPoint implements WayPoint {
 		this.tag = TAG_WAYPOINT;
 	}
 	/**
-	 * Devuelve un array de double con los seis valores:
-	 * {lon,lat,alt,speed,bearing,accuracy}. La salida la utiliza
+	 * Devuelve un array de double con los valores:
+	 * {lon,lat,alt}. La salida la utiliza
 	 * el TrackSegment y otros para gestionar la TSerie con
 	 * la colección de WayPoint
-	 * @return double[] {lon,lat,alt,speed,bearing,accuracy}
+	 * @return double[] {lon,lat,alt}
 	 */
 	@Override
-	public double[] getValues() {
-		double[] val=new double[] {
-			this.longitude, this.latitude, this.altitude};
-		return val;
-	}
+	public abstract double[] getValues(); 
 
 	/**
 	 * Devuelve una cadena gpx '<wpt>....</wpt>'

@@ -38,10 +38,10 @@ import com.mlab.gpx.impl.util.Util;
  * - getFactory(): nos proporciona la instancia 
  * de factory concreta en base al parámetro 'GpxFactory.Type'.<br/>
  * - parseXmlDocument() : Devuelve un Document a partir de un String xml<br/>
- * - parseGpxDocument() : Devuelve un GpxDocument a partirde un String xml <br/>
+ * - parseGpxDocument() : Devuelve un GpxDocument a partir de un String xml <br/>
  * - nodeAsFormatedXmlString() : Devuelve un String formateado en xml a partir
  * de un org.w3c.dom.Node<br/>
- *  - format(): Devuelve una String xml formateada con saltos de línea y 
+ *  - format(): Devuelve un String xml formateado con saltos de línea y 
  *  tabulaciones a partir de un String xml sin formatear<br/>
  *  El resto de métodos para parsear documentos son abstractos 
  *  y los deben implementar las subclases.<br/>
