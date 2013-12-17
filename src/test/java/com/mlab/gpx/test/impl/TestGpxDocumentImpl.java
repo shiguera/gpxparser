@@ -9,12 +9,12 @@ import org.w3c.dom.Element;
 
 import com.mlab.gpx.api.GpxDocument;
 import com.mlab.gpx.api.GpxFactory;
-import com.mlab.gpx.impl.SimpleGpxDocument;
+import com.mlab.gpx.impl.GpxDocumentImpl;
 import com.mlab.gpx.impl.SimpleWayPoint;
 import com.mlab.gpx.impl.Track;
 import com.mlab.gpx.impl.TrackSegment;
 
-public class TestSimpleGpxDocument extends TestCase {
+public class TestGpxDocumentImpl extends TestCase {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
 	private final String cadxml = "<?xml version=\"1.0\"  encoding=\"UTF-8\"?>"+
@@ -24,7 +24,7 @@ public class TestSimpleGpxDocument extends TestCase {
 			"<salary>200000</salary></staff></company>";
 
 	
-	private SimpleGpxDocument gpxdoc=null;
+	private GpxDocumentImpl gpxdoc=null;
 	private GpxFactory factory;
 	
 	
@@ -34,8 +34,8 @@ public class TestSimpleGpxDocument extends TestCase {
 		factory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
 		gpxdoc=buildGpxdoc();	
 	}
-	private SimpleGpxDocument buildGpxdoc() {
-		GpxDocument gpxdoc=(SimpleGpxDocument) factory.createGpxDocument();
+	private GpxDocumentImpl buildGpxdoc() {
+		GpxDocument gpxdoc=(GpxDocumentImpl) factory.createGpxDocument();
 		Track track=new Track();
 		long t=System.currentTimeMillis();
 		SimpleWayPoint tp= new SimpleWayPoint("Pto1","Punto de pruebas",t,-3.8,42.5,900.0);
@@ -47,7 +47,7 @@ public class TestSimpleGpxDocument extends TestCase {
 		ts.addWayPoint(tp2);
 		track.add(ts);		
 		gpxdoc.addTrack(track);
-		return (SimpleGpxDocument) gpxdoc;		
+		return (GpxDocumentImpl) gpxdoc;		
 	}
 	
 	public void test() {

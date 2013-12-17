@@ -23,7 +23,7 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import com.mlab.gpx.impl.Route;
-import com.mlab.gpx.impl.SimpleGpxDocument;
+import com.mlab.gpx.impl.GpxDocumentImpl;
 import com.mlab.gpx.impl.SimpleGpxFactory;
 import com.mlab.gpx.impl.Track;
 import com.mlab.gpx.impl.TrackSegment;
@@ -171,7 +171,7 @@ public abstract class GpxFactory {
 	 */
 	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
-		GpxDocument gpxDoc = (SimpleGpxDocument) GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory).parseGpxDocument(cad);
+		GpxDocument gpxDoc = (GpxDocumentImpl) GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory).parseGpxDocument(cad);
 		if(gpxDoc==null) {
 			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
 		}
@@ -506,7 +506,7 @@ public abstract class GpxFactory {
 	
 	// Abstract methods
 	public GpxDocument createGpxDocument() {
-		return new SimpleGpxDocument();
+		return new GpxDocumentImpl();
 	}
 	
 	/**

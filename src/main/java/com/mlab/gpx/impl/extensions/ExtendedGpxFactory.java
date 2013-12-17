@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 import com.mlab.gpx.api.GpxDocument;
 import com.mlab.gpx.api.GpxFactory;
 import com.mlab.gpx.api.WayPoint;
-import com.mlab.gpx.impl.SimpleGpxDocument;
+import com.mlab.gpx.impl.GpxDocumentImpl;
 import com.mlab.gpx.impl.util.Util;
 
 public class ExtendedGpxFactory extends GpxFactory {
@@ -17,7 +17,7 @@ public class ExtendedGpxFactory extends GpxFactory {
 
 	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
-		GpxDocument gpxDoc = (SimpleGpxDocument) 
+		GpxDocument gpxDoc = (GpxDocumentImpl) 
 				GpxFactory.getFactory(GpxFactory.Type.ExtendedGpxFactory).parseGpxDocument(cad);
 		if(gpxDoc==null) {
 			System.out.println("Error parsing GpxDocument "+gpxFile.getName());

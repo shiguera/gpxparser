@@ -31,7 +31,7 @@ import com.mlab.gpx.api.WayPoint;
  * 
  * @author shiguera
  */
-public class SimpleGpxDocument  implements GpxDocument {	
+public class GpxDocumentImpl  implements GpxDocument {	
 	private final String TAG_WAYPOINT = "wpt";
 	
 	final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
@@ -75,7 +75,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 	 * lo que rompe la compatibilidad con programas ya hechos
 	 * 
 	 */
-	public SimpleGpxDocument() {
+	public GpxDocumentImpl() {
 		this.gpxFactory = GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory);
 		this.doc = null;
 		this.metadata= new Metadata();
@@ -227,6 +227,7 @@ public class SimpleGpxDocument  implements GpxDocument {
 		cad += FOOTER;
 		return cad;
 	}
+	
 	
 	public String format() {
 		String xml=this.asGpx();
