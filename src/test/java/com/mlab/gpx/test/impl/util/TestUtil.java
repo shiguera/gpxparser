@@ -1,4 +1,4 @@
-package com.mlab.gpx.test.impl;
+package com.mlab.gpx.test.impl.util;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -8,6 +8,84 @@ import junit.framework.TestCase;
 import com.mlab.gpx.impl.util.Util;
 
 public class TestUtil extends TestCase {
+
+	public void testSecondsToHMSString() {
+		System.out.print("Testing Util.secondsToHMSString()...");
+		long t = (long)(2*60*60+33*60+17);
+		assertEquals("2 h 33 m 17 s", Util.secondsToHMSString(t));
+		t = (long)(2*60*60);
+		assertEquals("2 h", Util.secondsToHMSString(t));
+		t = (long)(2*60*60+17);
+		assertEquals("2 h 17 s", Util.secondsToHMSString(t));
+		t = (long)(0);
+		assertEquals("0 s", Util.secondsToHMSString(t));
+		System.out.println("OK");		
+	}
+	public void testSecondsToHMS() {
+		System.out.print("Testing Util.secondsToHMS()...");
+		// 16 segundos
+		long t = 16l;
+		assertEquals(0, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(0, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(16, (int)Util.secondsToHMS(t)[2]);
+		// 42 minutos
+		t = (long) (42*60.0);
+		assertEquals(0, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(42, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(0, (int)Util.secondsToHMS(t)[2]);
+		// 42 minutos y 18 segundos
+		t = (long) (42.0*60.0+18);
+		assertEquals(0, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(42, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(18, (int)Util.secondsToHMS(t)[2]);
+		// 2 horas
+		t = (long) (2.0*60.0*60.0);
+		assertEquals(2, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(0, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(0, (int)Util.secondsToHMS(t)[2]);
+		// 2 horas y 42 minutos
+		t = (long) (2.7*60.0*60.0);
+		assertEquals(2, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(42, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(0, (int)Util.secondsToHMS(t)[2]);
+		// 2 horas y 18 segundos
+		t = (long) (2.0*60.0*60.0+18);
+		assertEquals(2, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(0, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(18, (int)Util.secondsToHMS(t)[2]);
+		// 2 horas, 42 minutos y 18 segundos
+		t = (long) (2.0*60.0*60.0+42.0*60+18);
+		assertEquals(2, (int)Util.secondsToHMS(t)[0]);
+		assertEquals(42, (int)Util.secondsToHMS(t)[1]);
+		assertEquals(18, (int)Util.secondsToHMS(t)[2]);
+		
+		System.out.println("OK");		
+	}
+
+	public void testSecondsToHours() {
+		System.out.print("Testing Util.secondsToHours()...");
+		long t = (long) (2.7*60.0*60.0);
+		assertEquals(2.7, Util.secondsToHours(t));
+		t = (long) (2.3*60.0*60.0);
+		assertEquals(2.3, Util.secondsToHours(t));
+		t = (long) (-2.3*60.0*60.0);
+		assertEquals(-2.3, Util.secondsToHours(t));
+		t = (long) (0.3*60.0*60.0);
+		assertEquals(0.3, Util.secondsToHours(t));
+		System.out.println("OK");		
+	}
+	public void testSecondsToMinutes() {
+		System.out.print("Testing Util.secondsToMinutes()...");
+		long t = (long) (2.7*60.0);
+		assertEquals(2.7, Util.secondsToMinutes(t));
+		t = (long) (2.3*60.0);
+		assertEquals(2.3, Util.secondsToMinutes(t));
+		t = (long) (-2.3*60.0);
+		assertEquals(-2.3, Util.secondsToMinutes(t));
+		t = (long) (0.3*60.0);
+		assertEquals(0.3, Util.secondsToMinutes(t));
+		System.out.println("OK");		
+	}
 	
 	public void testStartTimeFromFileName() {
 		System.out.print("Testing Util.startTimeFromFileName()...");

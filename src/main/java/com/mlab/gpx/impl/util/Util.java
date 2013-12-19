@@ -19,6 +19,45 @@ import java.util.TimeZone;
 
 public class Util {
 	
+	public static String secondsToHMSString(long seconds) {
+		StringBuilder builder = new StringBuilder();
+		double[] hms = secondsToHMS(seconds);
+		if(hms[0]>0) {
+			builder.append((int)hms[0]);
+			builder.append(" h");
+		}
+		if(hms[1]>0) {
+			builder.append(" ");
+			builder.append((int)hms[1]);
+			builder.append(" m");
+		}
+		if(hms[2]>0) {
+			builder.append(" ");
+			builder.append((int)hms[2]);
+			builder.append(" s");
+		}
+		if(builder.toString().isEmpty()) {
+			builder.append("0 s");
+		}
+		return builder.toString();
+	}
+	public static double[] secondsToHMS(long seconds) {
+		double hours = secondsToHours(seconds);
+		double completeHours = Math.floor(hours);
+		long secondsReminder = seconds - (long)completeHours*60*60;
+		double minutesReminder = secondsToMinutes(secondsReminder);
+		double completeMinutes = Math.floor(minutesReminder);
+		secondsReminder = secondsReminder - (long)completeMinutes*60;
+		return new double[]{completeHours,completeMinutes,secondsReminder};
+	}
+	public static double secondsToHours(long seconds) {
+		return (((double)seconds)/60.0/60.0);
+		
+	}
+	public static double secondsToMinutes(long seconds) {
+		return (((double)seconds)/60.0);
+		
+	}
 	/**
 	 * Formatea un double a los digitos y precisión deseados, 
 	 * sustituyendo la coma decimal por el punto decimal.<br/>
