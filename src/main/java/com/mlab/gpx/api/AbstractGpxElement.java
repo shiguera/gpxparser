@@ -37,6 +37,14 @@ public abstract class AbstractGpxElement implements GpxElement {
 	public boolean add(GpxNode node) {
 		return this.nodes.add(node);
 	}
+	@Override
+	public boolean remove(GpxNode gpxNode) {
+		return this.nodes.remove(gpxNode);
+	}
+	@Override
+	public GpxNode get(int index) {
+		return (GpxNode)this.nodes.get(index);
+	}
 
 	@Override
 	public List<GpxNode> nodes() {

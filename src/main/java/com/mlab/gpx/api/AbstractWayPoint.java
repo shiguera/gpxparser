@@ -10,7 +10,7 @@ import com.mlab.gpx.impl.util.Util;
  * @author shiguera
  *
  */
-public abstract class AbstractWayPoint implements WayPoint {
+public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 
 	protected final String TAG_WAYPOINT = "wpt";
 	private final int LONG_DECIMALS = 6;

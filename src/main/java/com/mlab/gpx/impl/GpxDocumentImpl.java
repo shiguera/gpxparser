@@ -6,6 +6,7 @@ import org.w3c.dom.Document;
 
 import com.mlab.gpx.api.GpxDocument;
 import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.LeafGpxNode;
 import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.impl.util.XmlFactory;
 
@@ -32,7 +33,7 @@ import com.mlab.gpx.impl.util.XmlFactory;
  * 
  * @author shiguera
  */
-public class GpxDocumentImpl  implements GpxDocument {	
+public class GpxDocumentImpl extends LeafGpxNode implements GpxDocument {	
 	private final String TAG_WAYPOINT = "wpt";
 	
 	final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+

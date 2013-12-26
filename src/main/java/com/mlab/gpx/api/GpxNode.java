@@ -10,4 +10,8 @@ package com.mlab.gpx.api;
 public interface GpxNode {
 	
 	String asGpx();	
+	boolean add(GpxNode gpxNode);
+	boolean remove(GpxNode gpxNode);
+	GpxNode get(int index);	
+	
 }
