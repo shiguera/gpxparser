@@ -26,12 +26,20 @@ public interface GpxDocument extends GpxNode {
 	List<Track> getTracks();
 	Extensions getExtensions();
 	
-	void addTrack(Track track);
-	void addWayPoint(WayPoint wp);
-	void addRoute(Route rte);
-	
-	boolean hasWayPoints();
-	boolean hasRoutes();
+	boolean addTrack(Track track);
+	boolean removeTrack(Track track);
+	Track getTrack(int index);
 	boolean hasTracks();	
+	int trackCount();
+	boolean addWayPoint(WayPoint wp);
+	boolean removeWayPoint(WayPoint wp);
+	WayPoint getWayPoint(int index);
+	boolean hasWayPoints();
+	int wayPointCount();
+	boolean addRoute(Route rte);
+	boolean removeRoute(Route route);
+	Route getRoute(int index);
+	boolean hasRoutes();
+	int routeCount();
 
 }

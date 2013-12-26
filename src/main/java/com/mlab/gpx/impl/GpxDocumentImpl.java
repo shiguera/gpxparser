@@ -107,43 +107,51 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 		return wpts;
 	}
 
-	public void setWpts(ArrayList<WayPoint> wpts) {
-		this.wpts = wpts;
-	}
+//	public void setWpts(ArrayList<WayPoint> wpts) {
+//		this.wpts = wpts;
+//	}
 
 	@Override
 	public List<Route> getRoutes() {
 		return routes;
 	}
 
-	public void setRoutes(ArrayList<Route> routes) {
-		this.routes = routes;
-	}
+//	public void setRoutes(ArrayList<Route> routes) {
+//		this.routes = routes;
+//	}
 	
 	@Override
 	public List<Track> getTracks() {
 		return tracks;
 	}
 
-	public void setTracks(ArrayList<Track> tracks) {
-		this.tracks = tracks;
-	}
+//	public void setTracks(ArrayList<Track> tracks) {
+//		this.tracks = tracks;
+//	}
 
 	/**
 	 * Añade un track a la colección de tracks del GpxDocument
 	 * @param track Track que se quiere añadir
 	 */
 	@Override
-	public void addTrack(Track track) {
-		// Añadir el track a la colección de tracks
-		this.tracks.add(track);
+	public boolean addTrack(Track track) {
+		return this.tracks.add(track);
 		
 	}
 	
+	@Override
+	public boolean removeTrack(Track track) {
+		return this.tracks.remove(track);
+	}
+	@Override
+	public Track getTrack(int index) {
+		return this.tracks.get(index);
+	}
 	/**
 	 * Devuelve el número de tracks en el documento
 	 * @return Devuelve el número de tracks en el documento
 	 */
+	@Override
 	public int trackCount() {
 		return this.tracks.size();
 	}
@@ -158,10 +166,15 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 	 * @param wp WayPoint que se quiere añadir
 	 */
 	@Override
-	public void addWayPoint(WayPoint wp) {
+	public boolean addWayPoint(WayPoint wp) {
 		wp.setTag(TAG_WAYPOINT);
-		this.wpts.add(wp);
+		return this.wpts.add(wp);
 	}
+	@Override
+	public boolean removeWayPoint(WayPoint wp) {
+		return this.wpts.remove(wp);
+	}
+	@Override
 	public int wayPointCount() {
 		return this.wpts.size();
 	}
@@ -170,17 +183,28 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 	 * @return true si existen WayPoints individuales en el documento.
 	 * false en caso contrario
 	 */
+	@Override
 	public boolean hasWayPoints() {
 		return (this.wpts.size()>0);
+	}
+	@Override
+	public WayPoint getWayPoint(int index) {
+		return this.wpts.get(index);
 	}
 	/**
 	 * Añade una Route a la colección de rutas del GpxDocument
 	 * @param rte Route que se quiere añadir
 	 */
 	@Override
-	public void addRoute(Route rte) {
-		this.routes.add(rte);
+	public boolean addRoute(Route rte) {
+		return this.routes.add(rte);
 	}
+	
+	@Override 
+	public boolean removeRoute(Route route) {
+		return this.routes.remove(route);
+	}
+	@Override
 	public int routeCount() {
 		return this.routes.size();
 	}
@@ -189,8 +213,13 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 	 * @return true si existe algún Route en el documento.
 	 * false en caso contrario
 	 */
+	@Override
 	public boolean hasRoutes() {
 		return (this.routes.size()>0);
+	}
+	@Override
+	public Route getRoute(int index) {
+		return this.routes.get(index);
 	}
 	/**
 	 * Devuelve una cadena con el documento xml
@@ -240,6 +269,7 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 	public Extensions getExtensions() {
 		return this.extensions;
 	}
+
 
 		
 }
