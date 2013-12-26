@@ -1,10 +1,10 @@
 package com.mlab.gpx.impl;
 
 import com.mlab.gpx.api.Attribute;
-import com.mlab.gpx.api.LeafGpxNode;
+import com.mlab.gpx.api.CompositeGpxNode;
 
 
-public class SimpleAttribute extends LeafGpxNode implements Attribute {
+public class SimpleAttribute extends CompositeGpxNode implements Attribute {
 
 	private String name;
 	private String value;

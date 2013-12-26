@@ -71,7 +71,7 @@ public class AndroidWayPoint extends SimpleWayPoint {
 		wp.longitude = this.getLongitude();
 		wp.latitude = this.getLatitude();
 		wp.altitude = this.getAltitude();
-		wp.tag = this.getTag();
+		wp.tagname = this.getTag();
 		wp.speed = this.speed;
 		wp.bearing = this.bearing;
 		wp.accuracy = this.accuracy;

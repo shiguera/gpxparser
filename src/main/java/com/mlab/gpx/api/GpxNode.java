@@ -9,9 +9,14 @@ package com.mlab.gpx.api;
  */
 public interface GpxNode {
 	
+	String getNamespace();
+	void setNamespace(String namespace);
+	String getTagName();
+	void setTagName(String tagname);
 	String asGpx();	
 	boolean add(GpxNode gpxNode);
 	boolean remove(GpxNode gpxNode);
 	GpxNode get(int index);	
+	int size();
 	
 }

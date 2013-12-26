@@ -1,13 +1,13 @@
 package com.mlab.gpx.impl;
 
-import com.mlab.gpx.api.LeafGpxNode;
+import com.mlab.gpx.api.AbstractGpxNode;
 
 /**
  * Utility class to add node content in a composite way to GpxElements
  * @author shiguera
  *
  */
-public class TextContent extends LeafGpxNode  {
+public class TextContent extends AbstractGpxNode  {
 
 	private String content;
 	

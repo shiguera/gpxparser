@@ -88,7 +88,7 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 		wp.longitude = this.getLongitude();
 		wp.latitude = this.getLatitude();
 		wp.altitude = this.getAltitude();
-		wp.tag = this.getTag();
+		wp.tagname = this.getTag();
 		return wp;
 	}
 

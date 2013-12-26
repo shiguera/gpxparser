@@ -10,7 +10,7 @@ import com.mlab.gpx.impl.util.Util;
  * @author shiguera
  *
  */
-public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
+public abstract class AbstractWayPoint extends AbstractGpxNode implements WayPoint {
 
 	protected final String TAG_WAYPOINT = "wpt";
 	private final int LONG_DECIMALS = 6;
@@ -48,13 +48,12 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 	protected double altitude;
 	
 	/**
-	 * Este campo se utiliza para diferenciar en la salida gpx los waypoint aislados del
+	 * El campo tagname se utiliza para diferenciar en la salida gpx los waypoint aislados del
 	 * documento gpx, que llevan un marcado <pre> {@code '<wpt>...</wpt> } </pre> de los waypoint cuando están 
 	 * dentro de una Route o un TrackSegment. En esos casos el marcado es 
 	 * <pre> {@code <rtept> y <trkpt> } </pre>
 	 * respectivamente.
 	 */
-	protected String tag;
 	
 	/**
 	 * basic constructor
@@ -66,7 +65,7 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 		this.longitude = 0.0;
 		this.latitude = 0.0;
 		this.altitude = 0.0;
-		this.tag = TAG_WAYPOINT;
+		this.tagname = TAG_WAYPOINT;
 	}
 	
 	/**
@@ -96,7 +95,7 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 		this.longitude=longitude;
 		this.latitude=latitude;
 		this.altitude=altitude;
-		this.tag = TAG_WAYPOINT;
+		this.tagname = TAG_WAYPOINT;
 	}
 	/**
 	 * Devuelve un array de double con los valores:
@@ -122,7 +121,7 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 		String slon = Util.doubleToString(longitude, 12, 6);
 		
 		String cad="";
-		cad = "<"+this.tag+" ";
+		cad = "<"+this.tagname+" ";
 		cad += " lat=\""+slat+"\" lon=\""+slon+"\">";
 		// Altitud
 		cad += "<ele>"+String.format("%8.2f",this.altitude).trim().replace(',', '.')+"</ele>";
@@ -141,7 +140,7 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 		// abstract method
 		cad += extensionsAsGpx();
 		//cad += "</extensions>";
-		cad += "</"+this.tag+">";
+		cad += "</"+this.tagname+">";
 		return cad;	
 	}
 
@@ -235,7 +234,7 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 	}
 	@Override
 	public String getTag() {
-		return tag;
+		return tagname;
 	}
 	public void setTime(long time) {
 		this.time = time;
@@ -257,6 +256,6 @@ public abstract class AbstractWayPoint extends LeafGpxNode implements WayPoint {
 	}
 	@Override
 	public void setTag(String tag) {
-		this.tag = tag;		
+		this.tagname = tag;		
 	}
 }

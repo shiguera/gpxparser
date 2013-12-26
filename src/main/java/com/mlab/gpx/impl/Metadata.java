@@ -1,6 +1,6 @@
 package com.mlab.gpx.impl;
 
-import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.CompositeGpxNode;
 
 /**
  * Clase para el elemento metadata de un documento gpx.
@@ -22,7 +22,7 @@ import com.mlab.gpx.api.AbstractGpxElement;
  * @author shiguera
  *
  */
-public class Metadata extends AbstractGpxElement {
+public class Metadata extends CompositeGpxNode {
 	
 	private String name;
 	private String desc;

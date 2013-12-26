@@ -83,7 +83,7 @@ public class TestTrackSegment extends TestCase {
 		GpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
 		assertNotNull(doc);
 		Track track = (Track)doc.getTracks().get(0);
-		TrackSegment segment = (TrackSegment)track.nodes().get(0);
+		TrackSegment segment = (TrackSegment)track.get(0);
 		assertEquals(9095, (int)segment.length());
 		System.out.println("OK");
 	}

@@ -1,13 +1,13 @@
 package com.mlab.gpx.impl;
 
-import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.CompositeGpxNode;
 import com.mlab.gpx.api.GpxNode;
 import com.mlab.gpx.api.WayPoint;
 
 
 
 
-public class Route extends AbstractGpxElement {
+public class Route extends CompositeGpxNode {
 
 	private final String TAGNAME = "rte";
 	private final String TAG_RTEPT = "rtept";
@@ -25,7 +25,11 @@ public class Route extends AbstractGpxElement {
 	 */
 	public boolean addWayPoint(WayPoint wp) {
 		wp.setTag(TAG_RTEPT);
-		return this.nodes.add(wp);
+		if(wp!=null) {
+			return this.nodes.add(wp);
+		} else {
+			return false;
+		}
 	}
 	public WayPoint getWayPoint(int index) {
 		WayPoint wp=null;

@@ -64,7 +64,7 @@ public class ExtendedWayPoint extends AndroidWayPoint {
 		wp.speed = this.getSpeed();
 		wp.bearing = this.getBearing();
 		wp.accuracy = this.getAccuracy();
-		wp.tag = this.getTag();
+		wp.tagname = this.getTag();
 		wp.ax = this.ax;
 		wp.ay = this.ay;
 		wp.az = this.az;

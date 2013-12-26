@@ -8,7 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.CompositeGpxNode;
 import com.mlab.gpx.api.GpxNode;
 import com.mlab.gpx.api.WayPoint;
 
@@ -34,7 +34,7 @@ import com.mlab.gpx.api.WayPoint;
  * }
  * </pre>
  */
-public class Track  extends AbstractGpxElement {
+public class Track  extends CompositeGpxNode {
 	private final String TAGNAME = "trk";
 	private String name="";
 	private String cmt="";
@@ -340,7 +340,7 @@ public class Track  extends AbstractGpxElement {
 	 */
 	public TrackSegment getTrackSegment(int index) {
 		if(index>=0 && index<size()) {
-			return (TrackSegment) this.nodes().get(index);
+			return (TrackSegment) this.get(index);
 		} else {
 			throw new IndexOutOfBoundsException();
 		}
@@ -402,7 +402,7 @@ public class Track  extends AbstractGpxElement {
 	public int wayPointCount() {
 		int wpc = 0;
 		if(this.size()>0) {
-			for(GpxNode segment: this.nodes()) {
+			for(GpxNode segment: this.nodes) {
 				wpc += ((TrackSegment)segment).size();
 			}
 		}
@@ -413,7 +413,7 @@ public class Track  extends AbstractGpxElement {
 		double length = 0.0;
 		if(this.nodes.size()>0) {
 			for(int i=0; i< this.nodes.size(); i++) {
-				length += ((TrackSegment)this.nodes().get(i)).length();
+				length += ((TrackSegment)this.get(i)).length();
 			}
 				
 		}

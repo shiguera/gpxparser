@@ -135,7 +135,7 @@ public class TestGpxFactory extends TestCase {
 		// numero de segmentos
 		assertEquals(1,track.size());
 		// numero de puntos en el segmento
-		assertEquals(4,((TrackSegment)track.nodes().get(0)).size());
+		assertEquals(4,((TrackSegment)track.get(0)).size());
 		System.out.println("OK");
 		
 	}

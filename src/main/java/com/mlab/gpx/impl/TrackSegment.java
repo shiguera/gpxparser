@@ -1,6 +1,6 @@
 package com.mlab.gpx.impl;
 
-import com.mlab.gpx.api.AbstractGpxElement;
+import com.mlab.gpx.api.CompositeGpxNode;
 import com.mlab.gpx.api.GpxNode;
 import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.impl.srs.EllipsoidWGS84;
@@ -20,7 +20,7 @@ import com.mlab.gpx.impl.tserie.TSerie;
  * }
  * </pre>
  * */
-public class TrackSegment extends AbstractGpxElement {
+public class TrackSegment extends CompositeGpxNode {
 	
 	private final String TAG_TRKPT = "trkpt";
 	private final String TAGNAME = "trkseg";
@@ -155,11 +155,11 @@ public class TrackSegment extends AbstractGpxElement {
 		
 		if(this.nodes.size()>0) {
 			EllipsoidWGS84 ell = new EllipsoidWGS84();
-			WayPoint last = (WayPoint)this.nodes().get(0);
+			WayPoint last = (WayPoint)this.nodes.get(0);
 			double[] lastxy= ell.proyUTM(last.getLongitude(), last.getLatitude());
 			
 			for(int i=0; i<this.nodes.size(); i++) {
-				WayPoint current = (WayPoint)this.nodes().get(i);
+				WayPoint current = (WayPoint)this.nodes.get(i);
 				double[] currentxy = ell.proyUTM(current.getLongitude(), current.getLatitude());
 				double incd = Math.sqrt((currentxy[0]-lastxy[0])*(currentxy[0]-lastxy[0])+
 						(currentxy[1]-lastxy[1])*(currentxy[1]-lastxy[1]));
