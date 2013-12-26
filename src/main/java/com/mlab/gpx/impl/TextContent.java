@@ -3,7 +3,7 @@ package com.mlab.gpx.impl;
 import com.mlab.gpx.api.AbstractGpxNode;
 
 /**
- * Utility class to add node content in a composite way to GpxElements
+ * Utility class to add node content in a composite way to GpxNodes
  * @author shiguera
  *
  */

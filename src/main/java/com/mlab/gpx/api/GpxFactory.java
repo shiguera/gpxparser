@@ -21,15 +21,25 @@ import com.mlab.gpx.impl.util.XmlFactory;
 
 /**
  * Clase base abstracta para las implementaciones concretas de
- * clases factory para parsear documentos gpx.<br/>
- * Dispone de algunos métodos estáticos utilitarios 
- * con caracter general para operar con documentos xml:<br/>
- * - getFactory(): nos proporciona la instancia 
+ * clases factory para leer y escribir documentos gpx.<br/>
+ * El método estático <em>getFactory()</em> nos proporciona la instancia 
  * de factory concreta en base al parámetro 'GpxFactory.Type'.<br/>
- * - parseXmlDocument() : Devuelve un Document a partir de un String xml<br/>
+ * La diferencia en las factories está en el tipo de WayPoint que utilizan.
+ * A la fecha hay tres tipos de GpxFactory:<br/>
+ * <ul>
+ * <li>SimpleGpxFactory: Lee y escribe SimpleWayPoints, esto es, sin extensiones</li>
+ * <li>AndroidGpxFactory: Lee y escribe AndroidWayPoints</li>
+ * <li>ExtendedWayPoint: Lee y escribe ExtendedWayPoints</li>
+ * </ul>
+ * La factories son compatibles en el sentido de que cualquier factory lee un documento
+ * de cualquier tipo. Eso sí, un documento Gpx leido con una SimpleGpxFactory no será capaz
+ * de leer las extensiones de los puntos, si existen.
+ *  Dispone de los siguientes métodos:<br/>
+ * - readGpxDocument(): Devuelve un gpxDocument a partir de un File<br/>
  * - parseGpxDocument() : Devuelve un GpxDocument a partir de un String xml <br/>
  * - nodeAsFormatedXmlString() : Devuelve un String formateado en xml a partir
  * de un org.w3c.dom.Node<br/>
+ * - createWayPoint(): crea un WayPoint del tipo correspondiente a la factory<br/>
  *  - format(): Devuelve un String xml formateado con saltos de línea y 
  *  tabulaciones a partir de un String xml sin formatear<br/>
  *  El resto de métodos para parsear documentos son abstractos 

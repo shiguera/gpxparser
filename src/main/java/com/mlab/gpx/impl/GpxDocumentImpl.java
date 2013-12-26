@@ -33,7 +33,7 @@ import com.mlab.gpx.impl.util.XmlFactory;
  * 
  * @author shiguera
  */
-public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {	
+public class GpxDocumentImpl implements GpxDocument {	
 	private final String TAG_WAYPOINT = "wpt";
 	
 	final String HEAD = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"+
@@ -107,27 +107,15 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 		return wpts;
 	}
 
-//	public void setWpts(ArrayList<WayPoint> wpts) {
-//		this.wpts = wpts;
-//	}
-
 	@Override
 	public List<Route> getRoutes() {
 		return routes;
 	}
 
-//	public void setRoutes(ArrayList<Route> routes) {
-//		this.routes = routes;
-//	}
-	
 	@Override
 	public List<Track> getTracks() {
 		return tracks;
 	}
-
-//	public void setTracks(ArrayList<Track> tracks) {
-//		this.tracks = tracks;
-//	}
 
 	/**
 	 * Añade un track a la colección de tracks del GpxDocument
@@ -269,7 +257,5 @@ public class GpxDocumentImpl extends AbstractGpxNode implements GpxDocument {
 	public Extensions getExtensions() {
 		return this.extensions;
 	}
-
-
 		
 }
