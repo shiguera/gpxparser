@@ -5,9 +5,12 @@ import java.lang.reflect.Method;
 
 import junit.framework.TestCase;
 
+import org.junit.Test;
+
 import com.mlab.gpx.api.GpxDocument;
 import com.mlab.gpx.api.GpxFactory;
 import com.mlab.gpx.api.GpxFactory.Type;
+import com.mlab.gpx.impl.GpxEnvelope;
 import com.mlab.gpx.impl.SimpleWayPoint;
 import com.mlab.gpx.impl.Track;
 import com.mlab.gpx.impl.TrackSegment;
@@ -17,7 +20,7 @@ import com.mlab.gpx.impl.util.Util;
 public class TestTrackSegment extends TestCase {
 	
 	//private final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
-	
+	@Test
 	public void test() {
 		//this.logger.info("TESTING TrackSegment.test()");
 		System.out.print("Testing TrackSegment()...");
@@ -41,6 +44,7 @@ public class TestTrackSegment extends TestCase {
 		System.out.println("OK");
 	}
 	
+	@Test
 	public void testParseGpx() {
 		//this.logger.info("TESTING TrackSegment.testParseGpx()");
 		System.out.print("Testing TrackSegment.parseGpx()...");
@@ -77,6 +81,7 @@ public class TestTrackSegment extends TestCase {
 		
 	}
 	
+	@Test
 	public void testLength() {
 		System.out.print("Testing TrackSegment.length()...");
 		File gpxFile = Util.readResourceFile("test.gpx");
@@ -87,6 +92,28 @@ public class TestTrackSegment extends TestCase {
 		assertEquals(9095, (int)segment.length());
 		System.out.println("OK");
 	}
-	// TODO Falta test para método length()
+	@Test
+	public void testGetEnvelope() {
+		System.out.print("Testing TrackSegment.getEnvelope()...");
+		File gpxFile = Util.readResourceFile("test.gpx");
+		GpxDocument doc = ExtendedGpxFactory.readGpxDocument(gpxFile);
+		assertNotNull(doc);
+		Track track = (Track)doc.getTracks().get(0);
+		TrackSegment segment = (TrackSegment)track.get(0);
+		GpxEnvelope env = segment.getEnvelope();
+		assertEquals(env.getMinLat(),40.403063,0.01);
+		assertEquals(env.getMaxLat(),40.417964,0.01);
+		assertEquals(env.getMinLon(),-3.994934,0.01);
+		assertEquals(env.getMaxLon(),-3.898487,0.01);
+
+		assertEquals(env.getCenter()[0],(40.403063+40.417964)/2,0.01);
+		assertEquals(env.getCenter()[1],(-3.898487-3.994934)/2,0.01);
+
+		
+		//System.out.println();
+		//System.out.println(env.toString());
+
+		System.out.println("OK");
+	}
 
 }

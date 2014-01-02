@@ -350,9 +350,12 @@ public class Util {
 	}
 
 	public static List<Double> arrayDoublesToList(double[] values) {
+		if(values==null) {
+			return null;
+		}
 		List<Double> list = new ArrayList<Double>();
-		for(double value:values) {
-			list.add(new Double(value));
+		for(Double value:values) {
+			list.add(value);
 		}
 		return list;
 	}

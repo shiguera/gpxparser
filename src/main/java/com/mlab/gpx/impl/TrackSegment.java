@@ -25,14 +25,15 @@ public class TrackSegment extends CompositeGpxNode {
 	private final String TAG_TRKPT = "trkpt";
 	private final String TAGNAME = "trkseg";
 	private TSerie tserie;
+	private GpxEnvelope gpxEnvelope;
 	
 	public TrackSegment() {
 		// (lon,lat,alt,vel,rumbo,accuracy)
 		super();
 		tserie = new TSerie();
 		this.tagname = TAGNAME;
+		this.gpxEnvelope = new GpxEnvelope();
 	}
-	
 	
 	/**
 	 * Da acceso directo a los AbstractWpt's del segmento
@@ -123,6 +124,9 @@ public class TrackSegment extends CompositeGpxNode {
 			if(result) {
 				wp.setTag(TAG_TRKPT);
 				result = this.nodes.add(wp);
+				if(result) {
+					this.updateGpxEnvelope(wp.getLatitude(), wp.getLongitude());
+				} 
 			} 
 		} else {
 			System.out.println("Can't add waypoint");
@@ -170,5 +174,15 @@ public class TrackSegment extends CompositeGpxNode {
 		}
 		
 		return length;
+	}
+	private void updateGpxEnvelope(double newlat, double newlon) {
+		this.gpxEnvelope.update(newlat, newlon);
+	}
+	/**
+	 * El GpxEnvelope del TrackSegment
+	 * @return
+	 */
+	public GpxEnvelope getEnvelope() {
+		return this.gpxEnvelope;
 	}
 }
