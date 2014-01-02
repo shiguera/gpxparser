@@ -49,7 +49,7 @@ import com.mlab.gpx.impl.util.XmlFactory;
  *
  */
 public abstract class GpxFactory {
-	private final Logger LOG = Logger.getLogger(getClass().getName());
+	private static final Logger LOG = Logger.getLogger(GpxFactory.class.getName());
 	
 	
 	/**
@@ -140,9 +140,12 @@ public abstract class GpxFactory {
 	 */
 	public static GpxDocument readGpxDocument(File gpxFile) {
 		String cad = Util.readFileToString(gpxFile);
-		GpxDocument gpxDoc = (GpxDocumentImpl) GpxFactory.getFactory(GpxFactory.Type.SimpleGpxFactory).parseGpxDocument(cad);
-		if(gpxDoc==null) {
-			System.out.println("Error parsing GpxDocument "+gpxFile.getName());
+		GpxFactory factory = GpxFactory.getFactory(GpxFactory.Type.ExtendedGpxFactory);
+		GpxDocument gpxDoc = (GpxDocumentImpl) factory.parseGpxDocument(cad);
+		if(gpxDoc!=null) {
+			gpxDoc.setGpxFile(gpxFile);
+		} else {
+			LOG.warning("GpxFactory.readGpxDocument() ERROR: can't parse GpxDocument "+gpxFile.getName());
 		}
 		return gpxDoc;
 	}

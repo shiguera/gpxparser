@@ -43,7 +43,7 @@ public class ExtendedWayPoint extends AndroidWayPoint {
 		this.ay = 0.0;
 		this.az = 0.0;
 		this.pressure = 0.0;
-		if(values!=null) {
+		if(values!=null && values.size()>=10) {
 			this.ax=(values.get(6)!=null?values.get(6):0.0);
 			this.ay=(values.get(7)!=null?values.get(7):0.0);
 			this.az=(values.get(8)!=null?values.get(8):0.0);

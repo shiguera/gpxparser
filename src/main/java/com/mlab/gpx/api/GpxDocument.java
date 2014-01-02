@@ -1,5 +1,6 @@
 package com.mlab.gpx.api;
 
+import java.io.File;
 import java.util.List;
 
 import org.w3c.dom.Document;
@@ -19,6 +20,9 @@ import com.mlab.gpx.impl.Track;
  *
  */
 public interface GpxDocument {
+	
+	File getGpxFile();
+	void setGpxFile(File gpxFile);
 	
 	Document getDomDocument();
 	Metadata getMetadata();

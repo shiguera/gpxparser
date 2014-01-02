@@ -52,7 +52,7 @@ public class AndroidWayPoint extends SimpleWayPoint {
 		this.speed = -1.0;
 		this.bearing = -1.0;
 		this.accuracy = -1.0;
-		if(values!=null) {
+		if(values!=null && values.size()>=6) {
 			this.speed=(values.get(3)!=null?values.get(3):0.0);
 			this.bearing=(values.get(4)!=null?values.get(4):0.0);
 			this.accuracy=(values.get(5)!=null?values.get(5):0.0);

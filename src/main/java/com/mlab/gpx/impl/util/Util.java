@@ -15,6 +15,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class Util {
@@ -348,5 +349,12 @@ public class Util {
 		return file;
 	}
 
+	public static List<Double> arrayDoublesToList(double[] values) {
+		List<Double> list = new ArrayList<Double>();
+		for(double value:values) {
+			list.add(new Double(value));
+		}
+		return list;
+	}
 
 }

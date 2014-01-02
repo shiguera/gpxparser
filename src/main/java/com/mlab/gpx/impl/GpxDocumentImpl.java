@@ -1,10 +1,10 @@
 package com.mlab.gpx.impl;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.w3c.dom.Document;
 
-import com.mlab.gpx.api.AbstractGpxNode;
 import com.mlab.gpx.api.GpxDocument;
 import com.mlab.gpx.api.GpxFactory;
 import com.mlab.gpx.api.WayPoint;
@@ -71,6 +71,7 @@ public class GpxDocumentImpl implements GpxDocument {
 	
 	protected Extensions extensions;
 	
+	protected File gpxFile;
 	/**
 	 * Constructor de clase. Inicializa las colecciones.
 	 * He añadido el parámetro para el factory,
@@ -85,6 +86,7 @@ public class GpxDocumentImpl implements GpxDocument {
 		this.tracks = new ArrayList<Track>();
 		this.wpts = new ArrayList<WayPoint>();
 		this.extensions = new Extensions();
+		this.gpxFile = null;
 	}
 
 	@Override
@@ -256,6 +258,14 @@ public class GpxDocumentImpl implements GpxDocument {
 	@Override
 	public Extensions getExtensions() {
 		return this.extensions;
+	}
+
+	public File getGpxFile() {
+		return gpxFile;
+	}
+
+	public void setGpxFile(File gpxFile) {
+		this.gpxFile = gpxFile;
 	}
 		
 }
