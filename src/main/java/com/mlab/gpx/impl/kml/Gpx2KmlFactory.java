@@ -13,7 +13,7 @@ import de.micromata.opengis.kml.v_2_2_0.LookAt;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Style;
 
-public class KmlFactory {
+public class Gpx2KmlFactory {
 
 	public static boolean writeToFile(Kml kml, File file) {
 		try {
@@ -38,7 +38,7 @@ public class KmlFactory {
 		final Style style = createLineStyle("linestyleExample","7f0000ff",4.0d);		
 		document.getStyleSelector().add(style);
 
-		LineString ls = com.mlab.gpx.impl.kml.KmlFactory.segmentToLineString(segment);
+		LineString ls = com.mlab.gpx.impl.kml.Gpx2KmlFactory.segmentToLineString(segment);
 		
 		Placemark pm3 = document.createAndAddPlacemark().withName("gpxSegment");
 		pm3.setGeometry(ls);
