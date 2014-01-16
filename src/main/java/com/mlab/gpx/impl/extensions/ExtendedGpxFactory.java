@@ -32,7 +32,7 @@ public class ExtendedGpxFactory extends GpxFactory {
 	public WayPoint createWayPoint(String name, String description, long time,
 			List<Double> values) {
 		if(values==null) {
-			LOG.warning("ExtendedGpxFactory.createWayPoint(): values=null");
+			//LOG.warning("ExtendedGpxFactory.createWayPoint(): values=null");
 			return null;
 		}
 		WayPoint wp= new ExtendedWayPoint(name,description,time, values);
