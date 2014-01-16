@@ -360,4 +360,16 @@ public class Util {
 		return list;
 	}
 
+	public static double bearing(double lon1, double lat1, double lon2, double lat2) {
+		double incL = lon2-lon1;
+		double lm = (lat1+lat2)/2.0;
+		double lmradians = lm *2 * Math.PI / 360.0;
+		double tanlm = Math.tan(lmradians);
+		double Ap = incL * tanlm;
+		double tanR = incL * tanlm / incL;
+		double Rradians = Math.atan(tanR);
+		double R = Rradians * 360.0 / 2.0 / Math.PI;
+		return R;		
+	}
+
 }
