@@ -4,7 +4,7 @@
 
 	<groupId>com.mlab.gpx</groupId>
 	<artifactId>GpxParser</artifactId>
-	<version>3.3</version>
+	<version>3.2.1</version>
 	<packaging>jar</packaging>
 
 	<name>GpxParser</name>
@@ -15,7 +15,7 @@
 		<install-dir>${project.build.directory}</install-dir>
 		<groupId>com.mlab.gpx</groupId>
 		<artifactId>GpxParser</artifactId>
-		<version>3.3</version>
+		<version>3.2</version>
 		<packaging>jar</packaging>
 	</properties>
 	<dependencies>
@@ -48,80 +48,26 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-<!-- 			<plugin> -->
-<!-- 				Generar el jar ejecutable del programa -->
-<!-- 				<artifactId>maven-jar-plugin</artifactId> -->
-<!-- 				<version>2.2</version> -->
-<!-- 				<configuration> -->
-<!-- 					<archive> -->
-<!-- 						<manifest> -->
-<!-- 							<addClasspath>true</addClasspath> -->
-<!-- 	   							<mainClass>mlab.tesis.java.App</mainClass> -->
-<!-- 							<classpathPrefix>lib</classpathPrefix> -->
-<!-- 						</manifest> -->
-<!-- 					</archive> -->
-<!-- 				</configuration> -->
-<!-- 			</plugin> -->
 
 			<plugin>
-				<!-- Copia las dependencias en el directorio lib de target -->
+				<!-- Copia las dependencias en el directorio libs de target -->
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-dependency-plugin</artifactId>
 				<version>2.7</version>
 				<executions>
 					<execution>
-						<id>copy</id>
+						<id>copy-dependencies</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy</goal>
+							<goal>copy-dependencies</goal>
 						</goals>
 						<configuration>
-							<artifactItems>
-								<artifactItem>
-									<groupId>${project.groupId}</groupId>
-									<artifactId>${project.artifactId}</artifactId>
-									<version>${project.version}</version>
-									<!-- <packaging>${project.packaging}</packaging> -->
-									<!-- <groupId>[ groupId ]</groupId> -->
-									<!-- <artifactId>[ artifactId ]</artifactId> -->
-									<!-- <version>[ version ]</version> -->
-									<type>${project.packaging}</type>
-									<!-- <classifier>dev</classifier> -->
-									<overWrite>true</overWrite>
-									<outputDirectory>${install-dir}/${project.artifactId}/lib</outputDirectory>
-									<!-- <destFileName>GpxParser</destFileName> -->
-								</artifactItem>
-							</artifactItems>
+							<outputDirectory>${project.build.directory}/libs</outputDirectory>
+							<overWrite>true</overWrite>
+							<!-- <overWriteReleases>false</overWriteReleases> -->
+							<!-- <overWriteSnapshots>false</overWriteSnapshots> -->
+							<!-- <overWriteIfNewer>true</overWriteIfNewer> -->
 							<!-- other configurations here -->
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
-				<!-- Copia los recursos -->
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.4.3</version>
-				<executions>
-					<execution>
-						<id>copy-jar</id>
-						<phase>install</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${install-dir}/${project.artifactId}</outputDirectory>
-							<resources>
-								<resource>
-									<directory>${project.build.directory}</directory>
-									<includes>
-										<include>${project.build.finalName}.jar</include>
-									</includes>
-								</resource>
-								<resource>
-									<directory>${project.basedir}/src/main/resources</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
 						</configuration>
 					</execution>
 				</executions>
