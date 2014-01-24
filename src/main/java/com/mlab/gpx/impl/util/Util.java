@@ -18,6 +18,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import com.mlab.gpx.api.WayPoint;
+
 public class Util {
 	
 	public static String secondsToHMSString(long seconds) {
@@ -407,6 +409,13 @@ public class Util {
 		double distmeters = distmillas * 1852.0;
 		return distmeters;
 	}
+	public static double distLoxodromic(WayPoint wp1, WayPoint wp2) {
+		if(wp1 == null || wp2 == null) {
+			return Double.NaN;
+		}
+		return Util.distLoxodromic(wp1.getLongitude(), wp1.getLatitude(),	
+				wp2.getLongitude(), wp2.getLatitude());
+	}
 	
 	/**
 	 * Calcula la distancia loxodromica y luego hace pitagoras con la altitud
@@ -425,5 +434,12 @@ public class Util {
 		double inch = alt2-alt1;
 		double d3d = Math.sqrt(dh*dh + inch*inch);
 		return d3d;
+	}
+	public static double dist3D(WayPoint wp1, WayPoint wp2) {
+		if(wp1 == null || wp2 == null) {
+			return Double.NaN;
+		}
+		return Util.dist3D(wp1.getLongitude(), wp1.getLatitude(), wp1.getAltitude(),	
+				wp2.getLongitude(), wp2.getLatitude(), wp2.getAltitude());
 	}
 }
