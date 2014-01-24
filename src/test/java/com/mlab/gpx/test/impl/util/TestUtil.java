@@ -1,9 +1,11 @@
 package com.mlab.gpx.test.impl.util;
 
 import java.io.File;
-import java.lang.reflect.Method;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
+
+import org.junit.Test;
 
 import com.mlab.gpx.impl.util.Util;
 
@@ -204,4 +206,48 @@ public class TestUtil extends TestCase {
 		
 		System.out.println("OK");		
 	}
+
+	@Test
+	public void testDistLoxodromic() {
+		System.out.print("TestUtil.testDistLoxodromic()... ");
+		double lon1 = 0.0;
+		double lat1 = 0.0;
+		double lon2 = 1.0;
+		double lat2 = 0.0;
+		Assert.assertEquals(60.0*1852.0,  Util.distLoxodromic(lon1, lat1, lon2, lat2));
+		
+		lon2 = 0.0;
+		lat2 = 1.0;
+		Assert.assertEquals(60.0*1852.0,  Util.distLoxodromic(lon1, lat1, lon2, lat2));
+		
+		lon2 = 1.0;
+		Assert.assertEquals(157144.4192, Util.distLoxodromic(lon1, lat1, lon2, lat2), 0.001);
+		System.out.println("OK");
+	}
+
+	@Test
+	public void testDist3D() {
+		System.out.print("TestUtil.testDist3D()... ");
+		double lon1 = 0.0;
+		double lat1 = 0.0;
+		double alt1 = 0.0;
+		double lon2 = 1.0;
+		double lat2 = 0.0;
+		double alt2 = 1000.0;
+
+		Assert.assertEquals( 111124.4995,  Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2), 0.001);
+		//System.out.println("\ndist1 "+Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2));
+
+		lon2 = 0.0;
+		lat2 = 1.0;
+		Assert.assertEquals( 111124.4995,  Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2), 0.001);
+		//System.out.println("dist2 "+Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2));
+		
+		lon2 = 1.0;
+		Assert.assertEquals( 157147.6009,  Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2), 0.001);
+		//System.out.println("dist3 "+Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2));
+		
+		System.out.println("OK");
+	}
+
 }

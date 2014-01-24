@@ -360,6 +360,15 @@ public class Util {
 		return list;
 	}
 
+	/**
+	 * Calcula el Rumbo para ir del primer punto al segundo mediante
+	 * navegación loxodrómica
+	 * @param lon1
+	 * @param lat1
+	 * @param lon2
+	 * @param lat2
+	 * @return
+	 */
 	public static double bearing(double lon1, double lat1, double lon2, double lat2) {
 		double incL = lon2-lon1;
 		double lm = (lat1+lat2)/2.0;
@@ -371,5 +380,50 @@ public class Util {
 		double R = Rradians * 360.0 / 2.0 / Math.PI;
 		return R;		
 	}
+	
+	/**
+	 * Calcula la distancia loxodrómica entre la proyección horizontal de dos puntos,
+	 *  conocidas su coordenadas geográficas. Se utiliza el método náutico de estima 
+	 *  'Alrededor del apartamiento, apareció la madre de luis':<br/>
+	 *  
+	 *  Apartamiento = incLongitud  x cos(latitud_media) <br/>
+	 *  Rumbo = atan( Apartamiento / incLatitud ) <br/>
+	 *  Distancia = sqrt( Apart**2 x incLat**2 ) <br/>
+	 *  
+	 * @param lon1 longitud del primer punto en grados 
+	 * @param lat1 latitud del primer punto en grados
+	 * @param lon2 longitud del segundo punto en grados
+	 * @param lat2 latitud del segundo punto en grados
+	 * 
+	 * @return Devuelve la distancia en metros
+	 */
+	public static double distLoxodromic(double lon1, double lat1, double lon2, double lat2) {
+		double incL = (lon2 - lon1)*Math.PI / 180.0; // Incremento de Longitud en radianes
+		double lm = (lat1 + lat2) / 2.0 * Math.PI / 180.0 ; // Latitud media en radianes
+		double A = incL * Math.cos(lm); // Apartamiento 
+		double inclat = (lat2 - lat1) * Math.PI / 180.0; // Incremento de latitud en radianes
+		double D = Math.sqrt(A*A + inclat*inclat); // Distancia en radianes
+		double distmillas = D * 180.0 / Math.PI * 60.0; // Distancia en minutos = millas
+		double distmeters = distmillas * 1852.0;
+		return distmeters;
+	}
+	
+	/**
+	 * Calcula la distancia loxodromica y luego hace pitagoras con la altitud
+	 * 
+	 * @param lon1 longitud del primer punto en grados 
+	 * @param lat1 latitud del primer punto en grados
+	 * @param alt1 altitud en metros del primer punto
+	 * @param lon2 longitud del segundo punto en grados
+	 * @param lat2 latitud del segundo punto en grados
+	 * @param alt2 altitud en metros del segundo punto
 
+	 * @return Distancia en metros
+	 */
+	public static double dist3D(double lon1, double lat1, double alt1, double lon2, double lat2, double alt2) {
+		double dh = Util.distLoxodromic(lon1, lat1, lon2, lat2);
+		double inch = alt2-alt1;
+		double d3d = Math.sqrt(dh*dh + inch*inch);
+		return d3d;
+	}
 }
