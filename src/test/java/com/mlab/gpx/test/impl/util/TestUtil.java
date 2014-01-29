@@ -10,6 +10,7 @@ import org.junit.Test;
 import com.mlab.gpx.api.GpxFactory;
 import com.mlab.gpx.api.GpxFactory.Type;
 import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.impl.TrackSegment;
 import com.mlab.gpx.impl.util.Util;
 
 public class TestUtil extends TestCase {
@@ -262,6 +263,34 @@ public class TestUtil extends TestCase {
 		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
 				Util.arrayDoublesToList(new double[]{0.0,1.0,0.0}));
 		Assert.assertEquals(1.0, Util.speed(wp1, wp2), 0.01);
+	}
+	@Test
+	public void testMinMaxSpeed() {
+		System.out.println("Util.testMinMaxSpeed()");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{0.0,1.0,0.0}));
+		TrackSegment tsegment = new TrackSegment();
+		tsegment.add(wp1);
+		tsegment.add(wp2);
+		Assert.assertEquals(0.0, Util.minmaxSpeed(tsegment)[0], 0.01);		
+		Assert.assertEquals(1.0, Util.minmaxSpeed(tsegment)[1],0.01);
+		System.out.println("OK");
+	}
+	@Test
+	public void testMinMaxAltitude() {
+		System.out.println("Util.testMinMaxSpeed()");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{0.0,1.0,1000.0}));
+		TrackSegment tsegment = new TrackSegment();
+		tsegment.add(wp1);
+		tsegment.add(wp2);
+		Assert.assertEquals(0.0, Util.minmaxAltitude(tsegment)[0], 0.01);		
+		Assert.assertEquals(1000.0, Util.minmaxAltitude(tsegment)[1],0.01);
+		System.out.println("OK");
 	}
 	@Test
 	public void testDist3D() {

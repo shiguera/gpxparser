@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.impl.TrackSegment;
 import com.mlab.gpx.impl.srs.EllipsoidWGS84;
 
 public class Util {
@@ -440,6 +441,62 @@ public class Util {
 		double tseconds = (double)((wp2.getTime() - wp1.getTime()) / 1000l);
 		return dist/tseconds;
 	}
+	/**
+	 * Devuelve un double con los valores [minAltitude, maxAltitude] 
+	 * de los WayPoint de un TrackSegment
+	 * 
+	 * @param tsegment TrackSegment que se quiere analizar
+	 *
+	 * @return [minAltitude, maxAltitude]
+	 */
+	public static double[] minmaxAltitude(TrackSegment tsegment) {
+		if(tsegment==null || tsegment.size()==0) {
+			return null;
+		}
+		double maxh, minh;
+		WayPoint wp = tsegment.getStartWayPoint();
+		maxh = wp.getAltitude();
+		minh = wp.getAltitude();
+		for(int i=0; i<tsegment.size(); i++) {
+			WayPoint newwp = tsegment.getWayPoint(i);
+			if(newwp.getAltitude()>maxh) {
+				maxh = newwp.getAltitude();
+			}
+			if(newwp.getAltitude()< minh) {
+				minh = newwp.getAltitude();
+			}
+		}
+		return new double[]{minh, maxh};
+	}
+	/**
+	 * Devuelve un double con los valores [minSpeed, maxSpeed] 
+	 * de los WayPoint de un TrackSegment
+	 * 
+	 * @param tsegment TrackSegment que se quiere analizar
+	 *
+	 * @return [minSpeed, maxSpeed]
+	 */
+	public static double[] minmaxSpeed(TrackSegment tsegment) {
+		if(tsegment==null || tsegment.size()==0) {
+			return null;
+		}
+		double maxv, minv;
+		WayPoint wp = tsegment.getStartWayPoint();
+		maxv = 0.0;
+		minv = 0.0;
+		for(int i=0; i<tsegment.size(); i++) {
+			WayPoint newwp = tsegment.getWayPoint(i);
+			double newv = Util.speed(wp, newwp);
+			if(newv > maxv) {
+				maxv = newv;
+			}
+			if(newv < minv) {
+				minv = newv;
+			}
+		}
+		return new double[]{minv, maxv};
+	}
+
 	/**
 	 * Calcula la distancia loxodrómica entre la proyección horizontal de dos puntos,
 	 *  conocidas su coordenadas geográficas. Se utiliza el método náutico de estima 
