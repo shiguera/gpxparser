@@ -276,6 +276,7 @@ public class TestUtil extends TestCase {
 		tsegment.add(wp2);
 		Assert.assertEquals(0.0, Util.minmaxSpeed(tsegment)[0], 0.01);		
 		Assert.assertEquals(1.0, Util.minmaxSpeed(tsegment)[1],0.01);
+		Assert.assertEquals(0.50, Util.minmaxSpeed(tsegment)[2],0.01);
 		System.out.println("OK");
 	}
 	@Test
@@ -288,8 +289,11 @@ public class TestUtil extends TestCase {
 		TrackSegment tsegment = new TrackSegment();
 		tsegment.add(wp1);
 		tsegment.add(wp2);
-		Assert.assertEquals(0.0, Util.minmaxAltitude(tsegment)[0], 0.01);		
-		Assert.assertEquals(1000.0, Util.minmaxAltitude(tsegment)[1],0.01);
+		double[] minmax = Util.minmaxAltitude(tsegment);
+		Assert.assertEquals(0.0, minmax[0], 0.01);		
+		Assert.assertEquals(1000.0, minmax[1],0.01);
+		Assert.assertEquals(500.0, minmax[2],0.01);
+		
 		System.out.println("OK");
 	}
 	@Test

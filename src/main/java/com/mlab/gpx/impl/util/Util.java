@@ -442,59 +442,80 @@ public class Util {
 		return dist/tseconds;
 	}
 	/**
-	 * Devuelve un double con los valores [minAltitude, maxAltitude] 
+	 * Devuelve un double con los valores [minAltitude, maxAltitude, averageAltitude] 
 	 * de los WayPoint de un TrackSegment
 	 * 
 	 * @param tsegment TrackSegment que se quiere analizar
 	 *
-	 * @return [minAltitude, maxAltitude]
+	 * @return [minAltitude, maxAltitude, averageAltitude]
 	 */
 	public static double[] minmaxAltitude(TrackSegment tsegment) {
-		if(tsegment==null || tsegment.size()==0) {
+		if(tsegment==null || tsegment.size()<2) {
 			return null;
 		}
-		double maxh, minh;
+		double maxAltitude, minAltitude, altitudeAcc, distanceAcc;
 		WayPoint wp = tsegment.getStartWayPoint();
-		maxh = wp.getAltitude();
-		minh = wp.getAltitude();
-		for(int i=0; i<tsegment.size(); i++) {
+		maxAltitude = wp.getAltitude();
+		minAltitude = wp.getAltitude();
+		altitudeAcc = 0.0;
+		distanceAcc = 0.0;
+		for(int i=1; i<tsegment.size(); i++) {
 			WayPoint newwp = tsegment.getWayPoint(i);
-			if(newwp.getAltitude()>maxh) {
-				maxh = newwp.getAltitude();
+			double dist = Util.dist3D(wp, newwp);
+			distanceAcc += dist;
+			double hmed = (wp.getAltitude()+newwp.getAltitude())/2.0;
+			altitudeAcc += hmed * dist;
+			if(newwp.getAltitude()>maxAltitude) {
+				maxAltitude = newwp.getAltitude();
 			}
-			if(newwp.getAltitude()< minh) {
-				minh = newwp.getAltitude();
+			if(newwp.getAltitude()< minAltitude) {
+				minAltitude = newwp.getAltitude();
 			}
+			wp = newwp;
 		}
-		return new double[]{minh, maxh};
+		double averageAltitude= altitudeAcc / distanceAcc;
+		return new double[]{minAltitude, maxAltitude, averageAltitude};
 	}
 	/**
-	 * Devuelve un double con los valores [minSpeed, maxSpeed] 
+	 * Devuelve un double con los valores [minSpeed, maxSpeed, averageSpeed] 
 	 * de los WayPoint de un TrackSegment
 	 * 
 	 * @param tsegment TrackSegment que se quiere analizar
 	 *
-	 * @return [minSpeed, maxSpeed]
+	 * @return [minSpeed, maxSpeed, averageSpeed]
 	 */
 	public static double[] minmaxSpeed(TrackSegment tsegment) {
-		if(tsegment==null || tsegment.size()==0) {
+		if(tsegment==null || tsegment.size()<2) {
 			return null;
 		}
-		double maxv, minv;
+		double maxv, minv, lastv, avgv, distacc;
 		WayPoint wp = tsegment.getStartWayPoint();
 		maxv = 0.0;
 		minv = 0.0;
-		for(int i=0; i<tsegment.size(); i++) {
+		avgv = 0.0;
+		lastv = 0.0;
+		distacc = 0.0;
+		for(int i=1; i<tsegment.size(); i++) {
 			WayPoint newwp = tsegment.getWayPoint(i);
 			double newv = Util.speed(wp, newwp);
+			double dist = Util.dist3D(wp, newwp);
+			distacc += dist;
+			if(i==0) {
+				avgv = newv * dist; 
+			} else {
+				avgv += (lastv + newv)/ 2.0 * dist;
+			}
 			if(newv > maxv) {
 				maxv = newv;
 			}
 			if(newv < minv) {
 				minv = newv;
 			}
+			lastv = newv;
+			wp = newwp;
 		}
-		return new double[]{minv, maxv};
+		avgv = avgv / distacc;
+		return new double[]{minv, maxv, avgv};
 	}
 
 	/**
