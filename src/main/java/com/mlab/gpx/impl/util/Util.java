@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 import com.mlab.gpx.api.WayPoint;
+import com.mlab.gpx.impl.srs.EllipsoidWGS84;
 
 public class Util {
 	
@@ -364,25 +365,81 @@ public class Util {
 
 	/**
 	 * Calcula el Rumbo para ir del primer punto al segundo mediante
-	 * navegación loxodrómica
-	 * @param lon1
-	 * @param lat1
-	 * @param lon2
-	 * @param lat2
-	 * @return
+	 * navegación loxodrómica.
+	 * 
+	 * @param lon1 Longitud del primer punto en grados
+	 * @param lat1 Latitud del primer punto en grados
+	 * @param lon2 Longitud del segundo punto en grados
+	 * @param lat2 Latitud del segundo punto en grados
+	 * 
+	 * @return Rumbo en grados medido del Norte hacia el Este
 	 */
 	public static double bearing(double lon1, double lat1, double lon2, double lat2) {
-		double incL = lon2-lon1;
+		double incL = lon2 - lon1;
+		// Resolver rumbos 0 y 180
+		if(incL == 0.0) {
+			if(lat1<lat2) {
+				return 0.0;
+			} else if (lat1>lat2) {
+				return 180.0;
+			} else {
+				// incL = 0.0; inclat=0.0; => R=0.0;
+				return 0.0;
+			}
+		}
+		// Resolver rumbos 90 y 270
+		double incLat = lat2 - lat1;
+		if(incLat == 0.0) {
+			if(lon1 < lon2) {
+				return 90.0;
+			} else if ( lon1 > lon2) {
+				return 270.0;
+			} else {
+				return 0.0;
+			}
+		}
+		double incLonradians = (lon2 - lon1) * Math.PI / 180.0;
+		double incLatradians = (lat2 - lat1) * Math.PI / 180.0;
 		double lm = (lat1+lat2)/2.0;
-		double lmradians = lm *2 * Math.PI / 360.0;
-		double tanlm = Math.tan(lmradians);
-		double Ap = incL * tanlm;
-		double tanR = incL * tanlm / incL;
+		double lmradians = lm * Math.PI / 180.0;
+		double coslm = Math.cos(lmradians);
+		double Apradians = incLonradians * Math.abs(coslm);
+		double tanR = Apradians / incLatradians;
 		double Rradians = Math.atan(tanR);
-		double R = Rradians * 360.0 / 2.0 / Math.PI;
+		double R = Rradians * 180.0 / Math.PI;
+		if (R>0) {
+			if(Apradians<0) {
+				// tercer cuadrante
+				R = 180.0 + R;
+			}
+		} else {
+			if(Apradians>0) {
+				// Segundo cuadrante
+				R = 180.0 + R;
+			} else {
+				// Cuarto cuadrante
+				R = 360.0 + R;
+			}
+		}
 		return R;		
 	}
-	
+	public static double bearing(WayPoint wp1, WayPoint wp2) {
+		return Util.bearing(wp1.getLongitude(), wp1.getLatitude(), wp2.getLongitude(), wp2.getLatitude());
+	}
+	/**
+	 * Calcula la velocidad entre dos WayPoint mediante la fórmula
+	 * distancia/tiempo. La distancia la calcula con la fórmula de distancia 3D.
+	 * 
+	 * @param wp1 Primer WayPoint
+	 * @param wp2 Segundo WayPoint
+	 * 
+	 * @return Velocidad en metros/segundos
+	 */
+	public static double speed(WayPoint wp1, WayPoint wp2) {
+		double dist = Util.dist3D(wp1, wp2);
+		double tseconds = (double)((wp2.getTime() - wp1.getTime()) / 1000l);
+		return dist/tseconds;
+	}
 	/**
 	 * Calcula la distancia loxodrómica entre la proyección horizontal de dos puntos,
 	 *  conocidas su coordenadas geográficas. Se utiliza el método náutico de estima 
@@ -441,5 +498,27 @@ public class Util {
 		}
 		return Util.dist3D(wp1.getLongitude(), wp1.getLatitude(), wp1.getAltitude(),	
 				wp2.getLongitude(), wp2.getLatitude(), wp2.getAltitude());
+	}
+
+	public static double distCartesian(double x1, double y1, double x2, double y2) {
+		return Math.sqrt((x2-x1)*(x2-x1)+(y2-y1)*(y2-y1));
+	}
+	
+	public static double[] proyUtmWGS84(double lon, double lat) {
+		EllipsoidWGS84 ell = new EllipsoidWGS84();
+		return ell.proyUTM(lon, lat);
+	}
+	public static double distUtmWGS84(double lon1, double lat1, double lon2, double lat2) {
+		double[] xy1 = Util.proyUtmWGS84(lon1, lat1);
+		double[] xy2 = Util.proyUtmWGS84(lon2, lat2);
+		return Util.distCartesian(xy1[0], xy1[1], xy2[0], xy2[1]);
+	}
+	public static double distUtmWGS84(WayPoint wp1, WayPoint wp2) {
+		double lon1 = wp1.getLongitude();
+		double lat1 = wp1.getLatitude();
+		double lon2 = wp2.getLongitude();
+		double lat2 = wp2.getLatitude();
+		
+		return Util.distUtmWGS84(lon1, lat1, lon2, lat2);	
 	}
 }

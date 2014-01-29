@@ -7,6 +7,9 @@ import junit.framework.TestCase;
 
 import org.junit.Test;
 
+import com.mlab.gpx.api.GpxFactory;
+import com.mlab.gpx.api.GpxFactory.Type;
+import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.impl.util.Util;
 
 public class TestUtil extends TestCase {
@@ -226,6 +229,41 @@ public class TestUtil extends TestCase {
 	}
 
 	@Test
+	public void testBearing() {
+		System.out.print("TestUtil.testBearing()... ");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{0.0,1.0,0.0}));
+		Assert.assertEquals(0.0, Util.bearing(wp1, wp2));
+		
+		wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{0.0,-1.0,0.0}));
+		Assert.assertEquals(180.0, Util.bearing(wp1, wp2));	
+		
+		wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{1.0,0.0,0.0}));
+		Assert.assertEquals(90.0, Util.bearing(wp1, wp2));	
+		
+		
+		wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{1.0, 1.0,0.0}));
+		Assert.assertEquals(45.0, Util.bearing(wp1, wp2), 0.01);	
+		wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{1.0, -1.0,0.0}));
+		Assert.assertEquals(135.0, Util.bearing(wp1, wp2), 0.01);	
+		wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{-1.0, -1.0,0.0}));
+		Assert.assertEquals(225.0, Util.bearing(wp1, wp2), 0.01);	
+		wp2 = factory.createWayPoint("P2","",2000l,Util.arrayDoublesToList(new double[]{-1.0, 1.0,0.0}));
+		Assert.assertEquals(315.0, Util.bearing(wp1, wp2), 0.01);	
+		System.out.println("OK");
+		
+	}
+	@Test
+	public void testSpeed() {
+		System.out.print("TestUtil.testSpeed()... ");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{0.0,1.0,0.0}));
+		Assert.assertEquals(1.0, Util.speed(wp1, wp2), 0.01);
+	}
+	@Test
 	public void testDist3D() {
 		System.out.print("TestUtil.testDist3D()... ");
 		double lon1 = 0.0;
@@ -247,6 +285,39 @@ public class TestUtil extends TestCase {
 		Assert.assertEquals( 157147.6009,  Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2), 0.001);
 		//System.out.println("dist3 "+Util.dist3D(lon1, lat1, alt1, lon2, lat2, alt2));
 		
+		System.out.println("OK");
+	}
+	@Test
+	public void testProyUtmWGS84() {
+		System.out.print("Testing Util.proyUtmWGS84()...");
+		double longitude = -3.801873306;
+    	double latitude = 43.4884075;
+    	double[] xy = Util.proyUtmWGS84(longitude, latitude);
+    	// Valores obtenidos del conversor web del IGN 
+    	Assert.assertEquals(new Double("435160.57"), xy[0], 0.1);
+    	Assert.assertEquals(new Double("4815366.21"), xy[1], 0.1);        
+		System.out.println("OK");
+	}
+	@Test
+	public void testDistCartesian() {
+		System.out.print("Testing Util.DistCartesian()...");
+		double x1 = 0.0;
+		double y1 = 0.0;
+		double x2 = 1.0;
+		double y2 = 1.0;
+		
+		Assert.assertEquals(new Double(Math.sqrt(2.0)), Util.distCartesian(x1, y1, x2, y2), 0.0001);
+		System.out.println("OK");
+	}
+	@Test
+	public void testDistUtmWGS84() {
+		System.out.print("Testing Util.DistUtmWGS84()...");
+		double lon1 = 0.0;
+		double lat1 = 0.0;
+		double lat2 = 1.0;
+		double lon2 = 1.0;
+		//System.out.println(Util.distUtmWGS84(lon1, lat1, lon2, lat2));
+		Assert.assertEquals(new Double("156989.23"), Util.distUtmWGS84(lon1, lat1, lon2, lat2), 0.01);
 		System.out.println("OK");
 	}
 
