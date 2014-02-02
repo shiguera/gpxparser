@@ -519,6 +519,44 @@ public class Util {
 	}
 
 	/**
+	 * Devuelve el ángulo inicial a seguir en una navegaciçon ortodrómica
+	 * @param lon1, lat1, lon2, lat2 Longitudes y latitudes de los puntos
+	 * inicial y final en grados
+	 * 		
+	 * @return El ángulo inicial a seguir en grados sexagesimales
+	 */
+	public static double orthodromicStartAngle(double lon1, double lat1, double lon2, double lat2) {
+		double llon1 = lon1 * Math.PI / 180.0;
+		double llat1 = lat1 * Math.PI / 180.0;
+		double llon2 = lon2 * Math.PI / 180.0;
+		double llat2 = lat2 * Math.PI / 180.0;
+		double incL = (llon2 - llon1);
+		double ctgStartangle = (Math.tan(llat2)*Math.cos(llat1)-Math.sin(llat1)*Math.cos(incL)) / 
+				(Math.sin(incL));
+		double startAngle = Math.atan(1/ctgStartangle);
+		return startAngle * 180.0 / Math.PI ;
+	}
+	/**
+	 * Orthodromic distance in meters from one point to other
+	 * 
+	 * @param lon1, lat1, lon2, lat2 Longitudes y latitudes de los puntos
+	 * inicial y final en grados
+	 * 		
+	 * @return La distancia en metros entre el punto inicial y el punto final
+	 * a lo largo de un círculo máximo
+	 */
+	public static double orthodromicDistance(double lon1, double lat1, double lon2, double lat2) {
+		double llon1 = lon1 * Math.PI / 180.0;
+		double llat1 = lat1 * Math.PI / 180.0;
+		double llon2 = lon2 * Math.PI / 180.0;
+		double llat2 = lat2 * Math.PI / 180.0;
+		double incL = (llon2 - llon1);
+		double cosD = Math.sin(llat1)*Math.sin(llat2)+ Math.cos(llat1)*Math.cos(llat2)*Math.cos(incL);
+		double Dminutes = Math.acos(cosD)*180.0/Math.PI*60.0;
+		double dist = Dminutes * 1851.0; 
+		return dist;
+	}
+	/**
 	 * Calcula la distancia loxodrómica entre la proyección horizontal de dos puntos,
 	 *  conocidas su coordenadas geográficas. Se utiliza el método náutico de estima 
 	 *  'Alrededor del apartamiento, apareció la madre de luis':<br/>
@@ -534,7 +572,7 @@ public class Util {
 	 * 
 	 * @return Devuelve la distancia en metros
 	 */
-	public static double distLoxodromic(double lon1, double lat1, double lon2, double lat2) {
+	public static double loxodromicDistance(double lon1, double lat1, double lon2, double lat2) {
 		double incL = (lon2 - lon1)*Math.PI / 180.0; // Incremento de Longitud en radianes
 		double lm = (lat1 + lat2) / 2.0 * Math.PI / 180.0 ; // Latitud media en radianes
 		double A = incL * Math.cos(lm); // Apartamiento 
@@ -544,11 +582,11 @@ public class Util {
 		double distmeters = distmillas * 1852.0;
 		return distmeters;
 	}
-	public static double distLoxodromic(WayPoint wp1, WayPoint wp2) {
+	public static double loxodromicDistance(WayPoint wp1, WayPoint wp2) {
 		if(wp1 == null || wp2 == null) {
 			return Double.NaN;
 		}
-		return Util.distLoxodromic(wp1.getLongitude(), wp1.getLatitude(),	
+		return Util.loxodromicDistance(wp1.getLongitude(), wp1.getLatitude(),	
 				wp2.getLongitude(), wp2.getLatitude());
 	}
 	
@@ -565,7 +603,7 @@ public class Util {
 	 * @return Distancia en metros
 	 */
 	public static double dist3D(double lon1, double lat1, double alt1, double lon2, double lat2, double alt2) {
-		double dh = Util.distLoxodromic(lon1, lat1, lon2, lat2);
+		double dh = Util.loxodromicDistance(lon1, lat1, lon2, lat2);
 		double inch = alt2-alt1;
 		double d3d = Math.sqrt(dh*dh + inch*inch);
 		return d3d;

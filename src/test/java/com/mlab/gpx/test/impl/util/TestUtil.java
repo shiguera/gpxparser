@@ -211,6 +211,27 @@ public class TestUtil extends TestCase {
 		System.out.println("OK");		
 	}
 
+	public void testOrthodromicDistance() {
+		System.out.print("TestUtil.testOrthodromicDistance()");
+		double lon1 = -73.80; // New York
+		double lat1 = 40.41;  // 
+		double lon2 = -5.29; // 
+		double lat2 = 50.10;
+		//System.out.print(Util.orthodromicDistance(lon1, lat1, lon2, lat2));
+		Assert.assertEquals(5269716.4,  Util.orthodromicDistance(lon1, lat1, lon2, lat2), 0.1);
+		System.out.println("OK");		
+	}
+	public void testOrthodromicStartAngle() {
+		System.out.print("TestUtil.testOrthodromicStartAngle()");
+		double lon1 = -73.80; // New York
+		double lat1 = 40.41;  // 
+		double lon2 = -5.29; // 
+		double lat2 = 50.10;
+		//System.out.print(Util.orthodromicStartAngle(lon1, lat1, lon2, lat2));
+		Assert.assertEquals(54.12,  Util.orthodromicStartAngle(lon1, lat1, lon2, lat2),0.01);
+		System.out.println("OK");
+	}
+	
 	@Test
 	public void testDistLoxodromic() {
 		System.out.print("TestUtil.testDistLoxodromic()... ");
@@ -218,14 +239,14 @@ public class TestUtil extends TestCase {
 		double lat1 = 0.0;
 		double lon2 = 1.0;
 		double lat2 = 0.0;
-		Assert.assertEquals(60.0*1852.0,  Util.distLoxodromic(lon1, lat1, lon2, lat2));
+		Assert.assertEquals(60.0*1852.0,  Util.loxodromicDistance(lon1, lat1, lon2, lat2));
 		
 		lon2 = 0.0;
 		lat2 = 1.0;
-		Assert.assertEquals(60.0*1852.0,  Util.distLoxodromic(lon1, lat1, lon2, lat2));
+		Assert.assertEquals(60.0*1852.0,  Util.loxodromicDistance(lon1, lat1, lon2, lat2));
 		
 		lon2 = 1.0;
-		Assert.assertEquals(157144.4192, Util.distLoxodromic(lon1, lat1, lon2, lat2), 0.001);
+		Assert.assertEquals(157144.4192, Util.loxodromicDistance(lon1, lat1, lon2, lat2), 0.001);
 		System.out.println("OK");
 	}
 
