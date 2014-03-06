@@ -1,6 +1,7 @@
 package com.mlab.gpx.test.impl.util;
 
 import java.io.File;
+import java.util.List;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
@@ -318,6 +319,57 @@ public class TestUtil extends TestCase {
 		System.out.println("OK");
 	}
 	@Test
+	public void testSlopesVector() {
+		System.out.println("Util.testSlopesVector()");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{0.0,1.0,1000.0}));
+		WayPoint wp3 = factory.createWayPoint("P3","",2000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{1.0,1.0,2000.0}));
+		
+		TrackSegment tsegment = new TrackSegment();
+		tsegment.add(wp1);
+		tsegment.add(wp2);
+		tsegment.add(wp3);
+		List<Double> slopes = Util.slopesVector(tsegment, false);
+		Assert.assertEquals(2, slopes.size());		
+		Assert.assertEquals(0.00903, slopes.get(0),0.00001);		
+		Assert.assertEquals(0.00897, slopes.get(1),0.00001);		
+
+		slopes = Util.slopesVector(tsegment, true);
+		Assert.assertEquals(2, slopes.size());		
+		Assert.assertEquals(0.903, slopes.get(0),0.001);		
+		Assert.assertEquals(0.897, slopes.get(1),0.001);		
+
+		System.out.println("OK");
+	}
+	@Test
+	public void testSpeedsVector() {
+		System.out.println("Util.testSpeedsVector()");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{0.0,1.0,1000.0}));
+		WayPoint wp3 = factory.createWayPoint("P3","",2000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{1.0,1.0,2000.0}));
+		
+		TrackSegment tsegment = new TrackSegment();
+		tsegment.add(wp1);
+		tsegment.add(wp2);
+		tsegment.add(wp3);
+		List<Double> speeds = Util.speedsVector(tsegment);
+		Assert.assertEquals(2, speeds.size());		
+		System.out.println(speeds.get(0));
+		System.out.println(speeds.get(1));
+		
+		Assert.assertEquals(1.00058, speeds.get(0),0.00001);		
+		Assert.assertEquals(111107.57612, speeds.get(1),0.00001);		
+
+		System.out.println("OK");
+	}
+	
+	@Test
 	public void testDist3D() {
 		System.out.print("TestUtil.testDist3D()... ");
 		double lon1 = 0.0;
@@ -352,6 +404,24 @@ public class TestUtil extends TestCase {
     	Assert.assertEquals(new Double("4815366.21"), xy[1], 0.1);        
 		System.out.println("OK");
 	}
+	@Test
+	public void testProyUtmWGS84_vector() {
+		System.out.println("Util.testProyUtmWGS84_vector()");
+		GpxFactory factory = GpxFactory.getFactory(Type.SimpleGpxFactory);
+		WayPoint wp1 = factory.createWayPoint("P1","",1000l,Util.arrayDoublesToList(new double[]{0.0,0.0,0.0}));
+		WayPoint wp2 = factory.createWayPoint("P2","",1000l + (long)(1851000.0 * 60.0),
+				Util.arrayDoublesToList(new double[]{0.0,1.0,0.0}));
+		TrackSegment tsegment = new TrackSegment();
+		tsegment.add(wp1);
+		tsegment.add(wp2);
+		List<double[]> proy = Util.proyUTMWGS84(tsegment);
+		Assert.assertNotNull(proy);
+		Assert.assertEquals(2, proy.size());
+		Assert.assertEquals(166021.4, proy.get(0)[0],0.1);
+		Assert.assertEquals(0.0, proy.get(0)[1],0.01);
+		System.out.println("OK");
+	}
+
 	@Test
 	public void testDistCartesian() {
 		System.out.print("Testing Util.DistCartesian()...");

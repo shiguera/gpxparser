@@ -519,6 +519,75 @@ public class Util {
 	}
 
 	/**
+	 * Calcula un vector con las pendientes de los tramos del TrackSegment. Las 
+	 * pendientes se calculan como el cociente del incremento de altitud partido
+	 * por la distancia de las proyeccciones horizontales de los puntos. Se utiliza
+	 * la proyección UTM. Si el parámetro asPercentage es true los resultados de
+	 * las pendientes se dan en tanto por ciento.
+	 * 
+	 * @param segment TrackSegment a procesar
+	 * 
+	 * @return List<double> con las pendientes de cada segmento. Los resultados serán
+	 * en tanto por uno o tanto por ciento según el valor del parámetro asPercentage.
+	 *  El número de segmentos es una unidad menos que el número de puntos del 
+	 *  TrackSegment. Si los datos de entrada no son correctos se devuelve null.
+	 */
+	public static List<Double> slopesVector(TrackSegment segment, boolean asPercentage) {
+		if(segment==null || segment.size()<2) {
+			return null;
+		}
+		List<Double> slopes = new ArrayList<Double>();
+		for(int i=0; i<segment.size()-1; i++) {
+			double dist = Util.distUtmWGS84(segment.getWayPoint(i), segment.getWayPoint(i+1));
+			double inch = segment.getWayPoint(i+1).getAltitude() - segment.getWayPoint(i).getAltitude();	
+			double slope = 2e10;
+			if(dist != 0.0) {
+				slope = inch / dist;
+				if(asPercentage) {
+					slope = slope * 100.0;
+				}
+				slopes.add(slope);				
+			} 
+		}
+		return slopes;
+	}
+	/**
+	 * Calcula un vector con los rumbos en grados de cada punto del
+	 * track con el siguiente. La dimensión de la solución
+	 * es uno menos que el número de puntos del track.
+	 * 
+	 * @param segment
+	 * 
+	 * @return
+	 */
+	public static List<Double> bearingsVector(TrackSegment segment) {
+		if(segment==null || segment.size()<2) {
+			return null;
+		}
+		List<Double> bearings = new ArrayList<Double>();
+		for(int i=0; i<segment.size()-1; i++) {
+			WayPoint wp1 = segment.getWayPoint(i);
+			WayPoint wp2 = segment.getWayPoint(i+1);			
+			double bearing = Util.bearing(wp1, wp2);
+			bearings.add(bearing);				
+		}
+		return bearings;
+	}
+	public static List<Double> speedsVector(TrackSegment segment) {
+		if(segment==null || segment.size()<2) {
+			return null;
+		}
+		List<Double> speeds = new ArrayList<Double>();
+		for(int i=0; i<segment.size()-1; i++) {
+			WayPoint wp1 = segment.getWayPoint(i);
+			WayPoint wp2 = segment.getWayPoint(i+1);			
+			double speed = Util.speed(wp1, wp2);
+			speeds.add(speed);				
+		}
+		return speeds;
+	}
+	
+	/**
 	 * Devuelve el ángulo inicial a seguir en una navegaciçon ortodrómica
 	 * @param lon1, lat1, lon2, lat2 Longitudes y latitudes de los puntos
 	 * inicial y final en grados
@@ -623,6 +692,36 @@ public class Util {
 	public static double[] proyUtmWGS84(double lon, double lat) {
 		EllipsoidWGS84 ell = new EllipsoidWGS84();
 		return ell.proyUTM(lon, lat);
+	}
+	/**
+	 * Calcula la proyección UTM de los puntos de un TrackSegment 
+	 *
+	 * @param segment TrackSegment que se quiere proyectar
+	 * 
+	 * @return List<double[]> en el que cada elemento es un double[2] 
+	 * con las coordenadas x,y proyectadas del way point correspondiente
+	 * en el TrackSegment. Si el waypoint o su proyección son nulos se añade
+	 * un double[]{0.0,0.0}.<br>
+	 */
+	public static List<double[]> proyUTMWGS84(TrackSegment segment) {
+		if(segment==null || segment.size()==0) {
+			return null;
+		}
+		List<double[]> proy = new ArrayList<double[]>();
+		for(int i=0; i< segment.size(); i++) {
+			WayPoint wp = segment.getWayPoint(i);
+				if(wp != null) {
+				double[] p = Util.proyUtmWGS84(wp.getLongitude(), wp.getLatitude());
+				if(p != null) {
+					proy.add(p);
+				} else {
+					proy.add(new double[]{0.0,0.0});
+				}
+			} else {
+				proy.add(new double[]{0.0,0.0});
+			}
+		}
+		return proy;
 	}
 	public static double distUtmWGS84(double lon1, double lat1, double lon2, double lat2) {
 		double[] xy1 = Util.proyUtmWGS84(lon1, lat1);
