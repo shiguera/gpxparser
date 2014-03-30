@@ -1,0 +1,7 @@
+com.mlab.gpx.api
+com.mlab.gpx.impl
+com.mlab.gpx.impl.extensions
+com.mlab.gpx.impl.kml
+com.mlab.gpx.impl.srs
+com.mlab.gpx.impl.tserie
+com.mlab.gpx.impl.util
