@@ -4,7 +4,7 @@
 
 	<groupId>com.mlab.gpx</groupId>
 	<artifactId>GpxParser</artifactId>
-	<version>3.3-SNAPSHOT</version>
+	<version>3.3</version>
 	<packaging>jar</packaging>
 
 	<name>GpxParser</name>
