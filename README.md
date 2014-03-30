@@ -1,7 +1,7 @@
 GpxParser
 =========
 
-**Version 3.2**
+**Version 3.3**
 
 Librería de utilidades para trabajar con documentos GPX
 
