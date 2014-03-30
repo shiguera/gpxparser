@@ -11,7 +11,8 @@ Proporciona un mecanismo para manipular ExtendedWayPoints. Se trata de WayPoints
 
 Se puede consultar el javadoc en:
 
-[GpxParser javadoc] (http://shiguera.github.io/gpxparser/)
+<a href='http://shiguera.github.io/gpxparser/' target='_blank'>GpxParser javadoc</a>
+
 
 
 
