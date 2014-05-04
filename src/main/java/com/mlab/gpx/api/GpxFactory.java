@@ -82,9 +82,15 @@ public abstract class GpxFactory {
 	}
 
 	/**	
-	 * Parsea un documento de texto gpx a GpxDocument
-	 * @param cadgpx
-	 * @return GpxDocument 
+	 * Parsea un String conteniendo un documento GPX y devuelve
+	 * un objeto GpxDocument. Los WayPoint contenidos en el GpxDocument serán
+	 * del tipo de los de la factory concreta que esté parseando el documento. Esto
+	 * se realiza a través del método abstracto createWayPoint().
+	 * 
+	 * @param cadgpx String con un documento xml válido del tipo GPX
+	 * 
+	 * @return GpxDocument Instancia de la clase GpxDocument correspondiente
+	 * al documento GPX parseado o null si hay errores. 
 	 */
 	public GpxDocument parseGpxDocument(String cadgpx) {
 		Document doc= XmlFactory.parseXmlDocument(cadgpx);
