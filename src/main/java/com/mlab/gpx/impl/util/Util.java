@@ -18,11 +18,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import org.apache.log4j.Logger;
+
 import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.impl.TrackSegment;
 import com.mlab.gpx.impl.srs.EllipsoidWGS84;
 
 public class Util {
+	private final static Logger LOG = Logger.getLogger(Util.class);
 	
 	public static String secondsToHMSString(long seconds) {
 		StringBuilder builder = new StringBuilder();
@@ -230,6 +233,7 @@ public class Util {
 	 * @return 1 si todo va bien, negativo o cero en caso contrario
 	 */
 	public static int write(String filename, String cad) {
+		LOG.debug("Util.write(): " + filename);
 		BufferedWriter writer;
 		try {
 			writer = new BufferedWriter(new FileWriter(filename));

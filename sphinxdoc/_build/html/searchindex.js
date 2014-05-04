@@ -1,0 +1,1 @@
+Search.setIndex({envversion:42,terms:{content:[],index:0,modul:0,search:0,page:0},objtypes:{},objnames:{},filenames:["index","gpxfactory"],titles:["GpxParser&#8217;s documentation","GpxFactory"],objects:{},titleterms:{welcom:[],contenido:0,titl:[],gpxparser:0,indic:0,gpxfactori:1,tabl:0,document:0}})
