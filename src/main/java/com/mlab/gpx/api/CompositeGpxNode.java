@@ -8,7 +8,7 @@ import com.mlab.gpx.impl.util.XmlFactory;
 /**
  * Interface for GpxElements that are composite elements
  * @author shiguera
- *
+ * 
  */
 public abstract class CompositeGpxNode extends AbstractGpxNode {
 	
