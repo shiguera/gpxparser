@@ -104,6 +104,17 @@ public class XmlFactory {
 		return xmlString;
 	}
 	
+	public static String createTextNodeString(String nodename, String content) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("<");
+			builder.append(nodename);	
+			builder.append(">");
+			builder.append(content);
+			builder.append("</");
+			builder.append(nodename);	
+			builder.append(">");		
+			return builder.toString();		
+	}
 	/**
 	 * Build a String with an xml tag. The tag can be openning tag or closing tag
 	 * according on isOpeningTag parameter
