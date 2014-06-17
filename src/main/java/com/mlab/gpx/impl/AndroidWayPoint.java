@@ -5,6 +5,11 @@ import java.util.List;
 import com.mlab.gpx.impl.util.Util;
 import com.mlab.gpx.impl.util.XmlFactory;
 
+/**
+ * {longitude, latitude, altitude, speed, bearing, accuracy}
+ * @author shiguera
+ *
+ */
 public class AndroidWayPoint extends SimpleWayPoint {
 
 	protected final String namespace = "mlab";

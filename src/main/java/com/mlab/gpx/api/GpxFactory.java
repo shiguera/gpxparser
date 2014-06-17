@@ -51,6 +51,10 @@ import com.mlab.gpx.impl.util.XmlFactory;
 public abstract class GpxFactory {
 	private static final Logger LOG = Logger.getLogger(GpxFactory.class.getName());
 	
+	private final String WAYPOINT_NODENAME = "wpt";
+	private final String ROUTE_NODENAME = "rte";
+	private final String TRACK_NODENAME = "trk";
+	
 	
 	/**
 	 * Variable de tipo de Factory a instanciar a través 
@@ -78,9 +82,15 @@ public abstract class GpxFactory {
 	}
 
 	/**	
-	 * Parsea un documento de texto gpx a GpxDocument
-	 * @param cadgpx
-	 * @return GpxDocument 
+	 * Parsea un String conteniendo un documento GPX y devuelve
+	 * un objeto GpxDocument. Los WayPoint contenidos en el GpxDocument serán
+	 * del tipo de los de la factory concreta que esté parseando el documento. Esto
+	 * se realiza a través del método abstracto createWayPoint().
+	 * 
+	 * @param cadgpx String con un documento xml válido del tipo GPX
+	 * 
+	 * @return GpxDocument Instancia de la clase GpxDocument correspondiente
+	 * al documento GPX parseado o null si hay errores. 
 	 */
 	public GpxDocument parseGpxDocument(String cadgpx) {
 		Document doc= XmlFactory.parseXmlDocument(cadgpx);
@@ -90,41 +100,51 @@ public abstract class GpxFactory {
 		}
 		//Element gpx=doc.getDocumentElement();
 		
-		// Abstract method
 		GpxDocument gpxDocument = createGpxDocument();
 		
 		// FIXME Procesar metadata
 		
 		// Procesar nodos WayPoint
-		NodeList nl=doc.getElementsByTagName("wpt");
+		processWayPoints(gpxDocument, doc);
+		
+		// Procesar nodos Route
+		processRoutes(gpxDocument, doc);
+		
+		// Procesar nodos TRK
+		processTracks(gpxDocument, doc);
+		
+		// TODO Procesar nodos Extensions
+
+		return gpxDocument;
+	}
+	private void processWayPoints(GpxDocument gpxdocument, Document doc) {
+		NodeList nl=doc.getElementsByTagName(WAYPOINT_NODENAME);
 		//System.out.println("----------------\n"+nl.getLength()+"---------------\n");
 		for(int i=0; i< nl.getLength(); i++) {
 			WayPoint wp= parseWayPoint(XmlFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(wp!=null) {
 				//System.out.println("GpxFactory.parseGpxDocument(): adding way point to gpxdoc...");	
-				gpxDocument.addWayPoint(wp);
+				gpxdocument.addWayPoint(wp);
 			}
 		}
-		// Procesar nodos RTE
-		nl=doc.getElementsByTagName("rte");
+	}
+	private void processRoutes(GpxDocument gpxdocument, Document doc) {
+		NodeList nl=doc.getElementsByTagName(ROUTE_NODENAME);
 		for(int i=0; i< nl.getLength(); i++) {
 			Route rte= parseRoute(XmlFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(rte!=null) {
-				gpxDocument.addRoute(rte);
+				gpxdocument.addRoute(rte);
 			}
 		}
-		// Procesar nodos TRK
-		nl=doc.getElementsByTagName("trk");
+	}
+	private void processTracks(GpxDocument gpxdocument, Document doc) {
+		NodeList nl=doc.getElementsByTagName(TRACK_NODENAME);
 		for(int i=0; i< nl.getLength(); i++) {
 			Track trk= parseTrack(XmlFactory.nodeAsFormatedXmlString(nl.item(i),false));
 			if(trk!=null) {
-				gpxDocument.addTrack(trk);
+				gpxdocument.addTrack(trk);
 			}
-		}
-		
-		// TODO Procesar nodos Extensions
-
-		return gpxDocument;
+		}	
 	}
 	private boolean isValidGpxDocument(Document doc) {
 		if(doc == null || doc.getDocumentElement().getNodeName().equalsIgnoreCase("gpx")==false) {

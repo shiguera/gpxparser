@@ -1,0 +1,537 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"u",
+				"ul	Tag"
+			],
+			[
+				"se",
+				"section	Tag"
+			],
+			[
+				"android",
+				"android-studio"
+			],
+			[
+				"a",
+				"appName"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "index.rst",
+			"settings":
+			{
+				"buffer_size": 494,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gpxfactory.rst",
+			"settings":
+			{
+				"buffer_size": 50,
+				"line_ending": "Unix",
+				"name": ".. GpxFactory"
+			}
+		}
+	],
+	"build_system": "Packages/User/latex.sublime-build",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"",
+				"Set Syntax: Java"
+			],
+			[
+				"Snippet: ",
+				"Snippet: trycatch"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"Package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/shiguera/Documents/tesis/articles/reconstruction/reconstruction.tex",
+		"/home/shiguera/Documents/tesis/tesis-old/articulos/NotasTesisPerezZuriaga.tex",
+		"/home/shiguera/Documents/tesis/tesis-old/articulos/DiferenciaAltitudGPSMDE.tex",
+		"/home/shiguera/Documents/tesis/articles/articles.sublime-project",
+		"/home/shiguera/Documents/tesis/tesis-old/articulos/ReconstruccionVertical.tex",
+		"/home/shiguera/Documents/tesis/tesis-old/articulos/DiferenciaAltitudGPSMDE.bbl",
+		"/home/shiguera/Documents/tesis/articles/tesis2014/reconstruction.tex",
+		"/home/shiguera/Documents/articulos/Artículos blog/loxodromia.java",
+		"/home/shiguera/Documents/tesis/articles/smartdatamodel/smartdatamodel.tex",
+		"/home/shiguera/Documents/tesis/articles/basedatos/smartdatamodel.tex",
+		"/home/shiguera/Documents/tesis/articles/basedatos/% smartdatamodel.tex",
+		"/home/shiguera/apps/maven-android-sdk-deployer/pom.xml",
+		"/home/shiguera/Documents/tesis/workspace/TestMavenAndroidPlugin/pom.xml",
+		"/home/shiguera/Documents/tesis/workspace/TestMavenPlugin/pom.xml",
+		"/home/shiguera/Documents/tesis/workspace/GpxParser/.gitignore",
+		"/home/shiguera/workspace/android/RoadRecorder/RoadRecorderAlvac/.gitignore",
+		"/home/shiguera/workspace/android/maven-android-plugin-samples/helloflashlight/pom.xml",
+		"/home/shiguera/apps/maven-android-plugin/pom.xml",
+		"/home/shiguera/Documents/tesis/workspace/RoadPlayer/src/main/java/com/mlab/roadplayer/App.java",
+		"/home/shiguera/.config/sublime-text-2/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/shiguera/Documents/tesis/workspace/RoadPlayer/src/main/java/com/mlab/roadplayer/api/XmlSerializable.java",
+		"/home/shiguera/.bashrc",
+		"/home/shiguera/Documents/tesis/workspace/RoadPlayer/.gitignore",
+		"/home/shiguera/Documents/Mercatorlab/Alvac/presentacionVideoRecorder/index.html",
+		"/home/shiguera/Documentos/geoinquietos/PresentacionGeoinquietos/reveal.js/index.html",
+		"/home/shiguera/Documentos/geoinquietos/PresentacionGeoinquietos/OSM_1/index.html",
+		"/home/shiguera/Documentos/tesis/PresentacionDefensaTesina/index_old.html",
+		"/home/shiguera/Documentos/tesis/docs/master/docB_en.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/docB_en.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/docA.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/style.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/portadaGeneralTesina.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/stateoftheart.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/objetivos.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/abstract.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/shortcomings_3D_perspective.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/data_for_M-607_road.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/differences_among_stations.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/comparison _centerline.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/smartphone_software_for_geotagging.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/smartphone_sensor_data.tex",
+		"/home/shiguera/Documentos/tesis/docs/ElsevierSubmission/video_storage_requirements.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/docB.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/portadaDocumentoB.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/intro.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/docB-english/docB_en2.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/docB-english/docBtraducidohastasmartphones.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/styleB.tex",
+		"/home/shiguera/Dropbox/ontheroad/literaturereview2.1.txt",
+		"/home/shiguera/Documentos/tesis/docs/master/trozosB.tex",
+		"/home/shiguera/Documentos/tesis/tesis-old/articulos/VideoTracking.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/resumen.tex",
+		"/home/shiguera/Documentos/tesis/tesis-old/articulos/DiferenciaAltitudGPSMDE.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/index.tex",
+		"/home/shiguera/Documentos/tesis/tesis-old/articulos/ReconstruccionVertical-TrabajoFinalDisenoViario.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/tableapps.tex",
+		"/home/shiguera/Documentos/tesis/tesis-old/articulos/Trabajo_SantiagoHiguera_intro.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/abstract-spanish.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/metodologia.tex",
+		"/home/shiguera/Documentos/Mercatorlab/pacomegia/Alvac/appa_puertos.csv",
+		"/home/shiguera/pp/appa_puertos.csv",
+		"/home/shiguera/Documentos/geoinquietos/mappingparty-mayo2013/index.rst",
+		"/home/shiguera/Documentos/geoinquietos/mappingparty-mayo2013/_build/html/index.html",
+		"/home/shiguera/Documentos/tesis/docs/master/trozosviejos.tex",
+		"/home/shiguera/Documentos/tesis/docs/master/casoestudio.tex",
+		"/home/shiguera/Documentos/tesis/docs/abstracttraducido.txt",
+		"/home/shiguera/Documentos/tesis/docs/master/article.tex",
+		"/home/shiguera/Dropbox/GeoinquietosMadrid/tex/geoinquietos.tex",
+		"/home/shiguera/Documentos/tesis/docs/senx/article.tex",
+		"/home/shiguera/Documentos/tesis/docs/senx/index.tex",
+		"/home/shiguera/Documentos/tesis/docs/senx/abstract.tex",
+		"/home/shiguera/Documentos/tesis/docs/basedatos/index.tex",
+		"/home/shiguera/Documentos/tesis/docs/basedatos/article.tex",
+		"/home/shiguera/Documentos/tesis/docs/basedatos/abstract.tex",
+		"/home/shiguera/Documentos/tesis/docs/senx/abstact.tex",
+		"/home/shiguera/Documentos/tesis/docs/index.tex",
+		"/home/shiguera/Documentos/tesis/docs/intro.tex",
+		"/home/shiguera/Documentos/tesis/docs/stateoftheart.tex",
+		"/home/shiguera/Documentos/tesis/docs/tableapps.tex",
+		"/home/shiguera/Documentos/tesis/docs/style.tex",
+		"/home/shiguera/Documentos/tesis/docs/abstract.tex",
+		"/home/shiguera/Documentos/tesis/docs/objetivos.tex",
+		"/home/shiguera/Documentos/tesis/docs/metodologia.tex",
+		"/home/shiguera/Documentos/tesis/docs/casoestudio",
+		"/home/shiguera/Documentos/tesis/docs/resumen.tex",
+		"/home/shiguera/Documentos/tesis/docs/tesis.sublime-project",
+		"/home/shiguera/Documentos/tesis/docs/index.toc",
+		"/home/shiguera/Documentos/tesis/docs/trozosviejos.tex",
+		"/home/shiguera/.config/sublime-text-2/Packages/Default/Preferences.sublime-settings",
+		"/home/shiguera/.config/sublime-text-2/Packages/User/Preferences.sublime-settings",
+		"/home/shiguera/.config/sublime-text-2/Packages/User/JSON.sublime-settings",
+		"/var/www/prueba.html",
+		"/home/shiguera/Documentos/learnosm/_posts/es/0200-12-24-papers.md",
+		"/home/shiguera/Documentos/learnosm/_posts/es/0200-12-24-papers-org.md",
+		"/home/shiguera/Documentos/Mercatorlab/pacomegia/icis/icis_fondo1.css",
+		"/home/shiguera/Documentos/Mercatorlab/pacomegia/icis/icis_base.css",
+		"/home/shiguera/Documentos/tesis/docs/notas.tex",
+		"/home/shiguera/Documentos/tesis/docs/ResumenObjetivos20130220.tex",
+		"/home/shiguera/Documentos/tesis/docs/SmartInventory-StateOfTheArt.tex",
+		"/home/shiguera/Documentos/tesis/docs/latexsheet.tex",
+		"/home/shiguera/workspace/java/geotools/pruebasGeotools/GeotoolsQuickStart/pom.xml",
+		"/home/shiguera/Documentos/tesis/workspace/Inventory/pom.xml",
+		"/home/shiguera/Documentos/tesis/workspace/RoadPlayer/pom.xml",
+		"/home/shiguera/Descargas/backup_servidor/backup_mysql_feb2013.sql",
+		"/home/shiguera/Descargas/backup_mysql_feb2013.sql",
+		"/home/shiguera/apps/eclipse/eclipse.ini",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/index.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/1-intro.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/4-overlays.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/5-customstyle.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/2-maponline.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/7-osmosis.rst",
+		"/opt/mysql/server-5.6/README",
+		"/opt/mysql/server-5.6/INSTALL-BINARY",
+		"/var/run/mysqld/mysqld.sock",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/3-mapoffline.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/6-downloadosm.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/6-downloadmaps.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/7-downloadosm.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/docs/8-osmosis.rst",
+		"/home/shiguera/Documentos/tallerSIGTE/cartography/girona_peq.osm",
+		"/home/shiguera/Documentos/tallerSIGTE/cartography/girona.osm",
+		"/home/shiguera/Documentos/Mercatorlab/milagro-chimbo/resultados/MilagroChimbo-Erosion.tex",
+		"/home/shiguera/gvSIG/gvSIG.log",
+		"/media/shiguera/Samsung/backup-Feb2013/shiguera/.bashrc",
+		"/home/shiguera/Documentos/articulos/apuntes-programacion.tex",
+		"/usr/share/applications/eclipse.desktop",
+		"/home/shiguera/Documentos/Documentos-old/articulos/apuntes-programacion.tex"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"OpenStreet",
+			"figure",
+			"image",
+			"snippet",
+			"snipet",
+			"roadplayer",
+			">",
+			"figure",
+			"Ver Fig",
+			"table",
+			"figure",
+			"img/",
+			"table",
+			"figure",
+			"geometrical",
+			"\\textit{Android}",
+			" Android",
+			"center line",
+			"\\begin{figure",
+			"\\begin{",
+			" Google",
+			" OpenStreetMap",
+			" frame rate",
+			" tags",
+			" Android",
+			"et al",
+			" smartphone",
+			" smartphones",
+			" smartphone",
+			" smartphones",
+			" tracks",
+			" track",
+			"smartphones",
+			"smartphone",
+			"Android",
+			"yazdany",
+			"jazdany",
+			" RoadPlayer",
+			" RoadRecorder",
+			"\\textit{RoadPl",
+			"\\textit {RoadPl",
+			"\\textit {RoadPl\\ETC",
+			"\\textit {RoadPl\\ETC.",
+			"{RoadRecorder) can be played by \\textit {RoadPlayer}. \\textit {RoadPl\\ETC.",
+			"\\textit{",
+			" é",
+			"´ u",
+			" ó",
+			"˜n",
+			"´ a",
+			"˜ n",
+			"´ e",
+			"´u",
+			"6",
+			" á",
+			" ´ a",
+			"´e",
+			"´ o",
+			"´a",
+			"´o",
+			"´ı",
+			" ´o",
+			"smartphones",
+			"smartphone",
+			"Android",
+			"´ o",
+			" á",
+			"´ a",
+			" é",
+			"track",
+			"´a",
+			" ó",
+			"´e",
+			"´ı",
+			"´o",
+			" ´o",
+			"´ o",
+			"˜n",
+			" ´ e",
+			"´a",
+			" ´e",
+			"´ı",
+			"˜ n",
+			" ó",
+			"´o",
+			" ó",
+			"´o",
+			"programa \\textit{RoadRecorder}",
+			"Yous",
+			"fig:",
+			" smartphones",
+			" smartphone",
+			"Boroujeni",
+			"\\citep{",
+			"boroujeni",
+			"(\\citep{",
+			"( \\citep{",
+			"(\\citep{",
+			"postproces",
+			"laser",
+			"dificil",
+			"parametros",
+			"automoviles",
+			"metadatos",
+			"include",
+			"font-family",
+			" <bound box",
+			"bbox",
+			"bounding",
+			"box",
+			"\\section"
+		],
+		"highlight": false,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"&gt;",
+			"",
+			" \\textit{Android}",
+			"\\textit{Android}",
+			"centerline",
+			" \\textit{Google}",
+			" \\textit{OpenStreetMap}",
+			" \\textit{tags}",
+			" \\textit{Android}",
+			" \\textit{smartphone}",
+			" \\textit{smartphones}",
+			" \\textit{smartphone}",
+			" \\textit{Android}",
+			" \\textit{RoadPlayer}",
+			" \\textit{RoadRecorder}",
+			"é",
+			"ú",
+			"ó",
+			"ñ",
+			"á",
+			"ñ",
+			"é",
+			"ú",
+			"á",
+			"é",
+			"ó",
+			"á",
+			"ó",
+			"í",
+			"ó",
+			"\\textit{smartphones}",
+			"\\textit{smartphone}",
+			"\\textit{Android}",
+			"ó",
+			"á",
+			"é",
+			"\\textit{track}",
+			"á",
+			"ó",
+			"é",
+			"í",
+			"ó",
+			"ñ",
+			"é",
+			"á",
+			"é",
+			"í",
+			"ñ",
+			"ó",
+			"\\textit{software} desarrollado",
+			" \\textit{smartphones}",
+			" \\textit{smartphone}",
+			"\\textit{smartphone}",
+			"meta-datos"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "index.rst",
+					"settings":
+					{
+						"buffer_size": 494,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								397,
+								397
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/RestructuredText/reStructuredText.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "gpxfactory.rst",
+					"settings":
+					{
+						"buffer_size": 50,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								48,
+								48
+							]
+						],
+						"settings":
+						{
+							"auto_name": ".. GpxFactory",
+							"syntax": "Packages/RestructuredText/reStructuredText.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 34.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 86.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"ls",
+				"src/main/java/com/mlab/roadplayer/api/XmlSerializable.java"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 276.0,
+	"status_bar_visible": true
+}

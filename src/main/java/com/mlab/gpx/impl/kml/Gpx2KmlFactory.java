@@ -6,15 +6,20 @@ import com.mlab.gpx.api.WayPoint;
 import com.mlab.gpx.impl.TrackSegment;
 import com.mlab.gpx.impl.util.Util;
 
+import de.micromata.opengis.kml.v_2_2_0.BalloonStyle;
 import de.micromata.opengis.kml.v_2_2_0.Document;
 import de.micromata.opengis.kml.v_2_2_0.Kml;
 import de.micromata.opengis.kml.v_2_2_0.LineString;
 import de.micromata.opengis.kml.v_2_2_0.LookAt;
 import de.micromata.opengis.kml.v_2_2_0.Placemark;
 import de.micromata.opengis.kml.v_2_2_0.Style;
+import de.micromata.opengis.kml.v_2_2_0.StyleSelector;
 
 public class Gpx2KmlFactory {
 
+	private final static int DEFAULT_PLACEMARK_IMAGE_WITH = 400;
+	private final static String DEFAULT_BALLOON_BACKGROUND = "#a0d0b0";
+	
 	public static boolean writeToFile(Kml kml, File file) {
 		try {
 			kml.marshal(file);
@@ -85,6 +90,32 @@ public class Gpx2KmlFactory {
 		return ls;
 	}
 	
-	
+	public static Placemark createPlacemark(String name, String description, double longitude, double latitude, double altitude) {
+		final Kml kml = new Kml();
+		Placemark placeMark = kml.createAndSetPlacemark();
+    	placeMark.withName(name).withOpen(Boolean.TRUE).withDescription(description)
+    		.withStyleUrl("#balloonstyle")
+    	   .createAndSetPoint().addToCoordinates(longitude,latitude,altitude);		
+		return placeMark;
+	}
+	public static Kml createPlaceMarkWithBalloon(Placemark placemark) {
+		final Kml kml = new Kml();
+		Document doc = kml.createAndSetDocument();
+		String text = "<b>"+placemark.getName()+"</b><br/><em>"+placemark.getDescription()+"</em>";
+		BalloonStyle bs = new BalloonStyle().withBgColor("#f0f0f0").withText(text);
+		Style style = new Style().withId("balloonstyle").withBalloonStyle(bs);
+		placemark.createAndAddStyle().createAndSetBalloonStyle().withBgColor("#f0f0f0").withText(text);
+		doc.addToFeature(placemark);
+		return kml;
+	}
+	public static Kml createPlaceMarkWithImage(Placemark placemark, File imagefile) {
+		final Kml kml = new Kml();
+		Document doc = kml.createAndSetDocument();
+		String text = "<b>"+placemark.getName()+"</b><br/><em>"+placemark.getDescription()+"</em><br/>"+
+				"<img src='"+imagefile.getPath()+"' width='"+DEFAULT_PLACEMARK_IMAGE_WITH+"'/>";
+		placemark.createAndAddStyle().createAndSetBalloonStyle().withBgColor(DEFAULT_BALLOON_BACKGROUND).withText(text);
+		doc.addToFeature(placemark);
+		return kml;
+	}
 
 }

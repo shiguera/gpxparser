@@ -82,15 +82,38 @@ public class XmlFactory {
 	}
 	/**
 	 * Formatea una cadena xml con cambios de linea y tabulaciones. 
-	 * Añade la cabecera de documento
+	 * En la salida no muestra la declaración '<xml...>'
 	 * @param cadxml cadena xml que se quiere formatear
 	 * @return Cadena formateada
 	 */
 	public static String format(String cadxml) {
+		return format(cadxml, false);
+	}
+	/**
+	 * Formatea una cadena xml con cambios de linea y tabulaciones. 
+	 * En la salida muestra o no la declaración '<xml...>' según 
+	 * el valor de withDeclaration.
+	 * 
+	 * @param cadxml cadena xml que se quiere formatear
+	 * @return Cadena formateada
+	 */
+	public static String format(String cadxml, boolean withDeclaration) {
 		String xmlString="";
 		Document node = parseXmlDocument(cadxml);
-		xmlString = nodeAsFormatedXmlString(node,false);
+		xmlString = nodeAsFormatedXmlString(node,withDeclaration);
 		return xmlString;
+	}
+	
+	public static String createTextNodeString(String nodename, String content) {
+			StringBuilder builder = new StringBuilder();
+			builder.append("<");
+			builder.append(nodename);	
+			builder.append(">");
+			builder.append(content);
+			builder.append("</");
+			builder.append(nodename);	
+			builder.append(">");		
+			return builder.toString();		
 	}
 	/**
 	 * Build a String with an xml tag. The tag can be openning tag or closing tag
