@@ -30,9 +30,6 @@ public class SimpleWayPoint  extends AbstractWayPoint {
 	 * @param longitude
 	 * @param latitude
 	 * @param altitude
-	 * @param speed
-	 * @param bearing
-	 * @param accuracy
 	 */
 	public SimpleWayPoint(String name, String description, long time, 
 			double longitude, double latitude, double altitude) {
