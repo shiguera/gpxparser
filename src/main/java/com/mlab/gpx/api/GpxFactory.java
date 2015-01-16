@@ -15,6 +15,7 @@ import com.mlab.gpx.impl.Route;
 import com.mlab.gpx.impl.SimpleGpxFactory;
 import com.mlab.gpx.impl.Track;
 import com.mlab.gpx.impl.TrackSegment;
+import com.mlab.gpx.impl.extensions.ClinometerGpxFactory;
 import com.mlab.gpx.impl.extensions.ExtendedGpxFactory;
 import com.mlab.gpx.impl.util.Util;
 import com.mlab.gpx.impl.util.XmlFactory;
@@ -60,7 +61,7 @@ public abstract class GpxFactory {
 	 * Variable de tipo de Factory a instanciar a través 
 	 * del método estático 'getFactory()' 	
 	 */
-	public enum Type {SimpleGpxFactory, AndroidGpxFactory, ExtendedGpxFactory};
+	public enum Type {SimpleGpxFactory, AndroidGpxFactory, ExtendedGpxFactory, ClinometerGpxFactory};
 	protected GpxFactory.Type factoryType; 
 	
 	/**
@@ -77,6 +78,8 @@ public abstract class GpxFactory {
 				return new AndroidGpxFactory();
 			case ExtendedGpxFactory:
 				return new ExtendedGpxFactory();
+			case ClinometerGpxFactory:
+				return new ClinometerGpxFactory();
 		}
 		return null;
 	}
