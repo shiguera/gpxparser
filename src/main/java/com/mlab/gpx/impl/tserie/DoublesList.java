@@ -14,7 +14,7 @@ public class DoublesList {
 	/**
 	 * ArrayList que da sentido a la clase
 	 */
-	ArrayList<double[]> dlist;
+	protected ArrayList<double[]> dlist;
 	/**
 	 * Dimensión de los arrays de doubles que
 	 * componen la lista. La dimensión queda

@@ -11,12 +11,19 @@ import java.util.ListIterator;
  */
 public class TList {
 	
-	ArrayList<Long> tlist;
+	/**
+	 * ArrayList de tiempos
+	 */
+	protected ArrayList<Long> tlist;
 	
+	/**
+	 * Crea una lista de tiempos vacía
+	 */
 	public TList() {
 		tlist = new ArrayList<Long>();
 	}
 
+	
 	public int size() {
 		return tlist.size();
 	}
@@ -38,7 +45,12 @@ public class TList {
 		}
 		return false;
 	}
-	
+	/**
+	 * Añade un tiempo a la lista
+	 * 
+	 * @param t
+	 * @return
+	 */
 	public boolean add(long t) {
 		if(canAdd(t)) {
 			return tlist.add(Long.valueOf(t));
@@ -112,6 +124,12 @@ public class TList {
 		return index;
 	}
 	
+	/**
+	 * Devuelve true si el valor de t es uno 
+	 * de los valores de la lista
+	 * @param t
+	 * @return
+	 */
 	public boolean contains(long t) {
 		return tlist.contains(new Long(t));
 	}
@@ -129,6 +147,11 @@ public class TList {
 		}
 		return false;
 	}
+	/**
+	 * Devuelve el ArrayList de tiempos
+	 * 
+	 * @return
+	 */
 	public ArrayList<Long> getTlist() {
 		return tlist;
 	}

@@ -15,8 +15,8 @@ package com.mlab.gpx.impl.tserie;
  */ 
 public class TSerie {
 	
-	TList tlist;
-	DoublesList dlist;
+	protected TList tlist;
+	protected DoublesList dlist;
 	
 	public TSerie() {
 		tlist = new TList();
