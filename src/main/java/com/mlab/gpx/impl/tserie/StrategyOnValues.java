@@ -2,5 +2,5 @@ package com.mlab.gpx.impl.tserie;
 
 public interface StrategyOnValues {
 
-	double[] getValues(long t);
+	double[] getValues(TSerie tserie, long t);
 }

@@ -16,6 +16,7 @@ package com.mlab.gpx.impl.tserie;
 public class TSerie {
 	
 	protected TList tlist;
+
 	protected DoublesList dlist;
 	
 	public TSerie() {
@@ -120,7 +121,19 @@ public class TSerie {
 	}
 
 	public double[] getValues(long t, StrategyOnValues strategy) {
-		return strategy.getValues(t);
+		return strategy.getValues(this, t);
 	}
-	
+	public int indexOfFloor(long t) {
+		return tlist.indexOfFloor(t);
+	}
+	public int indexOfCeiling(long t) {
+		return tlist.indexOfCeiling(t);
+	}
+	public boolean isInRange(long t) {
+		return tlist.isInRange(t);
+	}
+	public int getDimension() {
+		return dlist.getDimension();
+	}
+
 }
