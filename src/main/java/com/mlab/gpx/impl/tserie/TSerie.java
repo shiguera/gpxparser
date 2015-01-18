@@ -119,5 +119,8 @@ public class TSerie {
 		return result;
 	}
 
+	public double[] getValues(long t, StrategyOnValues strategy) {
+		return strategy.getValues(t);
+	}
 	
 }
