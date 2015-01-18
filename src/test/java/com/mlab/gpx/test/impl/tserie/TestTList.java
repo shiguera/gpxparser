@@ -109,6 +109,29 @@ public class TestTList extends TestCase {
 		System.out.println("OK");		
 		
 	}
+	public void testIndexOfCeiling() {
+		System.out.print("Testing TList.indexOfFloor():... ");
+		TList list = new TList();
+		list.add(new Long(1000l));
+		list.add(new Long(2000l));
+		list.add(new Long(3000l));
+		list.add(new Long(4000l));
+		
+		// minor than first
+		assertEquals(-1,list.indexOfCeiling(500));
+		// greater than last
+		assertEquals(-1,list.indexOfCeiling(5000));
+		// first
+		assertEquals(0,list.indexOfCeiling(1000));
+		// last
+		assertEquals(3,list.indexOfCeiling(4000));
+		// between
+		assertEquals(2,list.indexOfCeiling(2500));
+				
+		System.out.println("OK");		
+		
+	}
+
 	public void testCanAdd() {
 		System.out.print("Testing TList.canAdd():... ");
 		TList list = new TList();
