@@ -46,15 +46,7 @@ public class TSerie {
 		}
 		return false;
 	}
-
-	/**
-	 * Devuelve los valores double[] del índice index
-	 * @param index
-	 * @return
-	 */
-	public double[] getValues(int index) {
-		return dlist.get(index);
-	}
+	
 	/**
 	 * Devuelve el número de filas de datos de la serie
 	 * @return
@@ -62,6 +54,7 @@ public class TSerie {
 	public int size() {
 		return this.tlist.size();
 	}
+
 	/** 
 	 * Devuelve el tiempo del indice index
 	 * @param index
@@ -70,14 +63,35 @@ public class TSerie {
 	public long getTime(int index) {
 		return tlist.get(index);
 	}
+	
+	/**
+	 * Devuelve el primer tiempo de los almacenados en la serie temporal
+	 * 
+	 * @return
+	 */
 	public long firsTime() {
 		return this.tlist.firstTime();
 	}
+	
+	/**
+	 * Devuelve el último tiempo de los almacenados en la serie temporal
+	 * 
+	 * @return
+	 */
 	public long lastTime() {
 		return this.tlist.lastTime();
 	}
 	/**
-	 * Si el tiempo es mayor-igual que el pirmero y
+	 * Devuelve los valores double[] del índice index
+	 * @param index
+	 * @return
+	 */
+	public double[] getValues(int index) {
+		return dlist.get(index);
+	}
+
+	/**
+	 * Si el tiempo es mayor o igual que el primero y
 	 * menor o igual que el último, devuelve el valor 
 	 * de doubles interpolados entre los de la serie,<br/>
 	 * Si el tiempo es exactamente uno de los de la serie
