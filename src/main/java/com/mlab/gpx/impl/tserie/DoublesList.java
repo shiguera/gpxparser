@@ -11,11 +11,25 @@ import java.util.ArrayList;
  */
 public class DoublesList {
 
-	ArrayList<double[]> dlist;
+	/**
+	 * ArrayList que da sentido a la clase
+	 */
+	protected ArrayList<double[]> dlist;
+	/**
+	 * Dimensión de los arrays de doubles que
+	 * componen la lista. La dimensión queda
+	 * establecida por el primer array que
+	 * se añade a la lista.
+	 * 
+	 */
 	int dimension;
 	
+	/**
+	 * Crea una instancia de DoublesList vacía 
+	 */
 	public DoublesList() {
 		dlist = new ArrayList<double[]>();
+		dimension = 0;
 	}
 	public boolean isEmpty() {
 		return dlist.isEmpty();
@@ -38,6 +52,14 @@ public class DoublesList {
 		return false;
 	}
 
+	/**
+	 * Añade un array de doubles a la lista. 
+	 * El primer elemento de la lista establece la dimensión
+	 * que tendrán que tener los subsiguientes arrays que se añadan
+	 * 
+	 * @param values
+	 * @return
+	 */
 	public boolean add(double[] values) {
 		boolean result = false;
 		if(dlist.isEmpty() || values.length==dimension) {
@@ -46,6 +68,11 @@ public class DoublesList {
 		} 
 		return result;
 	}
+	/**
+	 * Devuelve el número de elementos en la lista. Cada elemento
+	 * consta de un array de doubles
+	 * @return
+	 */
 	public int size() {
 		return dlist.size();
 	}
@@ -58,6 +85,13 @@ public class DoublesList {
 		return dimension;
 	}
 	
+	/**
+	 * Devuelve el array situado en la posición
+	 * indicada por index
+	 * 
+	 * @param index
+	 * @return
+	 */
 	public double[] get(int index) {
 		return dlist.get(index);
 	}

@@ -11,12 +11,19 @@ import java.util.ListIterator;
  */
 public class TList {
 	
-	ArrayList<Long> tlist;
+	/**
+	 * ArrayList de tiempos
+	 */
+	protected ArrayList<Long> tlist;
 	
+	/**
+	 * Crea una lista de tiempos vacía
+	 */
 	public TList() {
 		tlist = new ArrayList<Long>();
 	}
 
+	
 	public int size() {
 		return tlist.size();
 	}
@@ -33,12 +40,17 @@ public class TList {
 		if(t<0) {
 			return false;
 		}
-		if (tlist.isEmpty() || t>this.lastTime()) {
+		if (tlist.isEmpty() || t > lastTime()) {
 			return true;
 		}
 		return false;
 	}
-	
+	/**
+	 * Añade un tiempo a la lista
+	 * 
+	 * @param t
+	 * @return
+	 */
 	public boolean add(long t) {
 		if(canAdd(t)) {
 			return tlist.add(Long.valueOf(t));
@@ -112,6 +124,30 @@ public class TList {
 		return index;
 	}
 	
+	public int indexOfCeiling(long t) {
+		int index = -1;
+		if(!isInRange(t)) {
+			return index;
+		}
+		if(this.tlist.contains(Long.valueOf(t))) {
+			return tlist.indexOf(Long.valueOf(t));
+		}
+		for(ListIterator<Long> it=this.tlist.listIterator(); it.hasNext();) {
+			int idx = it.nextIndex();
+			if(it.next()>=t) {
+				index = idx;
+				break;
+			}
+		}
+		return index;
+	}
+	
+	/**
+	 * Devuelve true si el valor de t es uno 
+	 * de los valores de la lista
+	 * @param t
+	 * @return
+	 */
 	public boolean contains(long t) {
 		return tlist.contains(new Long(t));
 	}
@@ -129,6 +165,11 @@ public class TList {
 		}
 		return false;
 	}
+	/**
+	 * Devuelve el ArrayList de tiempos
+	 * 
+	 * @return
+	 */
 	public ArrayList<Long> getTlist() {
 		return tlist;
 	}
