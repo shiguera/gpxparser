@@ -10,6 +10,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -113,6 +114,21 @@ public class Util {
 		return t;
 	}
 	
+    /**
+     * Devuelve una cadena de la forma "yyyyMMdd_HHmmss" con
+     * la fecha y hora GMT correspondiente a la fecha pasada
+     * como argumento.
+     * @param date Date 
+     * @return Cadena "yyyyMMdd_HHmmss" con la fecha GMT
+     */
+    public static String getTimeStamp(Date date, boolean gmt) {
+    	DateFormat timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss");
+    	if(gmt) {
+    		timeStamp.setTimeZone(TimeZone.getTimeZone("GMT"));
+    	}
+    	return timeStamp.format(date);
+    }
+
     /**
      * Devuelve una cadena en la forma 2012-10-09T12:00:23
      * @param t
