@@ -136,4 +136,8 @@ public class TSerie {
 		return dlist.getDimension();
 	}
 
+	public void empty() {
+		tlist.empty();
+		dlist.empty();
+	}
 }

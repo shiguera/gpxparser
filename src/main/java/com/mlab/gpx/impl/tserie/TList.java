@@ -173,5 +173,7 @@ public class TList {
 	public ArrayList<Long> getTlist() {
 		return tlist;
 	}
-
+	public void empty() {
+		tlist.clear();
+	}
 }

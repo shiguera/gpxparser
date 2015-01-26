@@ -95,5 +95,7 @@ public class DoublesList {
 	public double[] get(int index) {
 		return dlist.get(index);
 	}
-
+	public void empty() {
+		dlist.clear();
+	}
 }
