@@ -19,7 +19,7 @@ Se puede consultar el javadoc en:
 GpxDocument
 -----------
 El interface GpxDocument encapsula el contenido de un archivo en formato *gpx*, constando de un elemento *metadata*, 
-una colección de *WayPoints*, una colección de *Rute* y una colección de *Tracks*. 
+una colección de *WayPoints*, una colección de *Routes* y una colección de *Tracks*. 
 
 Dispone de métodos para manipular dichos elementos y para devolver un *DomDocument* 
 generado a partir del documento *gpx*
@@ -29,9 +29,12 @@ GpxFactory
 Es la clase que nos da entrada a los demás elementos de la librería. Es una clase abstracta, 
 algunos de cuyos métodos serán implementados por las clases específicas derivadas, 
 a la fecha de escribir este documento eran SimpleGpxFactory, AndroidGpxFactory, ExtendedGpxFactory y 
-ClinometerGpxFactory
+ClinometerGpxFactory.
+La clase GpxFactory tiene un método estático que permite obtener instancias de GpxFactory del tipo adecuado. Para obtener una instancia de GpxFactory, por ejemplo del tipo ClinometerGpxFactory, se hace de la siguiente manera:
 
-Los métodos de GpxFactory son:
+GpxFactory factory = GpxFactory.getFactory(Type.ClinometerGpxFactory);
+
+Los métodos de las clases GpxFactory son:
 
 **readGpxDocument(File gpxFile):** Lee un fichero en formato gpx y devuelve un GpxDocument o null
 
