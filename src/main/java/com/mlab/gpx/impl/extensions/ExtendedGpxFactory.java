@@ -13,6 +13,10 @@ public class ExtendedGpxFactory extends GpxFactory {
 
 	private final Logger LOG = Logger.getLogger(getClass().getName());
 	
+ 	public ExtendedGpxFactory() {
+		this.factoryType = GpxFactory.Type.ExtendedGpxFactory;
+	}
+
 //	public static GpxDocument readGpxDocument(File gpxFile) {
 //		String cad = Util.readFileToString(gpxFile);
 //		GpxDocument gpxDoc = (GpxDocumentImpl) 

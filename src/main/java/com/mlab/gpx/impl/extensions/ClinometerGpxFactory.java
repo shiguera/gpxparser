@@ -11,6 +11,10 @@ import com.mlab.gpx.api.WayPoint;
 
 public class ClinometerGpxFactory extends GpxFactory {
 
+ 	public ClinometerGpxFactory() {
+		this.factoryType = GpxFactory.Type.ClinometerGpxFactory;
+	}
+
 	private final Logger LOG = Logger.getLogger(getClass().getName());
 		
 	/**
